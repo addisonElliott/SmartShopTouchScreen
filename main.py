@@ -7,11 +7,14 @@ def main():
 
     # TODO Start by coding in the concept GUI to start out
     # TODO Implement the buttons in the concept GUI
-    # comment
 
     form = MainWindow()
-    form.show() # Uncomment this out when testing
-    #form.showFullScreen() # Uncomment this when not testing
+
+    # Will pass this argument in Raspberry Pi 3 to get fullscreen display
+    if "-fullscreen" in sys.argv:
+        form.showFullScreen()
+    else:
+        form.show()
 
     sys.exit(app.exec_())
 
