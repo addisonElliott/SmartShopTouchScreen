@@ -19,3 +19,7 @@ class MainWindow(QMainWindow, mainWindow_ui.Ui_MainWindow):
         # Pressing escape will kill the application since the title bar is absent
         if event.key() == Qt.Key_Escape:
             self.close()
+
+    @pyqtSlot()
+    def on_pushButton_clicked(self):
+        self.close()
