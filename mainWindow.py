@@ -1,7 +1,9 @@
 import mainWindow_ui
-from scanner import BarcodeScanner
+from scanner import *
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow
 from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
 
 class MainWindow(QMainWindow, mainWindow_ui.Ui_MainWindow):
     def __init__(self, parent=None):
@@ -16,25 +18,22 @@ class MainWindow(QMainWindow, mainWindow_ui.Ui_MainWindow):
         # Sets position to 0,0 on screen and sets window to fixed size
         self.setGeometry(0, 0, 800, 480)
 
+        # Create shortcut for escape key that calls close()
+        self.closeShortcut = QShortcut(Qt.Key_Escape, self)
+        self.closeShortcut.activated.connect(self.close)
+
         # TODO The primary and secondary scanner should be defined based on prev
         # settings
-        self.primaryScanner = BarcodeScanner(4);
+        self.primaryScanner = BarcodeScanner(self, 4, "Ctrl+1", "primary")
         self.primaryScanner.barcodeReceived.connect(self.primaryScanner_barcodeReceived)
-        self.secondaryScanner = BarcodeScanner(5);
+        self.secondaryScanner = BarcodeScanner(self, 5, "Ctrl+2", "secondary")
         self.secondaryScanner.barcodeReceived.connect(self.secondaryScanner_barcodeReceived)
 
         # Setup timer to regularly poll for new barcodes from scanners
-        # TODO Consider having a constants file where I can set the interval for
-        # the scannerPoll timer. This doesnt need to be a setting however
+        # TODO Consider having a constants file where I can set the interval for the scannerPoll timer. This doesnt need to be a setting however
         self.scannerPoll = QTimer()
         self.scannerPoll.timeout.connect(self.scannerPoll_ticked)
         self.scannerPoll.start(2)
-
-    @pyqtSlot()
-    def keyPressEvent(self, event):
-        # Pressing escape will kill the application since the title bar is absent
-        if event.key() == Qt.Key_Escape:
-            self.close()
 
     @pyqtSlot()
     def on_pushButton_clicked(self):
