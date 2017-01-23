@@ -1,10 +1,10 @@
 from exception import *
 from evdev import *
-from ecodes import *
+from evdev.ecodes import *
+from PyQt5.QtCore import QObject, pyqtSignal
 import re
 
 keycodeToASCII = {
-    # Scancode: ASCIICode
     KEY_1: ['1', '!'], KEY_2: ['2', '@'], KEY_3: ['3', '#'], KEY_4: ['4', '$'], KEY_5: ['5', '%'], KEY_6: ['6', '^'],
     KEY_7: ['7', '*'], KEY_8: ['8', '('], KEY_9: ['9', '('], KEY_0: ['0', ')'], KEY_MINUS: ['-', '_'], KEY_EQUAL: ['=', '+'],
     KEY_TAB: ['\t', '\t'], KEY_Q: ['q', 'Q'], KEY_W: ['w', 'W'], KEY_E: ['e', 'E'], KEY_R: ['r', 'R'], KEY_T: ['t', 'T'],
@@ -21,8 +21,12 @@ numpadcodeToASCII = {
     KEY_KPPLUS: '+', KEY_KP1: '1', KEY_KP2: '2', KEY_KP3: '3', KEY_KP0: '0', KEY_KPDOT: '.', KEY_KPSLASH: '/'
 }
 
-class BarcodeScanner:
+class BarcodeScanner(QObject):
+    # Signal is emitted once a barcode has been scanned and received
+    barcodeReceived = pyqtSignal(str)
+    
     def __init__(self, usbPortNumber):
+        QObject.__init__(self)
         self.modifiers = {
             KEY_RIGHTMETA:  0,  # Right GUI - (usually the Windows key)
             KEY_RIGHTALT:   0,  # Right ALT
@@ -34,13 +38,18 @@ class BarcodeScanner:
             KEY_LEFTCTRL:   0   # Left Control
         }
         self.state = {
-            LED_CAPSL:   0, # Caps Lock
-            LED_NUML:    0, # Num Lock
-            LED_SCROLLL: 0  # Scroll Lock
+            KEY_CAPSLOCK: 0,    # Caps Lock
+            KEY_NUMLOCK: 0,     # Num Lock
+            KEY_SCROLLLOCK: 0,  # Scroll Lock
         }
 
+        # This regex expression identifies a device on a specified USB port number
+        # I am not entirely sure if this is Raspbian specific, Linux specific or what,
+        # but it works in this case
         rePhysicalLoc = re.compile("usb\-.*\..*\-1\.%i.*" % usbPortNumber)
 
+        # Loop through all available devices and search for a regex match
+        # First match found is the device we will use
         devices = [InputDevice(fn) for fn in list_devices()]
         self.device = None
         for device in devices:
@@ -54,35 +63,39 @@ class BarcodeScanner:
 
         # Get the current state of the LED buttons; update self.state with the values that are on
         ledStates = self.device.leds()
-        for led in ledStates:
-            self.state[led] = 1
+        if LED_CAPSL in ledStates: self.state[KEY_CAPSLOCK] = 1
+        if LED_NUML in ledStates: self.state[KEY_NUMLOCK] = 1
+        if LED_SCROLLL in ledStates: self.state[KEY_SCROLLLOCK] = 1
+
+        # Set the current string buffer to none
+        self.curStr = ""
 
     def poll(self):
         try:
             # Read all of the events from the loop
-            events = self.device.read()
+            deviceEvents = self.device.read()
 
-            for event in events:
+            for event in deviceEvents:
+                # Only accept keyboard events
                 if event.type is EV_KEY:
                     keyEvent = util.categorize(event)
-
-                    if keyEvent.keycode in self.modifiers:
-                        if keyEvent.keystate is events.KeyEvent.key_down:
-                            self.modifiers[keyEvent.keycode] = 1
-                        elif keyEvent.keystate is events.KeyEvent.key_up:
-                            self.modifiers[keyEvent.keycode] = 0
-                    elif keyEvent.keycode in self.state:
-                        if keyEvent.keystate is events.KeyEvent.key_down:
-                            self.state[keyEvent.keycode] = 1
-                        elif keyEvent.keystate is events.KeyEvent.key_up:
-                            self.state[keyEvent.keycode] = 0
-                    elif keyEvent.keystate is events.KeyEvent.key_down or \
-                        keyEvent.keystate is events.KeyEvent.key_hold:
-                        if keyEvent.keycode in keycodeToASCII:
+                    
+                    if keyEvent.scancode in self.modifiers:
+                        if keyEvent.keystate is events.KeyEvent.key_down: self.modifiers[keyEvent.scancode] = 1
+                        elif keyEvent.keystate is events.KeyEvent.key_up: self.modifiers[keyEvent.scancode] = 0
+                    elif keyEvent.scancode in self.state:
+                        if keyEvent.keystate is events.KeyEvent.key_down: self.state[keyEvent.scancode] = 1
+                        elif keyEvent.keystate is events.KeyEvent.key_up: self.state[keyEvent.scancode] = 0
+                    elif keyEvent.keystate is events.KeyEvent.key_down or keyEvent.keystate is events.KeyEvent.key_hold:
+                        if keyEvent.scancode is KEY_ENTER:
+                            #print("Current str: %s" % self.curStr)
+                            self.barcodeReceived.emit(self.curStr)
+                            self.curStr = ""
+                        elif keyEvent.scancode in keycodeToASCII:
                             shift = (self.modifiers[KEY_LEFTSHIFT] or self.modifiers[KEY_RIGHTSHIFT])
-                            str = keycodeToASCII[keyEvent.keycode][shift]
-                        elif keyEvent.keycode in numpadcodeToASCII:
-                            str = numpadcodeToASCII[keyEvent.keycode]
+                            self.curStr += keycodeToASCII[keyEvent.scancode][shift]
+                        elif keyEvent.scancode in numpadcodeToASCII and self.state[KEY_NUMLOCK]:
+                            str = numpadcodeToASCII[keyEvent.scancode]
         except BlockingIOError:
             # If no events are available, this is thrown
             # No actual error, move on
