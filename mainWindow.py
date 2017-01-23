@@ -26,7 +26,6 @@ class MainWindow(QMainWindow, mainWindow_ui.Ui_MainWindow):
         # TODO The primary and secondary scanner should be defined based on prev settings
         # Setup primary and secondary scanner based on if the shortcuts should be enabled
         if constants.barcodeScannerShortcut:
-
             self.primaryScanner = BarcodeScanner(self, 4, "Ctrl+1", "primary")
             self.secondaryScanner = BarcodeScanner(self, 5, "Ctrl+2", "secondary")
         else:
