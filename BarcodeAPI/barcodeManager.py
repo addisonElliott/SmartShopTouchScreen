@@ -4,6 +4,7 @@ from .dataBaseManager import DataBaseManager
 
 dbManager = DataBaseManager()
 
+
 class BarcodeManager:
     #def AddItemToInventory(barcode):
         #if IsCached(barcode):
@@ -11,21 +12,19 @@ class BarcodeManager:
         #else:
             # add to list of items to grab from database
 
-
-    def IsCached(barcode):
+    def IsCached(self, barcode):
         cachedBarcodes = dbManager.GetListOfCachedUPCs()
-        if barcode in cachedBarcodes:
+        if barcode in (item[0] for item in cachedBarcodes):
             return True
 
         return False
 
-
-    def GetJsonFrom3rdParty(barcode):
+    def GetJsonFrom3rdParty(self, barcode):
         api = "http://eandata.com/feed/?v=3&keycode=C9906FA4582B60E9&mode=json&find=" + barcode
-        page = urllib.urlopen(api)
-        data = json.load(page)
+        page = urllib.request.urlopen(api)
+        pageString = page.read().decode('utf-8')
+        data = json.loads(pageString)
 
         return data
 
-
-    #def UpdateItemInDataBase(barcode):
+    # def UpdateItemInDataBase(self, barcode):
