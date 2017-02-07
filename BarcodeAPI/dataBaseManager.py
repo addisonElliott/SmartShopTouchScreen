@@ -5,7 +5,7 @@ class DataBaseManager:
 
     def __init__(self):
         #try:
-        self.connection = psycopg2.connect("user='jacob' host='addison404project.ddns.net' password='password'")
+        self.connection = psycopg2.connect(database="smartshop", user="jacob", password="password", host="addison404project.ddns.net", port="5432")
         #except:
          #   raise "Cannot Connect to DataBase"
 
