@@ -7,30 +7,29 @@ from PyQt5.QtWidgets import *
 import constants
 
 class MainWindow(QMainWindow, mainWindow_ui.Ui_MainWindow):
-    def __init__(self, parent=None):
+    def __init__(self, config, parent=None):
         super(MainWindow, self).__init__(parent)
         self.setupUi(self)
 
-        # TODO Load settings here. This will load the previously saved settings
+        self.config = config
 
         # Remove title bar to
         self.setWindowFlags(Qt.FramelessWindowHint)
 
         # Sets position to 0,0 on screen and sets window to fixed size
-        self.setGeometry(0, 0, 800, 480)
+        self.setGeometry(QRect(0, 0, 800, 480))
 
         # Create shortcut for escape key that calls close()
         self.closeShortcut = QShortcut(Qt.Key_Escape, self)
         self.closeShortcut.activated.connect(self.close)
 
-        # TODO The primary and secondary scanner should be defined based on prev settings
         # Setup primary and secondary scanner based on if the shortcuts should be enabled
         if constants.barcodeScannerShortcut:
-            self.primaryScanner = BarcodeScanner(self, 4, "Ctrl+1", "primary")
-            self.secondaryScanner = BarcodeScanner(self, 5, "Ctrl+2", "secondary")
+            self.primaryScanner = BarcodeScanner(self, self.config['Scanners']['primaryPort'], "Ctrl+1", "primary")
+            self.secondaryScanner = BarcodeScanner(self, self.config['Scanners']['secondaryPort'], "Ctrl+2", "secondary")
         else:
-            self.primaryScanner = BarcodeScanner(self, 4)
-            self.secondaryScanner = BarcodeScanner(self, 5)
+            self.primaryScanner = BarcodeScanner(self, self.config['Scanners']['primaryPort'])
+            self.secondaryScanner = BarcodeScanner(self, self.config['Scanners']['secondaryPort'])
 
         self.primaryScanner.barcodeReceived.connect(self.primaryScanner_barcodeReceived)
         self.secondaryScanner.barcodeReceived.connect(self.secondaryScanner_barcodeReceived)
