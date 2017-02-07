@@ -1,8 +1,8 @@
 import urllib.request  # For internet operations
 import json  # To internet JSON data format
-from .dataBaseManager import DataBaseManager
+from .databaseManager import DatabaseManager
 
-dbManager = DataBaseManager()
+dbManager = DatabaseManager()
 
 
 class BarcodeManager:

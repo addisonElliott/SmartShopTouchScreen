@@ -1,7 +1,7 @@
 import psycopg2
 
 
-class DataBaseManager:
+class DatabaseManager:
 
     def __init__(self):
         #try:
