@@ -7,12 +7,14 @@ from exception import *
 from configobj import *
 
 def main():
+    # Load config spec, config file, and validate the config file with config spec
     configspec = ConfigObj('./configspec.ini', raise_errors=True, _inspec=True)
     validator = Validator()
 
     config = ConfigObj('./config.ini', configspec=configspec, create_empty=True)
     errors = config.validate(validator, preserve_errors=True, copy=True)
 
+    # Check and report any errors that occurred when validating config file
     msg = ""
     for entry in flatten_errors(config, errors):
         [sectionList, key, error] = entry
@@ -35,6 +37,7 @@ def main():
         config.write()
         raise SmartShopException("Could not parse config file:\n%s" % msg)
 
+    # Create application
     app = QApplication(sys.argv)
 
     # TODO Start by coding in the concept GUI to start out
@@ -48,11 +51,13 @@ def main():
     else:
         form.show()
 
+    # Execute application and retrieve return value when done
     ret = app.exec()
 
     # Save config file. It is possible for changes to be made using settings menu in GUI
     config.write()
 
+    # Exit python with return value from application execution
     sys.exit(ret)
 
 if __name__ == '__main__':

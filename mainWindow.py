@@ -13,11 +13,11 @@ class MainWindow(QMainWindow, mainWindow_ui.Ui_MainWindow):
 
         self.config = config
 
-        # Remove title bar to
+        # Remove title bar
         self.setWindowFlags(Qt.FramelessWindowHint)
 
         # Sets position to 0,0 on screen and sets window to fixed size
-        self.setGeometry(QRect(0, 0, 800, 480))
+        self.setGeometry(constants.windowGeometry)
 
         # Create shortcut for escape key that calls close()
         self.closeShortcut = QShortcut(Qt.Key_Escape, self)
@@ -35,11 +35,9 @@ class MainWindow(QMainWindow, mainWindow_ui.Ui_MainWindow):
         self.secondaryScanner.barcodeReceived.connect(self.secondaryScanner_barcodeReceived)
 
         # Setup timer to regularly poll for new barcodes from scanners
-        # TODO Consider having a constants file where I can set the interval for the scannerPoll timer. This doesnt need
-        # to be a setting however
         self.scannerPoll = QTimer()
         self.scannerPoll.timeout.connect(self.scannerPoll_ticked)
-        self.scannerPoll.start(5)
+        self.scannerPoll.start(constants.scannerPollInterval)
 
     @pyqtSlot()
     def on_pushButton_clicked(self):
