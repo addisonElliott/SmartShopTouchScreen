@@ -23,8 +23,28 @@ class BarcodeManager:
 
         return data
 
-    def UpdateItemInDataBase(self, barcode):
-        query = ""
-
     def AddItemToDatabase(self, barcode):
         data = self.GetJsonFrom3rdParty(barcode)
+        if data["status"]["code"] == "200":
+            item = self.ParseJsonObject(data)
+            id = self.dbManager.AddItemToInventory(item)
+            self.dbManager.AddUPCToCachedUPCs(barcode, id, item["qty"])
+        else:
+            item = {}
+            item["name"] = "Unknown Item"
+            item["qty"] = 1
+            item["avgQty"] = 1
+            id = self.dbManager.AddItemToInventory(item)
+            self.dbManager.AddUPCToCachedUPCs(barcode, id, item["qty"])
+
+
+    def ParseJsonObject(self, data):
+        item = {}
+        item["name"] = data["product"]["attributes"]["product"]
+        item["qty"] = 1
+        item["avgQty"] = 1
+
+        return item
+
+    def UpdateItemInDataBase(self, barcode):
+        query = ""
