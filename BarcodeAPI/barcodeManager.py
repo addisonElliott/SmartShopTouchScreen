@@ -2,22 +2,18 @@ import urllib.request  # For internet operations
 import json  # To internet JSON data format
 from .databaseManager import DatabaseManager
 
-dbManager = DatabaseManager()
-
 
 class BarcodeManager:
-    #def AddItemToInventory(barcode):
-        #if IsCached(barcode):
-            #
-        #else:
-            # add to list of items to grab from database
+    def __init__(self):
+        self.dbManager = DatabaseManager()
 
-    def IsCached(self, barcode):
-        cachedBarcodes = dbManager.GetListOfCachedUPCs()
-        if barcode in (item[0] for item in cachedBarcodes):
-            return True
+    def AddItemToInventory(self, barcode):
+        cachedItem = self.dbManager.GetCachedUPCItem()
 
-        return False
+        if cachedItem is not None:
+            self.UpdateItemInDataBase(cachedItem)
+        else:
+            self.AddItemToDatabase(barcode)
 
     def GetJsonFrom3rdParty(self, barcode):
         api = "http://eandata.com/feed/?v=3&keycode=C9906FA4582B60E9&mode=json&find=" + barcode
@@ -27,4 +23,8 @@ class BarcodeManager:
 
         return data
 
-    # def UpdateItemInDataBase(self, barcode):
+    def UpdateItemInDataBase(self, barcode):
+        query = ""
+
+    def AddItemToDatabase(self, barcode):
+        data = self.GetJsonFrom3rdParty(barcode)
