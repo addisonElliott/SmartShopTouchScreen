@@ -5,6 +5,7 @@ from configobj import ConfigObj
 from validate import Validator
 from exception import *
 from configobj import *
+import qdarkstyle
 
 def main():
     # Load config spec, config file, and validate the config file with config spec
@@ -40,6 +41,7 @@ def main():
     # Create application
     app = QApplication(sys.argv)
 
+    app.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())
     # TODO Start by coding in the concept GUI to start out
     # TODO Implement the buttons in the concept GUI
 
