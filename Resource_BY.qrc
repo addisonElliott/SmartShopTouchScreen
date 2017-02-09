@@ -1,5 +1,11 @@
 <RCC>
   <qresource prefix="Icons">
-    <file>Icons/GreenPlus.jpg</file>
+    <file>Icons/SSLogo_No_Background.png</file>
+    <file>Icons/BlueSettingsIconSOLID_Finished.png</file>
+    <file>Icons/BlueSettingsIcon_Finished.png</file>
+    <file>Icons/BlueBackIcon_Finished.png</file>
+    <file>Icons/RedMinusIcon_Finished.png</file>
+    <file>Icons/BlueHistoryIcon_Finished.png</file>
+    <file>Icons/GreenPlusIcon_Finished.png</file>
   </qresource>
 </RCC>
