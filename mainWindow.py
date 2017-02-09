@@ -40,7 +40,11 @@ class MainWindow(QMainWindow, mainWindow_ui.Ui_MainWindow):
         self.scannerPoll.start(constants.scannerPollInterval)
 
     @pyqtSlot()
-    def on_pushButton_clicked(self):
+    def on_purchaseHistoryBtn_clicked(self):
+        self.close()
+
+    @pyqtSlot()
+    def on_settingsBtn_clicked(self):
         self.close()
 
     @pyqtSlot()

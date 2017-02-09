@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>509</height>
+    <height>601</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -22,7 +22,7 @@
   <property name="font">
    <font>
     <family>Cronus Round</family>
-    <pointsize>24</pointsize>
+    <pointsize>12</pointsize>
    </font>
   </property>
   <property name="contextMenuPolicy">
@@ -48,6 +48,21 @@
     </sizepolicy>
    </property>
    <layout class="QGridLayout" name="gridLayout">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <property name="spacing">
+     <number>0</number>
+    </property>
     <item row="1" column="0">
      <layout class="QGridLayout" name="gridLayout_2">
       <property name="leftMargin">
@@ -82,6 +97,19 @@
         </item>
         <item>
          <widget class="QLabel" name="label">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>24</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
           <property name="text">
            <string>Main Menu</string>
           </property>
@@ -106,17 +134,20 @@
     </item>
     <item row="2" column="0">
      <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,3,3">
+      <property name="spacing">
+       <number>7</number>
+      </property>
       <property name="leftMargin">
-       <number>20</number>
+       <number>10</number>
       </property>
       <property name="topMargin">
-       <number>20</number>
+       <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>20</number>
+       <number>10</number>
       </property>
       <property name="bottomMargin">
-       <number>20</number>
+       <number>0</number>
       </property>
       <item>
        <layout class="QVBoxLayout" name="verticalLayout">
@@ -140,7 +171,7 @@
          </spacer>
         </item>
         <item>
-         <widget class="QPushButton" name="InOutPB">
+         <widget class="QPushButton" name="inOutBtn">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -187,7 +218,7 @@ border: 0;</string>
          </spacer>
         </item>
         <item>
-         <widget class="QPushButton" name="InOutPB_2">
+         <widget class="QPushButton" name="purchaseHistoryBtn">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -233,7 +264,7 @@ border: 0;</string>
          </spacer>
         </item>
         <item>
-         <widget class="QPushButton" name="InOutPB_4">
+         <widget class="QPushButton" name="settingsBtn">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -295,6 +326,11 @@ border: 0;</string>
       </item>
       <item>
        <widget class="QGroupBox" name="groupBox">
+        <property name="font">
+         <font>
+          <pointsize>16</pointsize>
+         </font>
+        </property>
         <property name="title">
          <string>Shopping List</string>
         </property>
@@ -305,11 +341,23 @@ border: 0;</string>
       </item>
       <item>
        <widget class="QGroupBox" name="groupBox_2">
+        <property name="font">
+         <font>
+          <pointsize>16</pointsize>
+          <kerning>true</kerning>
+         </font>
+        </property>
         <property name="title">
          <string>Favorite Items</string>
         </property>
         <property name="alignment">
-         <set>Qt::AlignCenter</set>
+         <set>Qt::AlignHCenter|Qt::AlignTop</set>
+        </property>
+        <property name="flat">
+         <bool>false</bool>
+        </property>
+        <property name="checkable">
+         <bool>false</bool>
         </property>
        </widget>
       </item>
@@ -327,7 +375,7 @@ border: 0;</string>
        <number>58</number>
       </property>
       <item>
-       <widget class="QPushButton" name="InOutPB_3">
+       <widget class="QPushButton" name="backBtn">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -373,7 +421,7 @@ border: 0;</string>
        </spacer>
       </item>
       <item>
-       <widget class="QPushButton" name="InOutPB_5">
+       <widget class="QPushButton" name="homeBtn">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Maximum">
           <horstretch>0</horstretch>
@@ -430,6 +478,7 @@ border: 0;</string>
  </widget>
  <resources>
   <include location="Resource_BY.qrc"/>
+  <include location="QDarkStylesheet/style.qrc"/>
  </resources>
  <connections/>
 </ui>
