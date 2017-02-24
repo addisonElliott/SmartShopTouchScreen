@@ -11,9 +11,13 @@ class BarcodeManager:
         cachedItem = self.dbManager.GetCachedUPCItem()
 
         if cachedItem is not None:
-            self.UpdateItemInDataBase(cachedItem)
+            self.dbManager.UpdateItemInDatabase(cachedItem)
         else:
             self.AddItemToDatabase(barcode)
+
+    def CheckOutItemInInventory(self, barcode):
+        item = self.dbManager.GetCachedUPCItem(barcode)
+        self.CheckOutItemInInventory(item)
 
     def GetJsonFrom3rdParty(self, barcode):
         api = "http://eandata.com/feed/?v=3&keycode=C9906FA4582B60E9&mode=json&find=" + barcode
@@ -46,5 +50,5 @@ class BarcodeManager:
 
         return item
 
-    def UpdateItemInDataBase(self, barcode):
-        query = ""
+    def RemoveFromInventory(self, barcode, qty=1):
+        self.dbManager.DecrementQuantityForItem(barcode, qty)
