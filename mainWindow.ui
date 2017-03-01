@@ -77,10 +77,13 @@
          <number>6</number>
         </property>
         <property name="leftMargin">
-         <number>0</number>
+         <number>135</number>
         </property>
         <property name="topMargin">
          <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>10</number>
         </property>
         <item>
          <spacer name="horizontalSpacer">
@@ -105,6 +108,7 @@
           </property>
           <property name="font">
            <font>
+            <family>Cronus Round</family>
             <pointsize>24</pointsize>
             <weight>75</weight>
             <bold>true</bold>
@@ -201,6 +205,52 @@ border: 0;</string>
           </property>
           <property name="checked">
            <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_5">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="purchaseHistoryBtn_2">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: #31363B;
+border: 0;</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="Resource_BY.qrc">
+            <normaloff>:/Icons/Icons/FingerIcon_Finished.png</normaloff>:/Icons/Icons/FingerIcon_Finished.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>64</width>
+            <height>64</height>
+           </size>
+          </property>
+          <property name="checkable">
+           <bool>false</bool>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
           </property>
          </widget>
         </item>
@@ -328,7 +378,10 @@ border: 0;</string>
        <widget class="QGroupBox" name="groupBox">
         <property name="font">
          <font>
+          <family>Cronus Round</family>
           <pointsize>16</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
          </font>
         </property>
         <property name="title">
@@ -337,13 +390,55 @@ border: 0;</string>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
         </property>
+        <widget class="QPushButton" name="backBtn_2">
+         <property name="geometry">
+          <rect>
+           <x>270</x>
+           <y>410</y>
+           <width>52</width>
+           <height>48</height>
+          </rect>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: #31363B;
+border: 0;</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="Resource_BY.qrc">
+           <normaloff>:/Icons/Icons/EditIcon_Finished.png</normaloff>:/Icons/Icons/EditIcon_Finished.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>48</width>
+           <height>48</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>false</bool>
+         </property>
+         <property name="checked">
+          <bool>false</bool>
+         </property>
+        </widget>
        </widget>
       </item>
       <item>
        <widget class="QGroupBox" name="groupBox_2">
         <property name="font">
          <font>
+          <family>Cronus Round</family>
           <pointsize>16</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
           <kerning>true</kerning>
          </font>
         </property>
@@ -368,11 +463,14 @@ border: 0;</string>
       <property name="sizeConstraint">
        <enum>QLayout::SetMinimumSize</enum>
       </property>
+      <property name="leftMargin">
+       <number>10</number>
+      </property>
       <property name="topMargin">
        <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>58</number>
+       <number>10</number>
       </property>
       <item>
        <widget class="QPushButton" name="backBtn">
@@ -415,6 +513,22 @@ border: 0;</string>
         <property name="sizeHint" stdset="0">
          <size>
           <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_6">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>60</width>
           <height>20</height>
          </size>
         </property>
