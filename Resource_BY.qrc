@@ -1,5 +1,8 @@
 <RCC>
   <qresource prefix="Icons">
+    <file>Icons/BlueHistoryIconRotated_Finished.png</file>
+    <file>Icons/HomeIconRotated_Finished.png</file>
+    <file>Icons/HomeIcon_Finished.png</file>
     <file>Icons/BinocularsIcon_Finished.png</file>
     <file>Icons/EditIcon_Finished.png</file>
     <file>Icons/EyeIcon_Finished.png</file>
