@@ -1,0 +1,112 @@
+# -*- coding: utf-8 -*-
+
+# Form implementation generated from reading ui file 'ManualAddDialog.ui'
+#
+# Created by: PyQt5 UI code generator 5.7.1
+#
+# WARNING! All changes made in this file will be lost!
+
+from PyQt5 import QtCore, QtGui, QtWidgets
+
+class Ui_ManualAddDialog(object):
+    def setupUi(self, ManualAddDialog):
+        ManualAddDialog.setObjectName("ManualAddDialog")
+        ManualAddDialog.resize(487, 379)
+        font = QtGui.QFont()
+        font.setFamily("Cronus Round")
+        ManualAddDialog.setFont(font)
+        self.gridLayout = QtWidgets.QGridLayout(ManualAddDialog)
+        self.gridLayout.setObjectName("gridLayout")
+        self.verticalLayout = QtWidgets.QVBoxLayout()
+        self.verticalLayout.setSizeConstraint(QtWidgets.QLayout.SetMinimumSize)
+        self.verticalLayout.setContentsMargins(-1, -1, -1, 0)
+        self.verticalLayout.setObjectName("verticalLayout")
+        self.label_6 = QtWidgets.QLabel(ManualAddDialog)
+        self.label_6.setObjectName("label_6")
+        self.verticalLayout.addWidget(self.label_6)
+        self.horizontalLayout = QtWidgets.QHBoxLayout()
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.lineEdit_2 = QtWidgets.QLineEdit(ManualAddDialog)
+        self.lineEdit_2.setObjectName("lineEdit_2")
+        self.horizontalLayout.addWidget(self.lineEdit_2)
+        self.UPCSearch = QtWidgets.QPushButton(ManualAddDialog)
+        self.UPCSearch.setObjectName("UPCSearch")
+        self.horizontalLayout.addWidget(self.UPCSearch)
+        self.verticalLayout.addLayout(self.horizontalLayout)
+        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout.addItem(spacerItem)
+        self.label_2 = QtWidgets.QLabel(ManualAddDialog)
+        self.label_2.setObjectName("label_2")
+        self.verticalLayout.addWidget(self.label_2)
+        self.comboBox = QtWidgets.QComboBox(ManualAddDialog)
+        self.comboBox.setObjectName("comboBox")
+        self.verticalLayout.addWidget(self.comboBox)
+        self.label_3 = QtWidgets.QLabel(ManualAddDialog)
+        self.label_3.setObjectName("label_3")
+        self.verticalLayout.addWidget(self.label_3)
+        self.lineEdit = QtWidgets.QLineEdit(ManualAddDialog)
+        self.lineEdit.setObjectName("lineEdit")
+        self.verticalLayout.addWidget(self.lineEdit)
+        self.label_4 = QtWidgets.QLabel(ManualAddDialog)
+        self.label_4.setObjectName("label_4")
+        self.verticalLayout.addWidget(self.label_4)
+        self.lineEdit_3 = QtWidgets.QLineEdit(ManualAddDialog)
+        self.lineEdit_3.setObjectName("lineEdit_3")
+        self.verticalLayout.addWidget(self.lineEdit_3)
+        self.label_5 = QtWidgets.QLabel(ManualAddDialog)
+        self.label_5.setObjectName("label_5")
+        self.verticalLayout.addWidget(self.label_5)
+        self.lineEdit_4 = QtWidgets.QLineEdit(ManualAddDialog)
+        self.lineEdit_4.setObjectName("lineEdit_4")
+        self.verticalLayout.addWidget(self.lineEdit_4)
+        self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_3.setContentsMargins(-1, 0, -1, -1)
+        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
+        self.verticalLayout.addLayout(self.horizontalLayout_3)
+        self.gridLayout.addLayout(self.verticalLayout, 0, 0, 1, 1)
+        self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_2.setContentsMargins(-1, 50, -1, -1)
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_2.addItem(spacerItem1)
+        self.pushButton = QtWidgets.QPushButton(ManualAddDialog)
+        self.pushButton.setMinimumSize(QtCore.QSize(45, 45))
+        self.pushButton.setMaximumSize(QtCore.QSize(45, 45))
+        self.pushButton.setStyleSheet("background-color: #31363B;\n"
+"border: 0;")
+        self.pushButton.setText("")
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(":/Icons/Icons/GreenCheckIcon_Finished.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pushButton.setIcon(icon)
+        self.pushButton.setIconSize(QtCore.QSize(40, 40))
+        self.pushButton.setObjectName("pushButton")
+        self.horizontalLayout_2.addWidget(self.pushButton)
+        self.pushButton_2 = QtWidgets.QPushButton(ManualAddDialog)
+        self.pushButton_2.setMinimumSize(QtCore.QSize(45, 45))
+        self.pushButton_2.setMaximumSize(QtCore.QSize(45, 45))
+        self.pushButton_2.setStyleSheet("background-color: #31363B;\n"
+"border: 0;")
+        self.pushButton_2.setText("")
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap(":/Icons/Icons/RedCancelIcon_Finished.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pushButton_2.setIcon(icon1)
+        self.pushButton_2.setIconSize(QtCore.QSize(40, 40))
+        self.pushButton_2.setObjectName("pushButton_2")
+        self.horizontalLayout_2.addWidget(self.pushButton_2)
+        self.gridLayout.addLayout(self.horizontalLayout_2, 1, 0, 1, 1)
+
+        self.retranslateUi(ManualAddDialog)
+        QtCore.QMetaObject.connectSlotsByName(ManualAddDialog)
+
+    def retranslateUi(self, ManualAddDialog):
+        _translate = QtCore.QCoreApplication.translate
+        ManualAddDialog.setWindowTitle(_translate("ManualAddDialog", "Dialog"))
+        self.label_6.setText(_translate("ManualAddDialog", "UPC Search"))
+        self.UPCSearch.setText(_translate("ManualAddDialog", "Search"))
+        self.label_2.setText(_translate("ManualAddDialog", "Product Category"))
+        self.label_3.setText(_translate("ManualAddDialog", "Item Name"))
+        self.label_4.setText(_translate("ManualAddDialog", "Item Description"))
+        self.label_5.setText(_translate("ManualAddDialog", "Quantity"))
+
+import Resource_BY_rc
+import style_rc

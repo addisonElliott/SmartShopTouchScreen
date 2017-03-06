@@ -1,6 +1,7 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget
 from mainWindow import *
+from ManualAddDialog import *
 from configobj import ConfigObj
 from validate import Validator
 from exception import *

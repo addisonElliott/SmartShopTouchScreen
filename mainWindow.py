@@ -1,4 +1,5 @@
 import mainWindow_ui
+from ManualAddDialog import *
 from scanner import *
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow
 from PyQt5.QtCore import *
@@ -44,7 +45,13 @@ class MainWindow(QMainWindow, mainWindow_ui.Ui_MainWindow):
         self.close()
 
     @pyqtSlot()
-    def on_settingsBtn_clicked(self):
+    def on_ManualAddButton_clicked(self):
+        ManualAdd = ManualAddDialog(self.config)
+        ManualAdd.exec()
+
+
+    @pyqtSlot()
+    def on_SettingsButton_clicked(self):
         self.close()
 
     @pyqtSlot()
