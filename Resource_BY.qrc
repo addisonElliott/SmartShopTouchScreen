@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="Icons">
+    <file>Icons/GreenCheckIcon_Finished.png</file>
+    <file>Icons/RedCancelIcon_Finished.png</file>
     <file>Icons/BlueHistoryIconRotated_Finished.png</file>
     <file>Icons/HomeIconRotated_Finished.png</file>
     <file>Icons/HomeIcon_Finished.png</file>
