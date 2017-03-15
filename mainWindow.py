@@ -1,5 +1,6 @@
 import mainWindow_ui
 from ManualAddDialog import *
+from favoriteWindow import *
 from scanner import *
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow
 from PyQt5.QtCore import *
@@ -52,7 +53,9 @@ class MainWindow(QMainWindow, mainWindow_ui.Ui_MainWindow):
 
     @pyqtSlot()
     def on_SettingsButton_clicked(self):
-        self.close()
+        self.fav = FavoriteWindow(self.config)
+        self.fav.show()
+        #self.close()
 
     @pyqtSlot()
     def scannerPoll_ticked(self):
