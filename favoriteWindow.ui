@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
+    <width>855</width>
     <height>480</height>
    </rect>
   </property>
@@ -375,6 +375,11 @@ border: 0;</string>
         <item row="1" column="2">
          <property name="text">
           <string>Pasta</string>
+         </property>
+        </item>
+        <item row="2" column="0">
+         <property name="text">
+          <string>AKSjd:AJDAJD:JAD:LJA:DJA:DJA:JD:ASKJD:KAJS</string>
          </property>
         </item>
        </widget>
