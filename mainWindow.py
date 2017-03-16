@@ -20,6 +20,8 @@ class MainWindow(QMainWindow, mainWindow_ui.Ui_MainWindow):
         # Sets position to 0,0 on screen and sets window to fixed size
         self.setGeometry(constants.windowGeometry)
 
+        # Set size of the recommended items columns
+
         # Create shortcut for escape key that calls close()
         self.closeShortcut = QShortcut(Qt.Key_Escape, self)
         self.closeShortcut.activated.connect(self.close)
