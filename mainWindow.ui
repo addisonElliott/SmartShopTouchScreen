@@ -10,11 +10,11 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>626</height>
+    <height>480</height>
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+   <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
@@ -60,7 +60,7 @@
      <number>0</number>
     </property>
     <property name="bottomMargin">
-     <number>0</number>
+     <number>6</number>
     </property>
     <property name="spacing">
      <number>0</number>
@@ -185,26 +185,41 @@ border: 0;</string>
            <number>0</number>
           </property>
           <item>
-           <widget class="QLabel" name="label">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
+           <widget class="QPushButton" name="ViewInventoryButton">
+            <property name="minimumSize">
+             <size>
+              <width>250</width>
+              <height>45</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>72</width>
+              <height>72</height>
+             </size>
             </property>
             <property name="font">
              <font>
               <family>Cronus Round</family>
               <pointsize>22</pointsize>
-              <weight>50</weight>
-              <bold>false</bold>
              </font>
             </property>
-            <property name="frameShape">
-             <enum>QFrame::NoFrame</enum>
+            <property name="styleSheet">
+             <string notr="true">background-color: #31363B;
+border: 0;</string>
             </property>
             <property name="text">
-             <string>Manage Inventory</string>
+             <string> Manage Inventory</string>
+            </property>
+            <property name="icon">
+             <iconset resource="Resource_BY.qrc">
+              <normaloff>:/Icons/Icons/BinocularsIcon_Finished.png</normaloff>:/Icons/Icons/BinocularsIcon_Finished.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
             </property>
            </widget>
           </item>
@@ -224,14 +239,14 @@ border: 0;</string>
              <widget class="QPushButton" name="PlusMinusButton">
               <property name="minimumSize">
                <size>
-                <width>72</width>
-                <height>72</height>
+                <width>64</width>
+                <height>64</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>72</width>
-                <height>72</height>
+                <width>64</width>
+                <height>64</height>
                </size>
               </property>
               <property name="styleSheet">
@@ -248,8 +263,8 @@ border: 0;</string>
               </property>
               <property name="iconSize">
                <size>
-                <width>66</width>
-                <height>66</height>
+                <width>58</width>
+                <height>58</height>
                </size>
               </property>
               <property name="checkable">
@@ -257,13 +272,6 @@ border: 0;</string>
               </property>
              </widget>
             </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_7">
-            <property name="topMargin">
-             <number>0</number>
-            </property>
             <item>
              <widget class="QPushButton" name="ManualAddButton">
               <property name="sizePolicy">
@@ -274,14 +282,14 @@ border: 0;</string>
               </property>
               <property name="minimumSize">
                <size>
-                <width>72</width>
-                <height>72</height>
+                <width>64</width>
+                <height>64</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>72</width>
-                <height>72</height>
+                <width>64</width>
+                <height>64</height>
                </size>
               </property>
               <property name="styleSheet">
@@ -297,8 +305,8 @@ border: 0;</string>
               </property>
               <property name="iconSize">
                <size>
-                <width>66</width>
-                <height>66</height>
+                <width>58</width>
+                <height>58</height>
                </size>
               </property>
              </widget>
@@ -306,43 +314,17 @@ border: 0;</string>
            </layout>
           </item>
           <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_7">
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+           </layout>
+          </item>
+          <item>
            <layout class="QHBoxLayout" name="horizontalLayout_8">
             <property name="topMargin">
              <number>0</number>
             </property>
-            <item>
-             <widget class="QPushButton" name="ViewInventoryButton">
-              <property name="minimumSize">
-               <size>
-                <width>72</width>
-                <height>72</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>72</width>
-                <height>72</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: #31363B;
-border: 0;</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset resource="Resource_BY.qrc">
-                <normaloff>:/Icons/Icons/BinocularsIcon_Finished.png</normaloff>:/Icons/Icons/BinocularsIcon_Finished.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>66</width>
-                <height>66</height>
-               </size>
-              </property>
-             </widget>
-            </item>
            </layout>
           </item>
           <item>
@@ -366,30 +348,112 @@ border: 0;</string>
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="label_5">
+           <widget class="QPushButton" name="FavoritesViewButton">
+            <property name="minimumSize">
+             <size>
+              <width>250</width>
+              <height>45</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>45</width>
+              <height>45</height>
+             </size>
+            </property>
             <property name="font">
              <font>
-              <pointsize>14</pointsize>
-              <weight>50</weight>
-              <bold>false</bold>
+              <family>Cronus Round</family>
+              <pointsize>22</pointsize>
              </font>
             </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: #31363B;
+border: 0;</string>
+            </property>
             <property name="text">
-             <string>Favorites</string>
+             <string> Favorite Items</string>
+            </property>
+            <property name="icon">
+             <iconset resource="Resource_BY.qrc">
+              <normaloff>:/Icons/Icons/BinocularsIcon_Finished.png</normaloff>:/Icons/Icons/BinocularsIcon_Finished.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QComboBox" name="FavoritesComboBox">
-            <property name="currentText">
-             <string/>
+           <widget class="QListWidget" name="listWidget">
+            <property name="font">
+             <font>
+              <pointsize>19</pointsize>
+             </font>
             </property>
+            <item>
+             <property name="text">
+              <string>New Item</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>New Item</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>New Item</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>New Item</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>New Item</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>New Item</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>New Item</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>New Item</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>New Item</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>New Item</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>New Item</string>
+             </property>
+            </item>
            </widget>
           </item>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_3">
             <property name="topMargin">
-             <number>20</number>
+             <number>0</number>
             </property>
             <item>
              <widget class="QPushButton" name="FavoriteAddButton">
@@ -457,39 +521,6 @@ border: 0;</string>
               </property>
              </widget>
             </item>
-            <item>
-             <widget class="QPushButton" name="FavoritesViewButton">
-              <property name="minimumSize">
-               <size>
-                <width>45</width>
-                <height>45</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>45</width>
-                <height>45</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: #31363B;
-border: 0;</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset resource="Resource_BY.qrc">
-                <normaloff>:/Icons/Icons/BinocularsIcon_Finished.png</normaloff>:/Icons/Icons/BinocularsIcon_Finished.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>40</width>
-                <height>40</height>
-               </size>
-              </property>
-             </widget>
-            </item>
            </layout>
           </item>
          </layout>
@@ -544,6 +575,9 @@ border: 0;</string>
       </item>
       <item>
        <layout class="QVBoxLayout" name="verticalLayout_3">
+        <property name="sizeConstraint">
+         <enum>QLayout::SetMaximumSize</enum>
+        </property>
         <property name="rightMargin">
          <number>0</number>
         </property>
@@ -569,44 +603,35 @@ border: 0;</string>
            </spacer>
           </item>
           <item>
-           <widget class="QLabel" name="label_2">
-            <property name="font">
-             <font>
-              <family>Cronus Round</family>
-              <pointsize>22</pointsize>
-              <weight>50</weight>
-              <bold>false</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>Shopping List</string>
-            </property>
-           </widget>
-          </item>
-          <item>
            <widget class="QPushButton" name="EditShopingListButton">
             <property name="minimumSize">
              <size>
-              <width>36</width>
-              <height>36</height>
+              <width>0</width>
+              <height>45</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>36</width>
+              <width>16777215</width>
               <height>16777215</height>
              </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Cronus Round</family>
+              <pointsize>22</pointsize>
+             </font>
             </property>
             <property name="styleSheet">
              <string notr="true">background-color: #31363B;
 border: 0;</string>
             </property>
             <property name="text">
-             <string/>
+             <string>Shopping List</string>
             </property>
             <property name="icon">
              <iconset resource="Resource_BY.qrc">
-              <normaloff>:/Icons/Icons/EditIcon_Finished.png</normaloff>:/Icons/Icons/EditIcon_Finished.png</iconset>
+              <normaloff>:/Icons/Icons/BinocularsIcon_Finished.png</normaloff>:/Icons/Icons/BinocularsIcon_Finished.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -635,7 +660,8 @@ border: 0;</string>
          <widget class="QLabel" name="label_3">
           <property name="font">
            <font>
-            <pointsize>14</pointsize>
+            <family>Cronus Round</family>
+            <pointsize>16</pointsize>
             <weight>50</weight>
             <bold>false</bold>
            </font>
@@ -652,13 +678,93 @@ border: 0;</string>
             <pointsize>19</pointsize>
            </font>
           </property>
+          <property name="editTriggers">
+           <set>QAbstractItemView::NoEditTriggers</set>
+          </property>
+          <property name="selectionMode">
+           <enum>QAbstractItemView::MultiSelection</enum>
+          </property>
+          <property name="viewMode">
+           <enum>QListView::ListMode</enum>
+          </property>
+          <item>
+           <property name="text">
+            <string>Apples</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>New Item</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>New Item</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>New Item</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>New Item</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>New Item</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>New Item</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>New Item</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>New Item</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>New Item</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>New Item</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>New Item</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Bananas</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Onions</string>
+           </property>
+          </item>
          </widget>
         </item>
         <item>
          <widget class="QLabel" name="label_4">
           <property name="font">
            <font>
-            <pointsize>14</pointsize>
+            <family>Cronus Round</family>
+            <pointsize>16</pointsize>
             <weight>50</weight>
             <bold>false</bold>
            </font>
@@ -669,7 +775,56 @@ border: 0;</string>
          </widget>
         </item>
         <item>
-         <widget class="QListWidget" name="listWidget_3"/>
+         <widget class="QListWidget" name="listWidget_3">
+          <property name="font">
+           <font>
+            <pointsize>19</pointsize>
+           </font>
+          </property>
+          <property name="selectionMode">
+           <enum>QAbstractItemView::MultiSelection</enum>
+          </property>
+          <item>
+           <property name="text">
+            <string>New Item</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>New Item</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>New Item</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>New Item</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>New Item</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>New Item</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>New Item</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>New Item</string>
+           </property>
+          </item>
+         </widget>
         </item>
        </layout>
       </item>
@@ -808,11 +963,6 @@ border: 0;</string>
      </layout>
     </item>
    </layout>
-  </widget>
-  <widget class="QStatusBar" name="statusbar">
-   <property name="sizeGripEnabled">
-    <bool>false</bool>
-   </property>
   </widget>
  </widget>
  <resources>
