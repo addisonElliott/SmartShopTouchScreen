@@ -24,13 +24,16 @@ class FavoriteWindow(QMainWindow, favoriteWindow_ui.Ui_FavoriteWindow):
         self.closeShortcut = QShortcut(Qt.Key_Escape, self)
         self.closeShortcut.activated.connect(self.close)
 
-        # Make the buttons at bottom of the screen floating; this cannot be done in Qt Designer
-        # Remove the widget containing the floating buttons from the layout since Qt Designer does not allow this
-        # Then setGeometry on the widget and finally raise the widget so it has a higher z-order than rest of items
-        self.centralwidget.layout().removeWidget(self.floatingBtnWidget)
-        floatingBtnWidgetWidth = 48 * 2 + 40
-        floatingBtnWidgetHeight = 48 + 12
-        floatingBtnWidgetX = (self.width() - floatingBtnWidgetWidth) / 2
-        floatingBtnWidgetY = self.height() - floatingBtnWidgetHeight - 1
-        self.floatingBtnWidget.setGeometry(floatingBtnWidgetX, floatingBtnWidgetY, floatingBtnWidgetWidth, floatingBtnWidgetHeight)
-        self.floatingBtnWidget.raise_()
+        self.tableModel = QStandardItemModel(4, 5, self)
+
+        self.tableModel.setItem(0, 0, QStandardItem("Rawr"))
+        self.tableModel.setItem(0, 1, QStandardItem("Really Long String of Words"))
+        self.tableModel.setItem(0, 2, QStandardItem("Really Long"))
+        self.tableModel.setItem(0, 3, QStandardItem("POPTARTS STRAWBERRY"))
+        self.tableModel.setItem(1, 0, QStandardItem("Rawr"))
+        self.tableModel.setItem(1, 1, QStandardItem("OOOOOOOOOO OOOOOOOOOO"))
+        self.tableModel.setItem(1, 2, QStandardItem("OOOOOOOOOO OOOOOOOOO"))
+        self.tableModel.setItem(1, 3, QStandardItem("OOOOOOOOO OOOOOOOO"))
+        self.tableModel.setItem(1, 4, QStandardItem("OOOOOOOO OOOOOOO"))
+
+        self.tableView.setModel(self.tableModel)
