@@ -240,6 +240,11 @@ border: 0;</string>
            <string notr="true">QTableView::item:selected, QTableView::item:hover
 { 
 	background-color: #768289;
+}
+
+QTableView::item:focus
+{
+	border: 0px;
 }</string>
           </property>
           <property name="frameShape">

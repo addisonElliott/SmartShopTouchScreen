@@ -119,6 +119,11 @@ class Ui_FavoriteWindow(object):
         self.tableView.setStyleSheet("QTableView::item:selected, QTableView::item:hover\n"
 "{ \n"
 "    background-color: #768289;\n"
+"}\n"
+"\n"
+"QTableView::item:focus\n"
+"{\n"
+"    border: 0px;\n"
 "}")
         self.tableView.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.tableView.setFrameShadow(QtWidgets.QFrame.Plain)
