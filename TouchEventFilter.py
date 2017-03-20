@@ -9,7 +9,7 @@ class TouchEventFilter(QObject):
             mousePosition = event.pos()
             cursor = QtGui.QCursor()
 
-            print("[%s] Mouse moved: M[%i %i] C[%i %i]" % (datetime.now(), mousePosition.x(), mousePosition.y(), cursor.pos().x(), cursor.pos().y()))
+            #print("[%s] Mouse moved: M[%i %i] C[%i %i]" % (datetime.now(), mousePosition.x(), mousePosition.y(), cursor.pos().x(), cursor.pos().y()))
             return True
         elif event.type() == QEvent.MouseButtonPress:
             mousePosition = event.pos()
