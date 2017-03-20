@@ -2,6 +2,7 @@ import sys
 from PyQt5.QtWidgets import QApplication, QWidget
 from mainWindow import *
 from ManualAddDialog import *
+from TouchEventFilter import *
 from configobj import ConfigObj
 from validate import Validator
 from exception import *
@@ -42,6 +43,10 @@ def main():
     # Create application
     app = QApplication(sys.argv)
 
+    # Create a filter for touch screen events
+    touchFilter = TouchEventFilter()
+    app.installEventFilter(touchFilter)
+
     app.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())
     # TODO Start by coding in the concept GUI to start out
     # TODO Implement the buttons in the concept GUI
@@ -50,8 +55,10 @@ def main():
 
     # Will pass this argument in Raspberry Pi 3 to get fullscreen display
     if "-fullscreen" in sys.argv:
+        constants.fullscreen = True
         form.showFullScreen()
     else:
+        constants.fullscreen = False
         form.show()
 
     # Execute application and retrieve return value when done

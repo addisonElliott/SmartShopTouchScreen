@@ -14,3 +14,6 @@ windowGeometry = QRect(0, 0, 800, 480)
 
 # Interval for polling barcode scanners in milliseconds
 scannerPollInterval = 5
+
+# Whether the menu will be shown as full screen or not
+fullscreen = False

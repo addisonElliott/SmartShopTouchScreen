@@ -50,11 +50,13 @@ class MainWindow(QMainWindow, mainWindow_ui.Ui_MainWindow):
         ManualAdd = ManualAddDialog(self.config)
         ManualAdd.exec()
 
-
     @pyqtSlot()
     def on_SettingsButton_clicked(self):
         self.fav = FavoriteWindow(self.config)
-        self.fav.show()
+        if constants.fullscreen:
+            self.fav.showFullScreen()
+        else:
+            self.fav.show()
         #self.close()
 
     @pyqtSlot()
