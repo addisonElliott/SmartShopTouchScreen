@@ -66,7 +66,6 @@ def main():
     # Load the stylesheet content from resources
     app.setStyleSheet(load_stylesheet())
 
-
     # TODO Start by coding in the concept GUI to start out
     # TODO Implement the buttons in the concept GUI
 

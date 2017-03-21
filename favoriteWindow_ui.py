@@ -222,7 +222,7 @@ class Ui_FavoriteWindow(object):
         FavoriteWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(FavoriteWindow)
-        self.tabWidget.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(FavoriteWindow)
 
     def retranslateUi(self, FavoriteWindow):

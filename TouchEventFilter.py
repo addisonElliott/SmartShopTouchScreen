@@ -38,5 +38,7 @@ class TouchEventFilter(QObject):
             print("[%s] Drag Leave" % (datetime.now()))
         elif event.type() == QEvent.DragMove:
             print("[%s] Drag Move" % (datetime.now()))
+        elif event.type() == QEvent.Wheel:
+            print("[%s] Wheel (%i, %i)" % (datetime.now(), event.angleDelta().x() / 120, event.angleDelta().y() / 120))
 
         return False
