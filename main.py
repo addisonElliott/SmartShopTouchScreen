@@ -1,5 +1,6 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget
+from PyQt5.QtCore import QFile, QTextStream
 from mainWindow import *
 from ManualAddDialog import *
 from TouchEventFilter import *
@@ -7,7 +8,22 @@ from configobj import ConfigObj
 from validate import Validator
 from exception import *
 from configobj import *
-import qdarkstyle
+import logging
+
+logger = logging.getLogger(__name__)
+
+def load_stylesheet():
+    import style_rc
+
+    f = QFile(":qdarkstyle/style.qss")
+    if not f.exists():
+        logger.error("Unable to load stylesheet, file not found in resources")
+        return ""
+    else:
+        f.open(QFile.ReadOnly | QFile.Text)
+        ts = QTextStream(f)
+        stylesheet = ts.readAll()
+        return stylesheet
 
 def main():
     # Load config spec, config file, and validate the config file with config spec
@@ -47,7 +63,10 @@ def main():
     touchFilter = TouchEventFilter()
     app.installEventFilter(touchFilter)
 
-    app.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())
+    # Load the stylesheet content from resources
+    app.setStyleSheet(load_stylesheet())
+
+
     # TODO Start by coding in the concept GUI to start out
     # TODO Implement the buttons in the concept GUI
 

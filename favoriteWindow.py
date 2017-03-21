@@ -37,3 +37,5 @@ class FavoriteWindow(QMainWindow, favoriteWindow_ui.Ui_FavoriteWindow):
         self.tableModel.setItem(1, 4, QStandardItem("OOOOOOOO OOOOOOO"))
 
         self.tableView.setModel(self.tableModel)
+
+        self.tableView.setMouseTracking(False)

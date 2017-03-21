@@ -199,8 +199,11 @@ border: 0;</string>
         <kerning>true</kerning>
        </font>
       </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tabWidgetPage1">
        <attribute name="title">
@@ -237,15 +240,7 @@ border: 0;</string>
            </font>
           </property>
           <property name="styleSheet">
-           <string notr="true">QTableView::item:selected, QTableView::item:hover
-{ 
-	background-color: #768289;
-}
-
-QTableView::item:focus
-{
-	border: 0px;
-}</string>
+           <string notr="true"/>
           </property>
           <property name="frameShape">
            <enum>QFrame::NoFrame</enum>

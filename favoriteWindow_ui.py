@@ -99,6 +99,7 @@ class Ui_FavoriteWindow(object):
         font.setWeight(50)
         font.setKerning(True)
         self.tabWidget.setFont(font)
+        self.tabWidget.setStyleSheet("")
         self.tabWidget.setObjectName("tabWidget")
         self.tabWidgetPage1 = QtWidgets.QWidget()
         self.tabWidgetPage1.setObjectName("tabWidgetPage1")
@@ -116,15 +117,7 @@ class Ui_FavoriteWindow(object):
         font.setFamily("Cronus Round")
         font.setPointSize(15)
         self.tableView.setFont(font)
-        self.tableView.setStyleSheet("QTableView::item:selected, QTableView::item:hover\n"
-"{ \n"
-"    background-color: #768289;\n"
-"}\n"
-"\n"
-"QTableView::item:focus\n"
-"{\n"
-"    border: 0px;\n"
-"}")
+        self.tableView.setStyleSheet("")
         self.tableView.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.tableView.setFrameShadow(QtWidgets.QFrame.Plain)
         self.tableView.setLineWidth(0)
@@ -229,7 +222,7 @@ class Ui_FavoriteWindow(object):
         FavoriteWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(FavoriteWindow)
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(FavoriteWindow)
 
     def retranslateUi(self, FavoriteWindow):
