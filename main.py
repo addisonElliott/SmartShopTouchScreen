@@ -1,19 +1,13 @@
-import sys
-from PyQt5.QtWidgets import QApplication, QWidget
-from PyQt5.QtCore import QFile, QTextStream
-from mainWindow import *
-from ManualAddDialog import *
-from configobj import ConfigObj
-from validate import Validator
-from exception import *
-from configobj import *
 import logging
+
+from configobj import *
+from validate import Validator
+
+from mainWindow import *
 
 logger = logging.getLogger(__name__)
 
 def load_stylesheet():
-    import style_rc
-
     f = QFile(":qdarkstyle/style.qss")
     if not f.exists():
         logger.error("Unable to load stylesheet, file not found in resources")

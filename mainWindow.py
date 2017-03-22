@@ -1,12 +1,11 @@
+from PyQt5.QtCore import *
+from PyQt5.QtWidgets import *
+
 import mainWindow_ui
-from ManualAddDialog import *
+from Util import constants
 from favoriteWindow import *
 from scanner import *
-from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
-import constants
+
 
 class MainWindow(QMainWindow, mainWindow_ui.Ui_MainWindow):
     def __init__(self, config, parent=None):

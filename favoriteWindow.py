@@ -1,11 +1,10 @@
-import favoriteWindow_ui
-from ManualAddDialog import *
-from scanner import *
-from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-import constants
+
+import favoriteWindow_ui
+from Util import constants, scroller
+
 
 class FavoriteWindow(QMainWindow, favoriteWindow_ui.Ui_FavoriteWindow):
     def __init__(self, config, parent=None):
@@ -38,33 +37,4 @@ class FavoriteWindow(QMainWindow, favoriteWindow_ui.Ui_FavoriteWindow):
 
         self.tableView.setModel(self.tableModel)
 
-        scroller = QScroller.scroller(self.tableView)
-        scroller.grabGesture(self.tableView, QScroller.LeftMouseButtonGesture)
-
-        scrollerProps = scroller.scrollerProperties()
-        scrollerProps.setScrollMetric(QScrollerProperties.HorizontalOvershootPolicy, QScrollerProperties.OvershootAlwaysOff)
-        scrollerProps.setScrollMetric(QScrollerProperties.VerticalOvershootPolicy, QScrollerProperties.OvershootAlwaysOff)
-        scrollerProps.setScrollMetric(QScrollerProperties.OvershootScrollDistanceFactor, 0)
-        scrollerProps.setScrollMetric(QScrollerProperties.OvershootDragDistanceFactor, 0)
-        scroller.setScrollerProperties(scrollerProps)
-
-        #sp = QScrollerProperties()
-        #sp.setScrollMetric(QScrollerProperties.DragVelocitySmoothingFactor, 0.6)
-        #sp.setScrollMetric(QScrollerProperties.MinimumVelocity, 0.0)
-        #sp.setScrollMetric(QScrollerProperties.MaximumVelocity, 0.5)
-        #sp.setScrollMetric(QScrollerProperties.AcceleratingFlickMaximumTime, 0.4)
-        #sp.setScrollMetric(QScrollerProperties.AcceleratingFlickSpeedupFactor, 1.2)
-        #sp.setScrollMetric(QScrollerProperties.SnapPositionRatio, 0.2)
-        #sp.setScrollMetric(QScrollerProperties.MaximumClickThroughVelocity, 0)
-        #sp.setScrollMetric(QScrollerProperties.DragStartDistance, 0.001)
-        #sp.setScrollMetric(QScrollerProperties.MousePressEventDelay, 0.5)
-
-        #scroller = QScroller(self.tableView)
-
-        #QScroller.grabGesture(self.tableView, QScroller.LeftMouseButtonGesture)
-        #scroller.setScrollerProperties(sp)
-
-        #self.tableView.setHorizontalScrollBarPolic(QAbstractItemView.ScrollPerPixel)
-        self.tableView.setHorizontalScrollMode(QAbstractItemView.ScrollPerPixel)
-        self.tableView.setVerticalScrollMode(QAbstractItemView.ScrollPerPixel)
-        #self.tableView.setVerticalScrollBarPolicy(QAbstractItemView.ScrollPerPixel)
+        scroller.setupScrolling(self.tableView)
