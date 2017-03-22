@@ -173,6 +173,12 @@ class Ui_FavoriteWindow(object):
         self.tabWidget.addTab(self.tabWidgetPage4, "")
         self.tabWidgetPage5 = QtWidgets.QWidget()
         self.tabWidgetPage5.setObjectName("tabWidgetPage5")
+        self.gridLayout_3 = QtWidgets.QGridLayout(self.tabWidgetPage5)
+        self.gridLayout_3.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout_3.setObjectName("gridLayout_3")
+        self.listView = QtWidgets.QListView(self.tabWidgetPage5)
+        self.listView.setObjectName("listView")
+        self.gridLayout_3.addWidget(self.listView, 0, 0, 1, 1)
         self.tabWidget.addTab(self.tabWidgetPage5, "")
         self.tabWidgetPage6 = QtWidgets.QWidget()
         self.tabWidgetPage6.setObjectName("tabWidgetPage6")
@@ -224,7 +230,7 @@ class Ui_FavoriteWindow(object):
         FavoriteWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(FavoriteWindow)
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(4)
         QtCore.QMetaObject.connectSlotsByName(FavoriteWindow)
 
     def retranslateUi(self, FavoriteWindow):

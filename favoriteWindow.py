@@ -38,3 +38,8 @@ class FavoriteWindow(QMainWindow, favoriteWindow_ui.Ui_FavoriteWindow):
         self.tableView.setModel(self.tableModel)
 
         scroller.setupScrolling(self.tableView)
+
+        self.tabTest = QWidget(self.tabWidget)
+        self.horizontalLayout_5 = QHBoxLayout(self.tabTest)
+        self.listTabTest = QListView(self.tabTest)
+        self.tabWidget.addTab(self.tabTest, 'Test')
