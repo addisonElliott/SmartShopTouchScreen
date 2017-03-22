@@ -44,6 +44,8 @@ class FavoriteWindow(QMainWindow, favoriteWindow_ui.Ui_FavoriteWindow):
         scrollerProps = scroller.scrollerProperties()
         scrollerProps.setScrollMetric(QScrollerProperties.HorizontalOvershootPolicy, QScrollerProperties.OvershootAlwaysOff)
         scrollerProps.setScrollMetric(QScrollerProperties.VerticalOvershootPolicy, QScrollerProperties.OvershootAlwaysOff)
+        scrollerProps.setScrollMetric(QScrollerProperties.OvershootScrollDistanceFactor, 0)
+        scrollerProps.setScrollMetric(QScrollerProperties.OvershootDragDistanceFactor, 0)
         scroller.setScrollerProperties(scrollerProps)
 
         #sp = QScrollerProperties()
