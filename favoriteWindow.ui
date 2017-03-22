@@ -226,7 +226,7 @@ border: 0;</string>
          <number>0</number>
         </property>
         <item row="0" column="0">
-         <widget class="QTableView" name="tableView">
+         <widget class="TileView" name="tableView">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
             <horstretch>0</horstretch>
@@ -480,6 +480,13 @@ border: 0;</string>
    </layout>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>TileView</class>
+   <extends>QTableView</extends>
+   <header>Widgets/tileView.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="Resource_BY.qrc"/>
   <include location="QDarkStylesheet/style.qrc"/>

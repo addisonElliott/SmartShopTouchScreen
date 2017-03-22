@@ -107,7 +107,7 @@ class Ui_FavoriteWindow(object):
         self.gridLayout_4.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_4.setSpacing(0)
         self.gridLayout_4.setObjectName("gridLayout_4")
-        self.tableView = QtWidgets.QTableView(self.tabWidgetPage1)
+        self.tableView = TileView(self.tabWidgetPage1)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -239,5 +239,6 @@ class Ui_FavoriteWindow(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabWidgetPage5), _translate("FavoriteWindow", "Beverages"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabWidgetPage6), _translate("FavoriteWindow", "Other"))
 
+from Widgets.tileView import TileView
 import Resource_BY_rc
 import style_rc
