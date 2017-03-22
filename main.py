@@ -3,7 +3,6 @@ from PyQt5.QtWidgets import QApplication, QWidget
 from PyQt5.QtCore import QFile, QTextStream
 from mainWindow import *
 from ManualAddDialog import *
-from TouchEventFilter import *
 from configobj import ConfigObj
 from validate import Validator
 from exception import *
@@ -58,10 +57,6 @@ def main():
 
     # Create application
     app = QApplication(sys.argv)
-
-    # Create a filter for touch screen events
-    touchFilter = TouchEventFilter()
-    app.installEventFilter(touchFilter)
 
     # Load the stylesheet content from resources
     app.setStyleSheet(load_stylesheet())
