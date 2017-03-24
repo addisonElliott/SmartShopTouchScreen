@@ -1,0 +1,21 @@
+<RCC>
+  <qresource prefix="Icons">
+    <file>Icons/GreenCheckIcon_Finished.png</file>
+    <file>Icons/RedCancelIcon_Finished.png</file>
+    <file>Icons/BlueHistoryIconRotated_Finished.png</file>
+    <file>Icons/HomeIconRotated_Finished.png</file>
+    <file>Icons/HomeIcon_Finished.png</file>
+    <file>Icons/BinocularsIcon_Finished.png</file>
+    <file>Icons/EditIcon_Finished.png</file>
+    <file>Icons/EyeIcon_Finished.png</file>
+    <file>Icons/FingerIcon_Finished.png</file>
+    <file>Cronus Round.otf</file>
+    <file>Icons/SSLogo_No_Background.png</file>
+    <file>Icons/BlueSettingsIconSOLID_Finished.png</file>
+    <file>Icons/BlueSettingsIcon_Finished.png</file>
+    <file>Icons/BlueBackIcon_Finished.png</file>
+    <file>Icons/RedMinusIcon_Finished.png</file>
+    <file>Icons/BlueHistoryIcon_Finished.png</file>
+    <file>Icons/GreenPlusIcon_Finished.png</file>
+  </qresource>
+</RCC>

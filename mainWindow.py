@@ -1,10 +1,11 @@
-import mainWindow_ui
-from scanner import *
-from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow
 from PyQt5.QtCore import *
-from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-import constants
+
+import mainWindow_ui
+from Util import constants
+from favoriteWindow import *
+from scanner import *
+
 
 class MainWindow(QMainWindow, mainWindow_ui.Ui_MainWindow):
     def __init__(self, config, parent=None):
@@ -12,12 +13,18 @@ class MainWindow(QMainWindow, mainWindow_ui.Ui_MainWindow):
         self.setupUi(self)
 
         self.config = config
+        self.recItemsWidget.horizontalHeader().setStretchLastSection(False)
+        self.recItemsWidget.horizontalHeader().setSectionResizeMode(1,QHeaderView.ResizeToContents)
+        self.recItemsWidget.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
+
 
         # Remove title bar
         self.setWindowFlags(Qt.FramelessWindowHint)
 
         # Sets position to 0,0 on screen and sets window to fixed size
         self.setGeometry(constants.windowGeometry)
+
+        # Set size of the recommended items columns
 
         # Create shortcut for escape key that calls close()
         self.closeShortcut = QShortcut(Qt.Key_Escape, self)
@@ -40,8 +47,22 @@ class MainWindow(QMainWindow, mainWindow_ui.Ui_MainWindow):
         self.scannerPoll.start(constants.scannerPollInterval)
 
     @pyqtSlot()
-    def on_pushButton_clicked(self):
+    def on_purchaseHistoryBtn_clicked(self):
         self.close()
+
+    @pyqtSlot()
+    def on_ManualAddButton_clicked(self):
+        ManualAdd = ManualAddDialog(self.config)
+        ManualAdd.exec()
+
+    @pyqtSlot()
+    def on_SettingsButton_clicked(self):
+        self.fav = FavoriteWindow(self.config)
+        if constants.fullscreen:
+            self.fav.showFullScreen()
+        else:
+            self.fav.show()
+        #self.close()
 
     @pyqtSlot()
     def scannerPoll_ticked(self):

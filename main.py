@@ -1,10 +1,22 @@
-import sys
-from PyQt5.QtWidgets import QApplication, QWidget
-from mainWindow import *
-from configobj import ConfigObj
-from validate import Validator
-from exception import *
+import logging
+
 from configobj import *
+from validate import Validator
+
+from mainWindow import *
+
+logger = logging.getLogger(__name__)
+
+def load_stylesheet():
+    f = QFile(":qdarkstyle/style.qss")
+    if not f.exists():
+        logger.error("Unable to load stylesheet, file not found in resources")
+        return ""
+    else:
+        f.open(QFile.ReadOnly | QFile.Text)
+        ts = QTextStream(f)
+        stylesheet = ts.readAll()
+        return stylesheet
 
 def main():
     # Load config spec, config file, and validate the config file with config spec
@@ -40,6 +52,9 @@ def main():
     # Create application
     app = QApplication(sys.argv)
 
+    # Load the stylesheet content from resources
+    app.setStyleSheet(load_stylesheet())
+
     # TODO Start by coding in the concept GUI to start out
     # TODO Implement the buttons in the concept GUI
 
@@ -47,8 +62,10 @@ def main():
 
     # Will pass this argument in Raspberry Pi 3 to get fullscreen display
     if "-fullscreen" in sys.argv:
+        constants.fullscreen = True
         form.showFullScreen()
     else:
+        constants.fullscreen = False
         form.show()
 
     # Execute application and retrieve return value when done
