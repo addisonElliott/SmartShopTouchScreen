@@ -859,6 +859,13 @@ QTreeView, QListView
     background-color: #232629;
 }
 
+QListView::item:hover,
+QListView::item:disabled:hover,
+QListView::item:hover:!active 
+{
+	background: transparent;
+}
+
 QTreeView:branch:selected
 {
     background: url(:/qss_icons/rc/transparent.png);

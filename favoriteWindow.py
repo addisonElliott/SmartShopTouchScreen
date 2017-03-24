@@ -39,7 +39,31 @@ class FavoriteWindow(QMainWindow, favoriteWindow_ui.Ui_FavoriteWindow):
 
         scroller.setupScrolling(self.tableView)
 
+        # Setup a tab
         self.tabTest = QWidget(self.tabWidget)
-        self.horizontalLayout_5 = QHBoxLayout(self.tabTest)
+        self.horizontalLayout_10 = QHBoxLayout(self.tabTest)
+        self.horizontalLayout_10.setContentsMargins(0, 0, 0, 0)
+
         self.listTabTest = QListView(self.tabTest)
+        font = QFont()
+        font.setPointSize(21)
+        self.listTabTest.setFont(font)
+        self.listTabTest.setFrameShape(QFrame.NoFrame)
+        self.listTabTest.setFrameShadow(QFrame.Plain)
+        self.listTabTest.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        self.listTabTest.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.listTabTest.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.listTabTest.setDragDropMode(QAbstractItemView.DragDrop)
+        self.listTabTest.setDefaultDropAction(Qt.ActionMask)
+        self.listTabTest.setAlternatingRowColors(True)
+        self.listTabTest.setSelectionMode(QAbstractItemView.MultiSelection)
+        self.listTabTest.setVerticalScrollMode(QAbstractItemView.ScrollPerPixel)
+        self.listTabTest.setHorizontalScrollMode(QAbstractItemView.ScrollPerPixel)
+        self.horizontalLayout_10.addWidget(self.listTabTest)
+
         self.tabWidget.addTab(self.tabTest, 'Test')
+
+        self.stringList = QStringListModel(self)
+        self.stringList.setStringList(['One', 'Two', 'Three', 'Four', 'Five'])
+
+        self.listTabTest.setModel(self.stringList)
