@@ -109,7 +109,7 @@ border: 0;</string>
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="Resource_BY.qrc">
+         <iconset resource="../Resource_BY.qrc">
           <normaloff>:/Icons/Icons/BlueBackIcon_Finished.png</normaloff>:/Icons/Icons/BlueBackIcon_Finished.png</iconset>
         </property>
         <property name="iconSize">
@@ -164,7 +164,7 @@ border: 0;</string>
        <string/>
       </property>
       <property name="icon">
-       <iconset resource="Resource_BY.qrc">
+       <iconset resource="../Resource_BY.qrc">
         <normaloff>:/Icons/Icons/SSLogo_No_Background.png</normaloff>:/Icons/Icons/SSLogo_No_Background.png</iconset>
       </property>
       <property name="iconSize">
@@ -529,7 +529,7 @@ border: 0;</string>
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="Resource_BY.qrc">
+          <iconset resource="../Resource_BY.qrc">
            <normaloff>:/Icons/Icons/GreenPlusIcon_Finished.png</normaloff>:/Icons/Icons/GreenPlusIcon_Finished.png</iconset>
          </property>
          <property name="iconSize">
@@ -568,7 +568,7 @@ border: 0;</string>
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="Resource_BY.qrc">
+          <iconset resource="../Resource_BY.qrc">
            <normaloff>:/Icons/Icons/RedMinusIcon_Finished.png</normaloff>:/Icons/Icons/RedMinusIcon_Finished.png</iconset>
          </property>
          <property name="iconSize">
@@ -628,7 +628,7 @@ border: 0;r</string>
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="Resource_BY.qrc">
+         <iconset resource="../Resource_BY.qrc">
           <normaloff>:/Icons/Icons/EditIcon_Finished.png</normaloff>:/Icons/Icons/EditIcon_Finished.png</iconset>
         </property>
         <property name="iconSize">
@@ -665,8 +665,8 @@ border: 0;r</string>
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="Resource_BY.qrc"/>
-  <include location="QDarkStylesheet/style.qrc"/>
+  <include location="../Resource_BY.qrc"/>
+  <include location="../QDarkStylesheet/style.qrc"/>
  </resources>
  <connections/>
 </ui>

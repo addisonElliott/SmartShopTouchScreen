@@ -2,9 +2,8 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
-import favoriteWindow_ui
+from Windows import favoriteWindow_ui
 from Util import constants, scroller
-
 
 class FavoriteWindow(QMainWindow, favoriteWindow_ui.Ui_FavoriteWindow):
     def __init__(self, config, parent=None):

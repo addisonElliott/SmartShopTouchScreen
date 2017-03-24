@@ -3,7 +3,7 @@ import logging
 from configobj import *
 from validate import Validator
 
-from mainWindow import *
+from Windows.mainWindow import *
 
 logger = logging.getLogger(__name__)
 

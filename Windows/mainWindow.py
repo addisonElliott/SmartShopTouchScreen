@@ -1,10 +1,10 @@
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 
-import mainWindow_ui
+from Windows import mainWindow_ui
 from Util import constants
-from favoriteWindow import *
-from scanner import *
+from Windows.favoriteWindow import *
+from Util.scanner import *
 
 
 class MainWindow(QMainWindow, mainWindow_ui.Ui_MainWindow):
