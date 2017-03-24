@@ -13,6 +13,10 @@ class MainWindow(QMainWindow, mainWindow_ui.Ui_MainWindow):
         self.setupUi(self)
 
         self.config = config
+        self.recItemsWidget.horizontalHeader().setStretchLastSection(False)
+        self.recItemsWidget.horizontalHeader().setSectionResizeMode(1,QHeaderView.ResizeToContents)
+        self.recItemsWidget.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
+
 
         # Remove title bar
         self.setWindowFlags(Qt.FramelessWindowHint)

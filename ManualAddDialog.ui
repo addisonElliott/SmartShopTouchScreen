@@ -129,7 +129,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="confirmButton">
        <property name="minimumSize">
         <size>
          <width>45</width>
@@ -162,7 +162,7 @@ border: 0;</string>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_2">
+      <widget class="QPushButton" name="cancelButton">
        <property name="minimumSize">
         <size>
          <width>45</width>

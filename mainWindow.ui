@@ -77,7 +77,7 @@
        <number>6</number>
       </property>
       <item row="2" column="0">
-       <widget class="QListWidget" name="listWidget_2">
+       <widget class="QListWidget" name="reqItemsWidget">
         <property name="font">
          <font>
           <pointsize>19</pointsize>
@@ -514,7 +514,7 @@ border: 0;</string>
        </widget>
       </item>
       <item row="2" column="1">
-       <widget class="QTableWidget" name="tableWidget_3">
+       <widget class="QTableWidget" name="recItemsWidget">
         <property name="font">
          <font>
           <pointsize>19</pointsize>
@@ -597,7 +597,7 @@ border: 0;</string>
         </item>
         <item row="0" column="1">
          <property name="text">
-          <string>1</string>
+          <string>101</string>
          </property>
         </item>
         <item row="1" column="0">
@@ -607,7 +607,7 @@ border: 0;</string>
         </item>
         <item row="1" column="1">
          <property name="text">
-          <string>3</string>
+          <string>102</string>
          </property>
         </item>
         <item row="2" column="0">
@@ -617,7 +617,7 @@ border: 0;</string>
         </item>
         <item row="2" column="1">
          <property name="text">
-          <string>2</string>
+          <string>103</string>
          </property>
         </item>
         <item row="3" column="0">
@@ -627,7 +627,7 @@ border: 0;</string>
         </item>
         <item row="3" column="1">
          <property name="text">
-          <string>12</string>
+          <string>104</string>
          </property>
         </item>
         <item row="4" column="0">
@@ -635,9 +635,19 @@ border: 0;</string>
           <string>New Item</string>
          </property>
         </item>
+        <item row="4" column="1">
+         <property name="text">
+          <string>401</string>
+         </property>
+        </item>
         <item row="5" column="0">
          <property name="text">
           <string>New Item</string>
+         </property>
+        </item>
+        <item row="5" column="1">
+         <property name="text">
+          <string>301</string>
          </property>
         </item>
         <item row="6" column="0">
@@ -645,9 +655,19 @@ border: 0;</string>
           <string>New Item</string>
          </property>
         </item>
+        <item row="6" column="1">
+         <property name="text">
+          <string>201</string>
+         </property>
+        </item>
         <item row="7" column="0">
          <property name="text">
           <string>New Item</string>
+         </property>
+        </item>
+        <item row="7" column="1">
+         <property name="text">
+          <string>100</string>
          </property>
         </item>
        </widget>
