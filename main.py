@@ -1,9 +1,14 @@
 import logging
-
 from configobj import *
 from validate import Validator
+import sys
 
-from Windows.mainWindow import *
+from Util import constants
+
+from PyQt5.QtCore import *
+from PyQt5.QtWidgets import *
+
+from Windows.centralWindow import *
 
 logger = logging.getLogger(__name__)
 
@@ -55,11 +60,7 @@ def main():
     # Load the stylesheet content from resources
     app.setStyleSheet(load_stylesheet())
 
-    # TODO Start by coding in the concept GUI to start out
-    # TODO Implement the buttons in the concept GUI
-
-    form = MainWindow(config)
-
+    form = CentralWindow(config)
     # Will pass this argument in Raspberry Pi 3 to get fullscreen display
     if "-fullscreen" in sys.argv:
         constants.fullscreen = True
