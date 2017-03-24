@@ -1,14 +1,9 @@
 import logging
+
 from configobj import *
 from validate import Validator
-import sys
 
-from Util import constants
-
-from PyQt5.QtCore import *
-from PyQt5.QtWidgets import *
-
-from Windows.centralWindow import *
+from Windows.mainWindow import *
 
 logger = logging.getLogger(__name__)
 
@@ -28,12 +23,12 @@ def main():
     configspec = ConfigObj('./configspec.ini', raise_errors=True, _inspec=True)
     validator = Validator()
 
-    constants.config = ConfigObj('./config.ini', configspec=configspec, create_empty=True)
-    errors = constants.config.validate(validator, preserve_errors=True, copy=True)
+    config = ConfigObj('./config.ini', configspec=configspec, create_empty=True)
+    errors = config.validate(validator, preserve_errors=True, copy=True)
 
     # Check and report any errors that occurred when validating config file
     msg = ""
-    for entry in flatten_errors(constants.config, errors):
+    for entry in flatten_errors(config, errors):
         [sectionList, key, error] = entry
 
         if key is not None:
@@ -51,7 +46,7 @@ def main():
 
     if len(msg) > 0:
         # An error occurred, save the config file in case any default data was copied
-        constants.config.write()
+        config.write()
         raise SmartShopException("Could not parse config file:\n%s" % msg)
 
     # Create application
@@ -63,27 +58,21 @@ def main():
     # TODO Start by coding in the concept GUI to start out
     # TODO Implement the buttons in the concept GUI
 
-    test = CentralWindow()
-    test.show()
+    form = MainWindow(config)
 
-
-
-
-    # form = MainWindow(config)
-    #
-    # # Will pass this argument in Raspberry Pi 3 to get fullscreen display
-    # if "-fullscreen" in sys.argv:
-    #     constants.fullscreen = True
-    #     form.showFullScreen()
-    # else:
-    #     constants.fullscreen = False
-    #     form.show()
+    # Will pass this argument in Raspberry Pi 3 to get fullscreen display
+    if "-fullscreen" in sys.argv:
+        constants.fullscreen = True
+        form.showFullScreen()
+    else:
+        constants.fullscreen = False
+        form.show()
 
     # Execute application and retrieve return value when done
     ret = app.exec()
 
     # Save config file. It is possible for changes to be made using settings menu in GUI
-    #config.write()
+    config.write()
 
     # Exit python with return value from application execution
     sys.exit(ret)

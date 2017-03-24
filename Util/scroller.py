@@ -1,6 +1,8 @@
 from PyQt5.QtWidgets import *
 from enum import Enum
-from Util.enums import *
+
+class ScrollingType(Enum):
+    Default = 1
 
 def setupScrolling(obj, scrollingType=None):
     scroller = QScroller.scroller(obj)

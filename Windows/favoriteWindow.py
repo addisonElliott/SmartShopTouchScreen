@@ -2,15 +2,25 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
-from Windows.centralWindow import *
 from Windows import favoriteWindow_ui
 from Util import constants, scroller
-from Util.enums import *
 
-class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
-    def __init__(self, parent=None):
+class FavoriteWindow(QMainWindow, favoriteWindow_ui.Ui_FavoriteWindow):
+    def __init__(self, config, parent=None):
         super(FavoriteWindow, self).__init__(parent)
         self.setupUi(self)
+
+        self.config = config
+
+        # Remove title bar
+        self.setWindowFlags(Qt.FramelessWindowHint)
+
+        # Sets position to 0,0 on screen and sets window to fixed size
+        self.setGeometry(constants.windowGeometry)
+
+        # Create shortcut for escape key that calls close()
+        self.closeShortcut = QShortcut(Qt.Key_Escape, self)
+        self.closeShortcut.activated.connect(self.close)
 
         self.tableModel = QStandardItemModel(4, 5, self)
 
@@ -56,11 +66,3 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
         self.stringList.setStringList(['One', 'Two', 'Three', 'Four', 'Five'])
 
         self.listTabTest.setModel(self.stringList)
-
-    @pyqtSlot()
-    def on_backBtn_clicked(self):
-        self.parent().setCurrentIndex(WindowType.Home)
-
-    @pyqtSlot()
-    def on_homeBtn_clicked(self):
-        self.parent().setCurrentIndex(WindowType.Home)
