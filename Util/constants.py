@@ -21,6 +21,3 @@ scannerPollInterval = 5
 
 # Whether the menu will be shown as full screen or not
 fullscreen = False
-
-# Config file
-config = None

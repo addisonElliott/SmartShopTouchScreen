@@ -42,7 +42,7 @@
   <property name="unifiedTitleAndToolBarOnMac" stdset="0">
    <bool>false</bool>
   </property>
-  <layout class="QGridLayout" name="gridLayout" columnstretch="1,0,0">
+  <layout class="QGridLayout" name="gridLayout" columnstretch="1,1,1">
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -58,30 +58,86 @@
    <property name="spacing">
     <number>0</number>
    </property>
-   <item row="0" column="0" rowspan="2">
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
+   <item row="2" column="0" colspan="3">
+    <layout class="QGridLayout" name="gridLayout_5" columnstretch="1,1,1">
      <property name="leftMargin">
-      <number>5</number>
+      <number>0</number>
      </property>
-     <item>
-      <widget class="QPushButton" name="backBtn">
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <item row="0" column="0">
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <property name="leftMargin">
+        <number>5</number>
+       </property>
+       <property name="rightMargin">
+        <number>5</number>
+       </property>
+       <item>
+        <widget class="QPushButton" name="backBtn">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>64</width>
+           <height>64</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>64</width>
+           <height>64</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: transparent;
+border: 0;</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../Resource_BY.qrc">
+           <normaloff>:/Icons/Icons/BlueBackIcon_Finished.png</normaloff>:/Icons/Icons/BlueBackIcon_Finished.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>64</width>
+           <height>64</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>214</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+     <item row="0" column="1">
+      <widget class="QPushButton" name="homeBtn">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <sizepolicy hsizetype="Fixed" vsizetype="Maximum">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>64</width>
-         <height>64</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>64</width>
-         <height>64</height>
-        </size>
        </property>
        <property name="styleSheet">
         <string notr="true">background-color: transparent;
@@ -92,79 +148,52 @@ border: 0;</string>
        </property>
        <property name="icon">
         <iconset resource="../Resource_BY.qrc">
-         <normaloff>:/Icons/Icons/BlueBackIcon_Finished.png</normaloff>:/Icons/Icons/BlueBackIcon_Finished.png</iconset>
+         <normaloff>:/Icons/Icons/SSLogo_No_Background.png</normaloff>:/Icons/Icons/SSLogo_No_Background.png</iconset>
        </property>
        <property name="iconSize">
         <size>
-         <width>64</width>
+         <width>256</width>
          <height>64</height>
         </size>
        </property>
+       <property name="checkable">
+        <bool>false</bool>
+       </property>
+       <property name="checked">
+        <bool>false</bool>
+       </property>
       </widget>
      </item>
-     <item>
-      <spacer name="horizontalSpacer">
+     <item row="0" column="2">
+      <spacer name="horizontalSpacer_5">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>214</width>
-         <height>20</height>
+         <width>260</width>
+         <height>63</height>
         </size>
        </property>
       </spacer>
      </item>
     </layout>
    </item>
-   <item row="0" column="2" rowspan="2">
-    <spacer name="horizontalSpacer_5">
+   <item row="4" column="0">
+    <spacer name="horizontalSpacer_4">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>260</width>
-       <height>63</height>
+       <width>40</width>
+       <height>20</height>
       </size>
      </property>
     </spacer>
    </item>
-   <item row="0" column="1" rowspan="2">
-    <widget class="QPushButton" name="homeBtn">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Maximum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: transparent;
-border: 0;</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="../Resource_BY.qrc">
-       <normaloff>:/Icons/Icons/SSLogo_No_Background.png</normaloff>:/Icons/Icons/SSLogo_No_Background.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>256</width>
-       <height>64</height>
-      </size>
-     </property>
-     <property name="checkable">
-      <bool>false</bool>
-     </property>
-     <property name="checked">
-      <bool>false</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0" colspan="3">
-    <widget class="QTabWidget" name="tabWidget">
+   <item row="3" column="0" colspan="3">
+    <widget class="QTabWidget" name="categoryTabWidget">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>0</horstretch>
@@ -188,9 +217,9 @@ border: 0;</string>
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
-     <widget class="QWidget" name="tabWidgetPage1">
+     <widget class="QWidget" name="favoritesTab">
       <attribute name="title">
        <string>Favorite's</string>
       </attribute>
@@ -211,7 +240,7 @@ border: 0;</string>
         <number>0</number>
        </property>
        <item row="0" column="0">
-        <widget class="TileView" name="tableView">
+        <widget class="TileView" name="favoritesTableView">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
            <horstretch>0</horstretch>
@@ -297,179 +326,9 @@ border: 0;</string>
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tabWidgetPage2">
-      <attribute name="title">
-       <string>Produce</string>
-      </attribute>
-      <layout class="QGridLayout" name="gridLayout_2">
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_8">
-         <property name="text">
-          <string>TextLabel</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-         <property name="wordWrap">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_7">
-         <property name="text">
-          <string>TextLabel</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-         <property name="wordWrap">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QPushButton" name="pushButton_13">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>PushButton</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QToolButton" name="toolButton_8">
-         <property name="text">
-          <string>PushButton</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="tabWidgetPage3">
-      <attribute name="title">
-       <string>Dairy</string>
-      </attribute>
-     </widget>
-     <widget class="QWidget" name="tabWidgetPage4">
-      <attribute name="title">
-       <string>Meat</string>
-      </attribute>
-     </widget>
-     <widget class="QWidget" name="tabWidgetPage5">
-      <attribute name="title">
-       <string>Beverages</string>
-      </attribute>
-      <layout class="QGridLayout" name="gridLayout_3">
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-       <item row="0" column="0">
-        <widget class="QListWidget" name="listWidget">
-         <property name="font">
-          <font>
-           <pointsize>19</pointsize>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true"/>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::NoFrame</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Plain</enum>
-         </property>
-         <property name="verticalScrollBarPolicy">
-          <enum>Qt::ScrollBarAlwaysOn</enum>
-         </property>
-         <property name="horizontalScrollBarPolicy">
-          <enum>Qt::ScrollBarAlwaysOff</enum>
-         </property>
-         <property name="editTriggers">
-          <set>QAbstractItemView::NoEditTriggers</set>
-         </property>
-         <property name="dragDropMode">
-          <enum>QAbstractItemView::DragDrop</enum>
-         </property>
-         <property name="defaultDropAction">
-          <enum>Qt::ActionMask</enum>
-         </property>
-         <property name="alternatingRowColors">
-          <bool>true</bool>
-         </property>
-         <property name="selectionMode">
-          <enum>QAbstractItemView::MultiSelection</enum>
-         </property>
-         <property name="verticalScrollMode">
-          <enum>QAbstractItemView::ScrollPerPixel</enum>
-         </property>
-         <property name="horizontalScrollMode">
-          <enum>QAbstractItemView::ScrollPerPixel</enum>
-         </property>
-         <property name="flow">
-          <enum>QListView::TopToBottom</enum>
-         </property>
-         <item>
-          <property name="text">
-           <string>New Item</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>New Item</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>New Item</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>New Item</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>New Item</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>New Item</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>New Item</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="tabWidgetPage6">
-      <attribute name="title">
-       <string>Other</string>
-      </attribute>
-     </widget>
     </widget>
    </item>
-   <item row="3" column="1">
+   <item row="4" column="1">
     <widget class="QWidget" name="floatingBtnWidget" native="true">
      <property name="styleSheet">
       <string notr="true">background-color: rgba(0,0,0,0);</string>
@@ -491,7 +350,7 @@ border: 0;</string>
        <number>6</number>
       </property>
       <item>
-       <widget class="QPushButton" name="pushButton_2">
+       <widget class="QPushButton" name="addBtn">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -529,7 +388,7 @@ border: 0;</string>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="removeBtn">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -570,7 +429,7 @@ border: 0;</string>
      </layout>
     </widget>
    </item>
-   <item row="3" column="2">
+   <item row="4" column="2">
     <layout class="QHBoxLayout" name="horizontalLayout_3">
      <item>
       <spacer name="horizontalSpacer_3">
@@ -586,7 +445,7 @@ border: 0;</string>
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_4">
+      <widget class="QPushButton" name="listAddBtn">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>

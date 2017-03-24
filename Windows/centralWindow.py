@@ -7,26 +7,35 @@ from Util.scanner import *
 from Util.enums import *
 
 class CentralWindow(QMainWindow):
-    def __init__(self, parent=None):
+    def __init__(self, config, parent=None):
         super(CentralWindow, self).__init__(parent)
 
+        # Save config variable in class
+        self.config = config
+
+        # Initialize central widget, horizontal layout and stacked which which fills the entire QMainWindow
         self.centralwidget = QWidget(self)
         self.horizontalLayout = QHBoxLayout(self.centralwidget)
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout.setSpacing(0)
         self.stackedWidget = QStackedWidget(self.centralwidget)
-        self.page = MainWindow(self)
-        self.page.centralWindow = self
-
-        self.stackedWidget.addWidget(self.page)
-        self.page_2 = FavoriteWindow(self)
-        self.page_2.centralWindow = self
-        self.stackedWidget.addWidget(self.page_2)
         self.horizontalLayout.addWidget(self.stackedWidget)
         self.setCentralWidget(self.centralwidget)
 
-        self.stackedWidget.setCurrentIndex(0)
-        self.stackedWidget.prevIndex = WindowType.Home
+        # Add main window to list of stacked widgets
+        self.mainWindow = MainWindow(self)
+        self.mainWindow.centralWindow = self
+        self.mainWindow.config = self.config
+        self.stackedWidget.addWidget(self.mainWindow)
+
+        # Add favorite window to list of stacked widgets
+        self.favoriteWindow = FavoriteWindow(self)
+        self.favoriteWindow.centralWindow = self
+        self.favoriteWindow.config = self.config
+        self.stackedWidget.addWidget(self.favoriteWindow)
+
+        # Set the current widget to be shown is the main
+        self.stackedWidget.setCurrentIndex(WindowType.Main)
 
         # Remove title bar
         self.setWindowFlags(Qt.FramelessWindowHint)
@@ -40,14 +49,11 @@ class CentralWindow(QMainWindow):
 
         # Setup primary and secondary scanner based on if the shortcuts should be enabled
         if constants.barcodeScannerShortcut:
-            self.primaryScanner = BarcodeScanner(self, constants.config['Scanners']['primaryPort'], "Ctrl+1", "primary")
-            self.secondaryScanner = BarcodeScanner(self, constants.config['Scanners']['secondaryPort'], "Ctrl+2", "secondary")
+            self.primaryScanner = BarcodeScanner(self, self.config['Scanners']['primaryPort'], "Ctrl+1", "primary")
+            self.secondaryScanner = BarcodeScanner(self, self.config['Scanners']['secondaryPort'], "Ctrl+2", "secondary")
         else:
-            self.primaryScanner = BarcodeScanner(self, constants.config['Scanners']['primaryPort'])
-            self.secondaryScanner = BarcodeScanner(self, constants.config['Scanners']['secondaryPort'])
-
-        self.primaryScanner.barcodeReceived.connect(self.primaryScanner_barcodeReceived)
-        self.secondaryScanner.barcodeReceived.connect(self.secondaryScanner_barcodeReceived)
+            self.primaryScanner = BarcodeScanner(self, self.config['Scanners']['primaryPort'])
+            self.secondaryScanner = BarcodeScanner(self, self.config['Scanners']['secondaryPort'])
 
         # Setup timer to regularly poll for new barcodes from scanners
         self.scannerPoll = QTimer()
