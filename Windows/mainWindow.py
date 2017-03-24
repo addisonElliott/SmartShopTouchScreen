@@ -12,7 +12,7 @@ class MainWindow(QMainWindow, mainWindow_ui.Ui_MainWindow):
         super(MainWindow, self).__init__(parent)
         self.setupUi(self)
 
-        self.config = configX
+        self.config = config
         self.recItemsWidget.horizontalHeader().setStretchLastSection(False)
         self.recItemsWidget.horizontalHeader().setSectionResizeMode(1,QHeaderView.ResizeToContents)
         self.recItemsWidget.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
