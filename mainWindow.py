@@ -13,12 +13,18 @@ class MainWindow(QMainWindow, mainWindow_ui.Ui_MainWindow):
         self.setupUi(self)
 
         self.config = config
+        self.recItemsWidget.horizontalHeader().setStretchLastSection(False)
+        self.recItemsWidget.horizontalHeader().setSectionResizeMode(1,QHeaderView.ResizeToContents)
+        self.recItemsWidget.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
+
 
         # Remove title bar
         self.setWindowFlags(Qt.FramelessWindowHint)
 
         # Sets position to 0,0 on screen and sets window to fixed size
         self.setGeometry(constants.windowGeometry)
+
+        # Set size of the recommended items columns
 
         # Create shortcut for escape key that calls close()
         self.closeShortcut = QShortcut(Qt.Key_Escape, self)
