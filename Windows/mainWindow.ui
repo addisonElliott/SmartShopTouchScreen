@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <widget class="QWidget" name="MainWindow">
   <property name="windowModality">
    <enum>Qt::NonModal</enum>
   </property>
@@ -33,731 +33,726 @@
   <property name="windowTitle">
    <string>Smart Shop</string>
   </property>
-  <property name="dockNestingEnabled">
+  <property name="dockNestingEnabled" stdset="0">
    <bool>false</bool>
   </property>
-  <property name="dockOptions">
-   <set>QMainWindow::AnimatedDocks</set>
-  </property>
-  <property name="unifiedTitleAndToolBarOnMac">
+  <property name="unifiedTitleAndToolBarOnMac" stdset="0">
    <bool>false</bool>
   </property>
-  <widget class="QWidget" name="centralwidget">
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>0</number>
    </property>
-   <layout class="QGridLayout" name="gridLayout">
-    <property name="leftMargin">
-     <number>0</number>
-    </property>
-    <property name="topMargin">
-     <number>0</number>
-    </property>
-    <property name="rightMargin">
-     <number>0</number>
-    </property>
-    <property name="bottomMargin">
-     <number>6</number>
-    </property>
-    <property name="spacing">
-     <number>0</number>
-    </property>
-    <item row="1" column="0">
-     <layout class="QGridLayout" name="gridLayout_3">
-      <property name="leftMargin">
-       <number>12</number>
-      </property>
-      <property name="rightMargin">
-       <number>6</number>
-      </property>
-      <property name="bottomMargin">
-       <number>6</number>
-      </property>
-      <item row="2" column="0">
-       <widget class="QListWidget" name="reqItemsWidget">
-        <property name="font">
-         <font>
-          <pointsize>19</pointsize>
-         </font>
-        </property>
-        <property name="editTriggers">
-         <set>QAbstractItemView::NoEditTriggers</set>
-        </property>
-        <property name="dragDropMode">
-         <enum>QAbstractItemView::DropOnly</enum>
-        </property>
-        <property name="defaultDropAction">
-         <enum>Qt::MoveAction</enum>
-        </property>
-        <property name="alternatingRowColors">
-         <bool>true</bool>
-        </property>
-        <property name="selectionMode">
-         <enum>QAbstractItemView::MultiSelection</enum>
-        </property>
-        <property name="viewMode">
-         <enum>QListView::ListMode</enum>
-        </property>
-        <item>
-         <property name="text">
-          <string>Apples</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>New Item</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>New Item</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>New Item</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>New Item</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>New Item</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>New Item</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>New Item</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>New Item</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>New Item</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>New Item</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>New Item</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Bananas</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Onions</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item row="0" column="0" colspan="2">
-       <widget class="QPushButton" name="EditShopingListButton">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>53</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <family>Cronus Round</family>
-          <pointsize>22</pointsize>
-         </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: #31363B;
-border: 0;</string>
-        </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>6</number>
+   </property>
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <item row="1" column="0">
+    <layout class="QGridLayout" name="gridLayout_3">
+     <property name="leftMargin">
+      <number>12</number>
+     </property>
+     <property name="rightMargin">
+      <number>6</number>
+     </property>
+     <property name="bottomMargin">
+      <number>6</number>
+     </property>
+     <item row="2" column="0">
+      <widget class="QListWidget" name="reqItemsWidget">
+       <property name="font">
+        <font>
+         <pointsize>19</pointsize>
+        </font>
+       </property>
+       <property name="editTriggers">
+        <set>QAbstractItemView::NoEditTriggers</set>
+       </property>
+       <property name="dragDropMode">
+        <enum>QAbstractItemView::DropOnly</enum>
+       </property>
+       <property name="defaultDropAction">
+        <enum>Qt::MoveAction</enum>
+       </property>
+       <property name="alternatingRowColors">
+        <bool>true</bool>
+       </property>
+       <property name="selectionMode">
+        <enum>QAbstractItemView::MultiSelection</enum>
+       </property>
+       <property name="viewMode">
+        <enum>QListView::ListMode</enum>
+       </property>
+       <item>
         <property name="text">
-         <string>Shopping List</string>
+         <string>Apples</string>
         </property>
-        <property name="icon">
-         <iconset resource="../Resource_BY.qrc">
-          <normaloff>:/Icons/Icons/BinocularsIcon_Finished.png</normaloff>:/Icons/Icons/BinocularsIcon_Finished.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>32</width>
-          <height>32</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="7" rowspan="3">
-       <layout class="QVBoxLayout" name="verticalLayout_4">
-        <property name="rightMargin">
-         <number>0</number>
-        </property>
-        <item>
-         <spacer name="verticalSpacer">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="QPushButton" name="PlusMinusButton">
-          <property name="minimumSize">
-           <size>
-            <width>64</width>
-            <height>64</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>64</width>
-            <height>64</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color: #31363B;
-border: 0;</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset resource="../Resource_BY.qrc">
-            <normaloff>:/Icons/Icons/GreenPlusIcon_Finished.png</normaloff>
-            <normalon>:/Icons/Icons/RedMinusIcon_Finished.png</normalon>:/Icons/Icons/GreenPlusIcon_Finished.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>58</width>
-            <height>58</height>
-           </size>
-          </property>
-          <property name="checkable">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer name="verticalSpacer_5">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="QPushButton" name="ManualAddButton">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>64</width>
-            <height>64</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>64</width>
-            <height>64</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color: #31363B;
-border: 0;</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset resource="../Resource_BY.qrc">
-            <normaloff>:/Icons/Icons/FingerIcon_Finished.png</normaloff>:/Icons/Icons/FingerIcon_Finished.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>58</width>
-            <height>58</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer name="verticalSpacer_4">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="QPushButton" name="ViewInventoryButton">
-          <property name="minimumSize">
-           <size>
-            <width>64</width>
-            <height>64</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>64</width>
-            <height>64</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <family>Cronus Round</family>
-            <pointsize>22</pointsize>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color: #31363B;
-border: 0;</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset resource="../Resource_BY.qrc">
-            <normaloff>:/Icons/Icons/BinocularsIcon_Finished.png</normaloff>:/Icons/Icons/BinocularsIcon_Finished.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>58</width>
-            <height>58</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer name="verticalSpacer_2">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="QPushButton" name="SettingsButton">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>64</width>
-            <height>64</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>64</width>
-            <height>64</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color: #31363B;
-border: 0;</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset resource="../Resource_BY.qrc">
-            <normaloff>:/Icons/Icons/BlueSettingsIconSOLID_Finished.png</normaloff>:/Icons/Icons/BlueSettingsIconSOLID_Finished.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>58</width>
-            <height>58</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer name="verticalSpacer_3">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-       </layout>
-      </item>
-      <item row="1" column="1">
-       <widget class="QLabel" name="label_4">
-        <property name="font">
-         <font>
-          <family>Cronus Round</family>
-          <pointsize>16</pointsize>
-          <weight>50</weight>
-          <bold>false</bold>
-         </font>
-        </property>
+       </item>
+       <item>
         <property name="text">
-         <string>Recommended Items</string>
+         <string>New Item</string>
         </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="label_3">
-        <property name="font">
-         <font>
-          <family>Cronus Round</family>
-          <pointsize>16</pointsize>
-          <weight>50</weight>
-          <bold>false</bold>
-         </font>
-        </property>
+       </item>
+       <item>
         <property name="text">
-         <string>Required Items</string>
+         <string>New Item</string>
         </property>
-       </widget>
-      </item>
-      <item row="0" column="2">
-       <spacer name="horizontalSpacer_7">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
+       </item>
+       <item>
+        <property name="text">
+         <string>New Item</string>
         </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::Fixed</enum>
+       </item>
+       <item>
+        <property name="text">
+         <string>New Item</string>
         </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>6</width>
-          <height>20</height>
-         </size>
+       </item>
+       <item>
+        <property name="text">
+         <string>New Item</string>
         </property>
-       </spacer>
-      </item>
-      <item row="0" column="6">
-       <spacer name="horizontalSpacer_3">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
+       </item>
+       <item>
+        <property name="text">
+         <string>New Item</string>
         </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::Fixed</enum>
+       </item>
+       <item>
+        <property name="text">
+         <string>New Item</string>
         </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>6</width>
-          <height>20</height>
-         </size>
+       </item>
+       <item>
+        <property name="text">
+         <string>New Item</string>
         </property>
-       </spacer>
-      </item>
-      <item row="0" column="3" rowspan="3">
-       <widget class="Line" name="line_2">
-        <property name="lineWidth">
-         <number>1</number>
+       </item>
+       <item>
+        <property name="text">
+         <string>New Item</string>
         </property>
-        <property name="midLineWidth">
-         <number>1</number>
+       </item>
+       <item>
+        <property name="text">
+         <string>New Item</string>
         </property>
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
+       </item>
+       <item>
+        <property name="text">
+         <string>New Item</string>
         </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QTableWidget" name="recItemsWidget">
-        <property name="font">
-         <font>
-          <pointsize>19</pointsize>
-         </font>
+       </item>
+       <item>
+        <property name="text">
+         <string>Bananas</string>
         </property>
-        <property name="editTriggers">
-         <set>QAbstractItemView::NoEditTriggers</set>
+       </item>
+       <item>
+        <property name="text">
+         <string>Onions</string>
         </property>
-        <property name="dragEnabled">
-         <bool>true</bool>
-        </property>
-        <property name="dragDropOverwriteMode">
-         <bool>false</bool>
-        </property>
-        <property name="dragDropMode">
-         <enum>QAbstractItemView::DragOnly</enum>
-        </property>
-        <property name="defaultDropAction">
-         <enum>Qt::LinkAction</enum>
-        </property>
-        <property name="alternatingRowColors">
-         <bool>true</bool>
-        </property>
-        <property name="selectionMode">
-         <enum>QAbstractItemView::MultiSelection</enum>
-        </property>
-        <property name="selectionBehavior">
-         <enum>QAbstractItemView::SelectRows</enum>
-        </property>
-        <property name="showGrid">
-         <bool>false</bool>
-        </property>
-        <property name="rowCount">
-         <number>12</number>
-        </property>
-        <property name="columnCount">
-         <number>2</number>
-        </property>
-        <attribute name="horizontalHeaderVisible">
-         <bool>true</bool>
-        </attribute>
-        <attribute name="horizontalHeaderStretchLastSection">
-         <bool>true</bool>
-        </attribute>
-        <attribute name="verticalHeaderVisible">
-         <bool>false</bool>
-        </attribute>
-        <row/>
-        <row/>
-        <row/>
-        <row/>
-        <row/>
-        <row/>
-        <row/>
-        <row/>
-        <row/>
-        <row/>
-        <row/>
-        <row/>
-        <column>
-         <property name="text">
-          <string>Item</string>
-         </property>
-         <property name="textAlignment">
-          <set>AlignCenter</set>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Qty</string>
-         </property>
-         <property name="textAlignment">
-          <set>AlignCenter</set>
-         </property>
-        </column>
-        <item row="0" column="0">
-         <property name="text">
-          <string>New Item</string>
-         </property>
-        </item>
-        <item row="0" column="1">
-         <property name="text">
-          <string>101</string>
-         </property>
-        </item>
-        <item row="1" column="0">
-         <property name="text">
-          <string>New Item</string>
-         </property>
-        </item>
-        <item row="1" column="1">
-         <property name="text">
-          <string>102</string>
-         </property>
-        </item>
-        <item row="2" column="0">
-         <property name="text">
-          <string>New Item</string>
-         </property>
-        </item>
-        <item row="2" column="1">
-         <property name="text">
-          <string>103</string>
-         </property>
-        </item>
-        <item row="3" column="0">
-         <property name="text">
-          <string>New Item</string>
-         </property>
-        </item>
-        <item row="3" column="1">
-         <property name="text">
-          <string>104</string>
-         </property>
-        </item>
-        <item row="4" column="0">
-         <property name="text">
-          <string>New Item</string>
-         </property>
-        </item>
-        <item row="4" column="1">
-         <property name="text">
-          <string>401</string>
-         </property>
-        </item>
-        <item row="5" column="0">
-         <property name="text">
-          <string>New Item</string>
-         </property>
-        </item>
-        <item row="5" column="1">
-         <property name="text">
-          <string>301</string>
-         </property>
-        </item>
-        <item row="6" column="0">
-         <property name="text">
-          <string>New Item</string>
-         </property>
-        </item>
-        <item row="6" column="1">
-         <property name="text">
-          <string>201</string>
-         </property>
-        </item>
-        <item row="7" column="0">
-         <property name="text">
-          <string>New Item</string>
-         </property>
-        </item>
-        <item row="7" column="1">
-         <property name="text">
-          <string>100</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item row="0" column="0">
-     <layout class="QGridLayout" name="gridLayout_2">
-      <property name="sizeConstraint">
-       <enum>QLayout::SetMinimumSize</enum>
-      </property>
-      <property name="leftMargin">
-       <number>10</number>
-      </property>
-      <property name="topMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
-       <number>10</number>
-      </property>
-      <item row="0" column="2">
-       <spacer name="horizontalSpacer_5">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="0" column="0">
-       <spacer name="horizontalSpacer_4">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="1" column="0" colspan="3">
-       <widget class="Line" name="line_3">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QPushButton" name="TopSSLogo">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Maximum">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: #31363B;
+       </item>
+      </widget>
+     </item>
+     <item row="0" column="0" colspan="2">
+      <widget class="QPushButton" name="EditShopingListButton">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>53</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Cronus Round</family>
+         <pointsize>22</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: transparent;
 border: 0;</string>
-        </property>
+       </property>
+       <property name="text">
+        <string>Shopping List</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../Resource_BY.qrc">
+         <normaloff>:/Icons/Icons/BinocularsIcon_Finished.png</normaloff>:/Icons/Icons/BinocularsIcon_Finished.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="7" rowspan="3">
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="PlusMinusButton">
+         <property name="minimumSize">
+          <size>
+           <width>64</width>
+           <height>64</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>64</width>
+           <height>64</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: transparent;
+border: 0;</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../Resource_BY.qrc">
+           <normaloff>:/Icons/Icons/GreenPlusIcon_Finished.png</normaloff>
+           <normalon>:/Icons/Icons/RedMinusIcon_Finished.png</normalon>:/Icons/Icons/GreenPlusIcon_Finished.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>58</width>
+           <height>58</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_5">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="ManualAddButton">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>64</width>
+           <height>64</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>64</width>
+           <height>64</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: transparent;
+border: 0;</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../Resource_BY.qrc">
+           <normaloff>:/Icons/Icons/FingerIcon_Finished.png</normaloff>:/Icons/Icons/FingerIcon_Finished.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>58</width>
+           <height>58</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="ViewInventoryButton">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>64</width>
+           <height>64</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>64</width>
+           <height>64</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>Cronus Round</family>
+           <pointsize>22</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: transparent;
+border: 0;</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../Resource_BY.qrc">
+           <normaloff>:/Icons/Icons/BinocularsIcon_Finished.png</normaloff>:/Icons/Icons/BinocularsIcon_Finished.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>58</width>
+           <height>58</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="SettingsButton">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>64</width>
+           <height>64</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>64</width>
+           <height>64</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: transparent;
+border: 0;</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../Resource_BY.qrc">
+           <normaloff>:/Icons/Icons/BlueSettingsIconSOLID_Finished.png</normaloff>:/Icons/Icons/BlueSettingsIconSOLID_Finished.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>58</width>
+           <height>58</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLabel" name="label_4">
+       <property name="font">
+        <font>
+         <family>Cronus Round</family>
+         <pointsize>16</pointsize>
+         <weight>50</weight>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Recommended Items</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="font">
+        <font>
+         <family>Cronus Round</family>
+         <pointsize>16</pointsize>
+         <weight>50</weight>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Required Items</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <spacer name="horizontalSpacer_7">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>6</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="0" column="6">
+      <spacer name="horizontalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>6</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="0" column="3" rowspan="3">
+      <widget class="Line" name="line_2">
+       <property name="lineWidth">
+        <number>1</number>
+       </property>
+       <property name="midLineWidth">
+        <number>1</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QTableWidget" name="recItemsWidget">
+       <property name="font">
+        <font>
+         <pointsize>19</pointsize>
+        </font>
+       </property>
+       <property name="editTriggers">
+        <set>QAbstractItemView::NoEditTriggers</set>
+       </property>
+       <property name="dragEnabled">
+        <bool>true</bool>
+       </property>
+       <property name="dragDropOverwriteMode">
+        <bool>false</bool>
+       </property>
+       <property name="dragDropMode">
+        <enum>QAbstractItemView::DragOnly</enum>
+       </property>
+       <property name="defaultDropAction">
+        <enum>Qt::LinkAction</enum>
+       </property>
+       <property name="alternatingRowColors">
+        <bool>true</bool>
+       </property>
+       <property name="selectionMode">
+        <enum>QAbstractItemView::MultiSelection</enum>
+       </property>
+       <property name="selectionBehavior">
+        <enum>QAbstractItemView::SelectRows</enum>
+       </property>
+       <property name="showGrid">
+        <bool>false</bool>
+       </property>
+       <property name="rowCount">
+        <number>12</number>
+       </property>
+       <property name="columnCount">
+        <number>2</number>
+       </property>
+       <attribute name="horizontalHeaderVisible">
+        <bool>true</bool>
+       </attribute>
+       <attribute name="horizontalHeaderStretchLastSection">
+        <bool>true</bool>
+       </attribute>
+       <attribute name="verticalHeaderVisible">
+        <bool>false</bool>
+       </attribute>
+       <row/>
+       <row/>
+       <row/>
+       <row/>
+       <row/>
+       <row/>
+       <row/>
+       <row/>
+       <row/>
+       <row/>
+       <row/>
+       <row/>
+       <column>
         <property name="text">
-         <string/>
+         <string>Item</string>
         </property>
-        <property name="icon">
-         <iconset resource="../Resource_BY.qrc">
-          <normaloff>:/Icons/Icons/SSLogo_No_Background.png</normaloff>:/Icons/Icons/SSLogo_No_Background.png</iconset>
+        <property name="textAlignment">
+         <set>AlignCenter</set>
         </property>
-        <property name="iconSize">
-         <size>
-          <width>256</width>
-          <height>64</height>
-         </size>
+       </column>
+       <column>
+        <property name="text">
+         <string>Qty</string>
         </property>
-        <property name="checkable">
-         <bool>false</bool>
+        <property name="textAlignment">
+         <set>AlignCenter</set>
         </property>
-        <property name="checked">
-         <bool>false</bool>
+       </column>
+       <item row="0" column="0">
+        <property name="text">
+         <string>New Item</string>
         </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-   </layout>
-  </widget>
+       </item>
+       <item row="0" column="1">
+        <property name="text">
+         <string>101</string>
+        </property>
+       </item>
+       <item row="1" column="0">
+        <property name="text">
+         <string>New Item</string>
+        </property>
+       </item>
+       <item row="1" column="1">
+        <property name="text">
+         <string>102</string>
+        </property>
+       </item>
+       <item row="2" column="0">
+        <property name="text">
+         <string>New Item</string>
+        </property>
+       </item>
+       <item row="2" column="1">
+        <property name="text">
+         <string>103</string>
+        </property>
+       </item>
+       <item row="3" column="0">
+        <property name="text">
+         <string>New Item</string>
+        </property>
+       </item>
+       <item row="3" column="1">
+        <property name="text">
+         <string>104</string>
+        </property>
+       </item>
+       <item row="4" column="0">
+        <property name="text">
+         <string>New Item</string>
+        </property>
+       </item>
+       <item row="4" column="1">
+        <property name="text">
+         <string>401</string>
+        </property>
+       </item>
+       <item row="5" column="0">
+        <property name="text">
+         <string>New Item</string>
+        </property>
+       </item>
+       <item row="5" column="1">
+        <property name="text">
+         <string>301</string>
+        </property>
+       </item>
+       <item row="6" column="0">
+        <property name="text">
+         <string>New Item</string>
+        </property>
+       </item>
+       <item row="6" column="1">
+        <property name="text">
+         <string>201</string>
+        </property>
+       </item>
+       <item row="7" column="0">
+        <property name="text">
+         <string>New Item</string>
+        </property>
+       </item>
+       <item row="7" column="1">
+        <property name="text">
+         <string>100</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="0" column="0">
+    <layout class="QGridLayout" name="gridLayout_2">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetMinimumSize</enum>
+     </property>
+     <property name="leftMargin">
+      <number>10</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>10</number>
+     </property>
+     <item row="0" column="2">
+      <spacer name="horizontalSpacer_5">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="0" column="0">
+      <spacer name="horizontalSpacer_4">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="1" column="0" colspan="3">
+      <widget class="Line" name="line_3">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QPushButton" name="homeBtn">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Maximum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: transparent;
+border: 0;</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../Resource_BY.qrc">
+         <normaloff>:/Icons/Icons/SSLogo_No_Background.png</normaloff>:/Icons/Icons/SSLogo_No_Background.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>256</width>
+         <height>64</height>
+        </size>
+       </property>
+       <property name="checkable">
+        <bool>false</bool>
+       </property>
+       <property name="checked">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
  </widget>
  <resources>
   <include location="../Resource_BY.qrc"/>

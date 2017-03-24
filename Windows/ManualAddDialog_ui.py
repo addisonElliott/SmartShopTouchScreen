@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_ManualAddDialog(object):
     def setupUi(self, ManualAddDialog):
         ManualAddDialog.setObjectName("ManualAddDialog")
-        ManualAddDialog.resize(487, 379)
+        ManualAddDialog.resize(487, 404)
         font = QtGui.QFont()
         font.setFamily("Cronus Round")
         ManualAddDialog.setFont(font)
@@ -72,7 +72,7 @@ class Ui_ManualAddDialog(object):
         self.confirmButton = QtWidgets.QPushButton(ManualAddDialog)
         self.confirmButton.setMinimumSize(QtCore.QSize(45, 45))
         self.confirmButton.setMaximumSize(QtCore.QSize(45, 45))
-        self.confirmButton.setStyleSheet("background-color: #31363B;\n"
+        self.confirmButton.setStyleSheet("background-color: transparent;\n"
 "border: 0;")
         self.confirmButton.setText("")
         icon = QtGui.QIcon()
@@ -84,7 +84,7 @@ class Ui_ManualAddDialog(object):
         self.cancelButton = QtWidgets.QPushButton(ManualAddDialog)
         self.cancelButton.setMinimumSize(QtCore.QSize(45, 45))
         self.cancelButton.setMaximumSize(QtCore.QSize(45, 45))
-        self.cancelButton.setStyleSheet("background-color: #31363B;\n"
+        self.cancelButton.setStyleSheet("background-color: transparent;\n"
 "border: 0;")
         self.cancelButton.setText("")
         icon1 = QtGui.QIcon()
