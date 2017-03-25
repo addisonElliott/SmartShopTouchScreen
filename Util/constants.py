@@ -21,3 +21,10 @@ scannerPollInterval = 5
 
 # Whether the menu will be shown as full screen or not
 fullscreen = False
+
+# Database information to connect to PostgreSQL server.
+dbDatabase = "smartshop"
+dbUsername = "jacob"
+dbPassword = "password"
+dbHost = "addison404project.ddns.net"
+dbPort = "5432"
