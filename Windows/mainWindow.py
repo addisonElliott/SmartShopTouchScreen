@@ -9,9 +9,13 @@ from Util.scanner import *
 from Util.enums import *
 
 class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
-    def __init__(self, parent=None):
+    def __init__(self, centralWindow, config, dbManager, parent=None):
         super(MainWindow, self).__init__(parent)
         self.setupUi(self)
+
+        self.centralWindow = centralWindow
+        self.config = config
+        self.dbManager = dbManager
 
         # Set size of the recommended items columns
         self.recItemsWidget.horizontalHeader().setStretchLastSection(False)

@@ -7,10 +7,21 @@ from Windows import favoriteWindow_ui
 from Util import constants, scroller
 from Util.enums import *
 
+class CategoryTab():
+    __slots__ = ['widget', 'horizontalLayout', 'listView']
+    def __init__(self, widget = None, horizontalLayout = None, listView = None):
+        self.widget = widget
+        self.horizontalLayout = horizontalLayout
+        self.listView = listView
+
 class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
-    def __init__(self, parent=None):
+    def __init__(self, centralWindow, config, dbManager, parent=None):
         super(FavoriteWindow, self).__init__(parent)
         self.setupUi(self)
+
+        self.centralWindow = centralWindow
+        self.config = config
+        self.dbManager = dbManager
 
         self.favoritesTabModel = QStandardItemModel(4, 5, self)
 
@@ -27,40 +38,50 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
         self.favoritesTableView.setModel(self.favoritesTabModel)
         scroller.setupScrolling(self.favoritesTableView)
 
-        # Setup a tab
-        self.testTab = QWidget(self.categoryTabWidget)
-        self.horizontalLayout_10 = QHBoxLayout(self.testTab)
-        self.horizontalLayout_10.setContentsMargins(0, 0, 0, 0)
+        # Create an empty tabDict which will contain a dictionary for each tab in the window, query all categories and
+        # add each tab to the window
+        self.tabDict = {}
+        self.categories = self.dbManager.GetCategories(True)
+        for category in self.categories:
+            self.addTab(category['id'], category['name'])
 
-        self.testTabList = QListView(self.testTab)
+    def addTab(self, id, name):
+        newTab = CategoryTab(QWidget(self.categoryTabWidget))
+        newTab.horizontalLayout = QHBoxLayout(newTab.widget)
+        newTab.horizontalLayout.setContentsMargins(0, 0, 0, 0)
+
+        # Create list view for category and with the appropiate settings
+        newTab.listView = QListView(newTab.widget)
         font = QFont()
         font.setPointSize(21)
-        self.testTabList.setFont(font)
-        self.testTabList.setFrameShape(QFrame.NoFrame)
-        self.testTabList.setFrameShadow(QFrame.Plain)
-        self.testTabList.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
-        self.testTabList.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        self.testTabList.setEditTriggers(QAbstractItemView.NoEditTriggers)
-        self.testTabList.setDragDropMode(QAbstractItemView.DragDrop)
-        self.testTabList.setDefaultDropAction(Qt.ActionMask)
-        self.testTabList.setAlternatingRowColors(True)
-        self.testTabList.setSelectionMode(QAbstractItemView.MultiSelection)
-        self.testTabList.setVerticalScrollMode(QAbstractItemView.ScrollPerPixel)
-        self.testTabList.setHorizontalScrollMode(QAbstractItemView.ScrollPerPixel)
-        self.horizontalLayout_10.addWidget(self.testTabList)
+        newTab.listView.setFont(font)
+        newTab.listView.setFrameShape(QFrame.NoFrame)
+        newTab.listView.setFrameShadow(QFrame.Plain)
+        newTab.listView.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        newTab.listView.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        newTab.listView.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        newTab.listView.setDragDropMode(QAbstractItemView.DragDrop)
+        newTab.listView.setDefaultDropAction(Qt.ActionMask)
+        newTab.listView.setAlternatingRowColors(True)
+        newTab.listView.setSelectionMode(QAbstractItemView.MultiSelection)
+        newTab.listView.setVerticalScrollMode(QAbstractItemView.ScrollPerPixel)
+        newTab.listView.setHorizontalScrollMode(QAbstractItemView.ScrollPerPixel)
+        newTab.horizontalLayout.addWidget(newTab.listView)
 
-        self.categoryTabWidget.addTab(self.testTab, 'Test')
+        # Add tab to tab widget as well as the tabDict variable
+        self.categoryTabWidget.addTab(newTab.widget, name)
+        self.tabDict[id] = newTab
 
+        # Set list view to have model to display items
         self.stringList = QStringListModel(self)
         self.stringList.setStringList(['One', 'Two', 'Three', 'Four', 'Five'])
 
-        self.testTabList.setModel(self.stringList)
+        newTab.listView.setModel(self.stringList)
 
     @pyqtSlot()
     def showEvent(self, event):
         self.centralWindow.primaryScanner.barcodeReceived.connect(self.primaryScanner_barcodeReceived)
         self.centralWindow.secondaryScanner.barcodeReceived.connect(self.secondaryScanner_barcodeReceived)
-        print('This widget is being shown. Handle anything necessary. Favorite Window')
 
     @pyqtSlot()
     def hideEvent(self, event):
