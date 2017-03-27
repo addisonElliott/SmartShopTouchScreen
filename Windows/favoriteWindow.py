@@ -1,6 +1,7 @@
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
+from Windows.manualAddDialog import *
 
 from Windows.centralWindow import *
 from Windows import favoriteWindow_ui
@@ -96,6 +97,11 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
     @pyqtSlot()
     def on_homeBtn_clicked(self):
         self.parent().setCurrentIndex(WindowType.Main)
+
+    @pyqtSlot()
+    def on_listAddBtn_clicked(self):
+        dialog = ManualAddDialog(self.config, self.dbManager, self.categories, self)
+        dialog.exec()
 
     @pyqtSlot(str)
     def primaryScanner_barcodeReceived(self, barcode):

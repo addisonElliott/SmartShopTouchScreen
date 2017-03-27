@@ -8,6 +8,8 @@ from Util.enums import *
 from Util.databaseManager import *
 from Util import constants
 
+from Widgets.touchSpinBox import *
+
 class CentralWindow(QMainWindow):
     def __init__(self, config, parent=None):
         super(CentralWindow, self).__init__(parent)

@@ -9,4 +9,4 @@ bcManager = BarcodeManager(dbManager)
 data = bcManager.GetJsonFrom3rdParty("070360002372")
 dataOkay = data["status"]["code"] == "200"
 
-print("")
+print(data)

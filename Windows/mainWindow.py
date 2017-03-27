@@ -46,6 +46,11 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
     def on_SettingsButton_clicked(self):
         self.centralWindow.close()
 
+    @pyqtSlot(bool, bool)
+    def on_checkInOutBtn_clicked(self, checked, longPress):
+        print('Button hit: checked: %r longPress: %r' % (checked, longPress))
+        print('yesss')
+
     @pyqtSlot()
     def scannerPoll_ticked(self):
         self.primaryScanner.poll()

@@ -94,20 +94,20 @@ class Ui_MainWindow(object):
         self.verticalLayout_4.setObjectName("verticalLayout_4")
         spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout_4.addItem(spacerItem)
-        self.PlusMinusButton = QtWidgets.QPushButton(MainWindow)
-        self.PlusMinusButton.setMinimumSize(QtCore.QSize(64, 64))
-        self.PlusMinusButton.setMaximumSize(QtCore.QSize(64, 64))
-        self.PlusMinusButton.setStyleSheet("background-color: transparent;\n"
+        self.checkInOutBtn = TouchButton(MainWindow)
+        self.checkInOutBtn.setMinimumSize(QtCore.QSize(64, 64))
+        self.checkInOutBtn.setMaximumSize(QtCore.QSize(64, 64))
+        self.checkInOutBtn.setStyleSheet("background-color: transparent;\n"
 "border: 0;")
-        self.PlusMinusButton.setText("")
+        self.checkInOutBtn.setText("")
         icon1 = QtGui.QIcon()
         icon1.addPixmap(QtGui.QPixmap(":/Icons/Icons/RedMinusIcon_Finished.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
         icon1.addPixmap(QtGui.QPixmap(":/Icons/Icons/GreenPlusIcon_Finished.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.PlusMinusButton.setIcon(icon1)
-        self.PlusMinusButton.setIconSize(QtCore.QSize(58, 58))
-        self.PlusMinusButton.setCheckable(True)
-        self.PlusMinusButton.setObjectName("PlusMinusButton")
-        self.verticalLayout_4.addWidget(self.PlusMinusButton)
+        self.checkInOutBtn.setIcon(icon1)
+        self.checkInOutBtn.setIconSize(QtCore.QSize(58, 58))
+        self.checkInOutBtn.setCheckable(True)
+        self.checkInOutBtn.setObjectName("checkInOutBtn")
+        self.verticalLayout_4.addWidget(self.checkInOutBtn)
         spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout_4.addItem(spacerItem1)
         self.ManualAddButton = QtWidgets.QPushButton(MainWindow)
@@ -371,5 +371,6 @@ class Ui_MainWindow(object):
         item.setText(_translate("MainWindow", "100"))
         self.recItemsWidget.setSortingEnabled(__sortingEnabled)
 
+from Widgets.touchButton import TouchButton
 import Resource_BY_rc
 import style_rc
