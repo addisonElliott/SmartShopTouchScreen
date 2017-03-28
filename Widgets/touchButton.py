@@ -18,11 +18,11 @@ class TouchButton(QPushButton, QObject):
     def mouseReleaseEvent(self, event):
         if self.hitButton(event.pos()) and self.isDown():
             if event.button() == Qt.LeftButton:
+                self.click()
                 self.pressed.emit(self.isChecked(), False)
-                self.click()
             elif event.button() == Qt.RightButton:
-                self.pressed.emit(self.isChecked(), True)
                 self.click()
+                self.pressed.emit(self.isChecked(), True)
 
             self.repaint()
         else:

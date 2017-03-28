@@ -11,8 +11,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_ManualAddDialog(object):
     def setupUi(self, ManualAddDialog):
         ManualAddDialog.setObjectName("ManualAddDialog")
-        ManualAddDialog.setWindowModality(QtCore.Qt.NonModal)
-        ManualAddDialog.resize(487, 309)
+        ManualAddDialog.setWindowModality(QtCore.Qt.ApplicationModal)
+        ManualAddDialog.resize(487, 328)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Maximum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -26,7 +26,7 @@ class Ui_ManualAddDialog(object):
 "    border: 1px solid #76797C;\n"
 "}")
         ManualAddDialog.setSizeGripEnabled(False)
-        ManualAddDialog.setModal(False)
+        ManualAddDialog.setModal(True)
         self.gridLayout = QtWidgets.QGridLayout(ManualAddDialog)
         self.gridLayout.setContentsMargins(5, 5, 5, 5)
         self.gridLayout.setObjectName("gridLayout")
@@ -50,13 +50,14 @@ class Ui_ManualAddDialog(object):
         self.label.setFont(font)
         self.label.setObjectName("label")
         self.gridLayout.addWidget(self.label, 5, 0, 1, 1)
-        self.nameEdit = QtWidgets.QLineEdit(ManualAddDialog)
+        self.nameEdit = TouchLineEdit(ManualAddDialog)
         font = QtGui.QFont()
         font.setFamily("Segoe UI")
         font.setPointSize(15)
         self.nameEdit.setFont(font)
         self.nameEdit.setContextMenuPolicy(QtCore.Qt.PreventContextMenu)
         self.nameEdit.setMaxLength(20)
+        self.nameEdit.setClearButtonEnabled(False)
         self.nameEdit.setObjectName("nameEdit")
         self.gridLayout.addWidget(self.nameEdit, 4, 0, 1, 1)
         self.label_3 = QtWidgets.QLabel(ManualAddDialog)
@@ -82,6 +83,7 @@ class Ui_ManualAddDialog(object):
         icon.addPixmap(QtGui.QPixmap(":/Icons/Icons/GreenCheckIcon_Finished.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.confirmBtn.setIcon(icon)
         self.confirmBtn.setIconSize(QtCore.QSize(48, 48))
+        self.confirmBtn.setDefault(True)
         self.confirmBtn.setObjectName("confirmBtn")
         self.horizontalLayout_2.addWidget(self.confirmBtn)
         self.cancelBtn = TouchButton(ManualAddDialog)
@@ -131,6 +133,9 @@ class Ui_ManualAddDialog(object):
 
         self.retranslateUi(ManualAddDialog)
         QtCore.QMetaObject.connectSlotsByName(ManualAddDialog)
+        ManualAddDialog.setTabOrder(self.categoryComboBox, self.nameEdit)
+        ManualAddDialog.setTabOrder(self.nameEdit, self.confirmBtn)
+        ManualAddDialog.setTabOrder(self.confirmBtn, self.cancelBtn)
 
     def retranslateUi(self, ManualAddDialog):
         _translate = QtCore.QCoreApplication.translate
@@ -157,6 +162,7 @@ class Ui_ManualAddDialog(object):
         self.categoryComboBox.setItemText(16, _translate("ManualAddDialog", "New Item"))
 
 from Widgets.touchButton import TouchButton
+from Widgets.touchLineEdit import TouchLineEdit
 from Widgets.touchSpinBox import TouchSpinBox
 import Resource_BY_rc
 import style_rc

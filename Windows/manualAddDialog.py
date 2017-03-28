@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import *
 from Util import scroller
 from Util.enums import *
 
+
 class ManualAddDialog(QDialog, manualAddDialog_ui.Ui_ManualAddDialog):
     def __init__(self, config, dbManager, categories, parent=None):
         super(ManualAddDialog, self).__init__(parent)
@@ -16,7 +17,7 @@ class ManualAddDialog(QDialog, manualAddDialog_ui.Ui_ManualAddDialog):
         self.categories = categories
 
         # Remove title bar
-        self.setWindowFlags(Qt.FramelessWindowHint)
+        self.setWindowFlags(Qt.Dialog | Qt.FramelessWindowHint)
 
         scroller.setupScrolling(self.categoryComboBox.view())
         self.categoryComboBox.view().setVerticalScrollMode(QAbstractItemView.ScrollPerPixel)

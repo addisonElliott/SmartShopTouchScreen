@@ -3,14 +3,14 @@
  <class>ManualAddDialog</class>
  <widget class="QDialog" name="ManualAddDialog">
   <property name="windowModality">
-   <enum>Qt::NonModal</enum>
+   <enum>Qt::ApplicationModal</enum>
   </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>487</width>
-    <height>309</height>
+    <height>328</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -37,7 +37,7 @@
    <bool>false</bool>
   </property>
   <property name="modal">
-   <bool>false</bool>
+   <bool>true</bool>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
@@ -94,7 +94,7 @@
     </widget>
    </item>
    <item row="4" column="0">
-    <widget class="QLineEdit" name="nameEdit">
+    <widget class="TouchLineEdit" name="nameEdit">
      <property name="font">
       <font>
        <family>Segoe UI</family>
@@ -106,6 +106,9 @@
      </property>
      <property name="maxLength">
       <number>20</number>
+     </property>
+     <property name="clearButtonEnabled">
+      <bool>false</bool>
      </property>
     </widget>
    </item>
@@ -173,6 +176,9 @@ border: 0;</string>
          <width>48</width>
          <height>48</height>
         </size>
+       </property>
+       <property name="default">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -332,7 +338,18 @@ border: 0;</string>
    <extends>QSpinBox</extends>
    <header>Widgets/touchSpinBox.h</header>
   </customwidget>
+  <customwidget>
+   <class>TouchLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>Widgets/touchLineEdit.h</header>
+  </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>categoryComboBox</tabstop>
+  <tabstop>nameEdit</tabstop>
+  <tabstop>confirmBtn</tabstop>
+  <tabstop>cancelBtn</tabstop>
+ </tabstops>
  <resources>
   <include location="../QDarkStylesheet/style.qrc"/>
   <include location="../Resource_BY.qrc"/>
