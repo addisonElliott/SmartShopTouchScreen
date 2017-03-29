@@ -5,6 +5,7 @@ from Windows import mainWindow_ui
 from Util import constants
 from Windows.favoriteWindow import *
 from Windows.centralWindow import *
+from Windows.ExpirationBox import *
 from Util.scanner import *
 from Util.enums import *
 
