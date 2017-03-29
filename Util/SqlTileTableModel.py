@@ -106,6 +106,20 @@ class SqlTileTableModel(QAbstractTableModel):
         # is not at least columnsPerRow data elements, then just set the column count to that
         return min(len(self.resdata), self.columnsPerRow)
 
+    def flags(self, index):
+        # If the index isnt valid, no item flags
+        if not index.isValid():
+            return Qt.NoItemFlags
+
+        # Convert from 2D index (row, column) to linear index
+        ind = index.column() + index.row() * self.columnCount()
+
+        # If the linear index is out of range, then it has no flags (cannot be selected and is disabled)
+        if ind >= len(self.resdata):
+            return Qt.NoItemFlags
+
+        return Qt.ItemIsSelectable | Qt.ItemIsEnabled | Qt.ItemNeverHasChildren
+
     def data(self, index, role = None):
         if not index.isValid() or role != Qt.DisplayRole:
             return None
@@ -113,9 +127,12 @@ class SqlTileTableModel(QAbstractTableModel):
         # Convert from 2D index (row, column) to linear index
         ind = index.column() + index.row() * self.columnCount()
 
+        print('Flags for %i %i: ' % (index.row(), index.column()))
+        print(int(self.flags(index)))
+
         # If the linear index is out of range, then return no data element there
         if ind >= len(self.resdata):
-            return QVariant()
+            return None
 
         val = self.resdata[ind][0]
 
