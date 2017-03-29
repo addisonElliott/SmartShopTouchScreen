@@ -186,7 +186,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Scan to cancel : 10</string>
+        <string>Scan to cancel</string>
        </property>
       </widget>
      </item>
@@ -225,7 +225,7 @@ border: 0;</string>
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="Resource_BY.qrc">
+        <iconset resource="../Resource_BY.qrc">
          <normaloff>:/Icons/Icons/GreenCheckIcon_Finished.png</normaloff>:/Icons/Icons/GreenCheckIcon_Finished.png</iconset>
        </property>
        <property name="iconSize">
@@ -258,7 +258,7 @@ border: 0;</string>
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="Resource_BY.qrc">
+        <iconset resource="../Resource_BY.qrc">
          <normaloff>:/Icons/Icons/RedCancelIcon_Finished.png</normaloff>:/Icons/Icons/RedCancelIcon_Finished.png</iconset>
        </property>
        <property name="iconSize">
@@ -316,8 +316,8 @@ border: 0;</string>
   </layout>
  </widget>
  <resources>
-  <include location="QDarkStylesheet/style.qrc"/>
-  <include location="Resource_BY.qrc"/>
+  <include location="../QDarkStylesheet/style.qrc"/>
+  <include location="../Resource_BY.qrc"/>
  </resources>
  <connections/>
 </ui>

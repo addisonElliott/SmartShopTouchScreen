@@ -164,7 +164,7 @@ class Ui_ExpirationBox(object):
         self.month_combo.setItemText(10, _translate("ExpirationBox", "11"))
         self.month_combo.setItemText(11, _translate("ExpirationBox", "12"))
         self.year_label.setText(_translate("ExpirationBox", "Year"))
-        self.cancel_label.setText(_translate("ExpirationBox", "Scan to cancel : 10"))
+        self.cancel_label.setText(_translate("ExpirationBox", "Scan to cancel"))
         self.qty_label.setText(_translate("ExpirationBox", "Quantity"))
         self.exp_label.setText(_translate("ExpirationBox", "Expiration Date"))
 

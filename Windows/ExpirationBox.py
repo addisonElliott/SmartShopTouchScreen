@@ -1,4 +1,4 @@
-import ExpirationBox_ui
+from Windows import ExpirationBox_ui
 from PyQt5.QtWidgets import QApplication, QWidget, QDialog
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
