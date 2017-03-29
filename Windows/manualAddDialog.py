@@ -24,8 +24,6 @@ class ManualAddDialog(QDialog, manualAddDialog_ui.Ui_ManualAddDialog):
         scroller.setupScrolling(self.categoryComboBox.view())
         self.categoryComboBox.view().setVerticalScrollMode(QAbstractItemView.ScrollPerPixel)
 
-        scroller.setupScrolling(self.quantitySpinBox, ScrollingType.SpinBox)
-
         self.updateCategories()
 
     def updateCategories(self):
@@ -56,7 +54,11 @@ class ManualAddDialog(QDialog, manualAddDialog_ui.Ui_ManualAddDialog):
 
     @pyqtSlot(bool, bool)
     def on_confirmBtn_clicked(self, checked, longPressed):
-        self.accept()
+        if (self.categoryComboBox.currentIndex() >= 0 and self.categoryComboBox.currentIndex() < len(self.categories)) \
+            and (len(self.nameEdit.text()) > 0):
+            self.accept()
+        else:
+            print('Please enter data into all of the fields to continue')
 
     @pyqtSlot(bool, bool)
     def on_cancelBtn_clicked(self, checked, longPressed):

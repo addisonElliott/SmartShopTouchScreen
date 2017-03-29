@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>487</width>
-    <height>328</height>
+    <height>240</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -52,47 +52,6 @@
    <property name="bottomMargin">
     <number>5</number>
    </property>
-   <item row="6" column="0">
-    <widget class="TouchSpinBox" name="quantitySpinBox">
-     <property name="font">
-      <font>
-       <family>Segoe UI</family>
-       <pointsize>15</pointsize>
-      </font>
-     </property>
-     <property name="mouseTracking">
-      <bool>false</bool>
-     </property>
-     <property name="focusPolicy">
-      <enum>Qt::ClickFocus</enum>
-     </property>
-     <property name="contextMenuPolicy">
-      <enum>Qt::PreventContextMenu</enum>
-     </property>
-     <property name="buttonSymbols">
-      <enum>QAbstractSpinBox::UpDownArrows</enum>
-     </property>
-     <property name="minimum">
-      <number>1</number>
-     </property>
-     <property name="maximum">
-      <number>1000000000</number>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="0">
-    <widget class="QLabel" name="label">
-     <property name="font">
-      <font>
-       <family>Segoe UI</family>
-       <pointsize>15</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>Quantity Per Package</string>
-     </property>
-    </widget>
-   </item>
    <item row="4" column="0">
     <widget class="TouchLineEdit" name="nameEdit">
      <property name="font">
@@ -125,7 +84,20 @@
      </property>
     </widget>
    </item>
-   <item row="7" column="0">
+   <item row="0" column="0">
+    <widget class="QLabel" name="label_2">
+     <property name="font">
+      <font>
+       <family>Segoe UI</family>
+       <pointsize>15</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Product Category</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <property name="spacing">
       <number>15</number>
@@ -217,19 +189,6 @@ border: 0;</string>
      </item>
     </layout>
    </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="label_2">
-     <property name="font">
-      <font>
-       <family>Segoe UI</family>
-       <pointsize>15</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>Product Category</string>
-     </property>
-    </widget>
-   </item>
    <item row="2" column="0">
     <widget class="QComboBox" name="categoryComboBox">
      <property name="font">
@@ -247,11 +206,6 @@ border: 0;</string>
    <class>TouchButton</class>
    <extends>QPushButton</extends>
    <header>Widgets/touchButton.h</header>
-  </customwidget>
-  <customwidget>
-   <class>TouchSpinBox</class>
-   <extends>QSpinBox</extends>
-   <header>Widgets/touchSpinBox.h</header>
   </customwidget>
   <customwidget>
    <class>TouchLineEdit</class>

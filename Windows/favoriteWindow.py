@@ -104,11 +104,17 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
 
         # Run the dialog, if successfully completed, then add new item to category
         if dialog.exec():
-            i = 4
+            catComboInd = dialog.categoryComboBox.currentIndex()
+            name = dialog.nameEdit.text()
+            catID = dialog.categories[catComboInd]['id']
 
+            #self.dbManager.AddItemToInventory(item)
 
+        # If the categories list that was sent to the dialog is not the same when finishing, that means a new category
+        # was added and the new category list was queried. Update the categories variable in FavoriteWindow and add the
+        # appropiate tabs
         if self.categories is not dialog.categories:
-            print('Categories changed!')
+            self.categories = dialog.categories
 
     @pyqtSlot(str)
     def primaryScanner_barcodeReceived(self, barcode):
