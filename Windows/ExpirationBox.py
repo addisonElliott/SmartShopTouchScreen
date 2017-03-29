@@ -4,6 +4,7 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from Util import constants
+from Util import scroller
 import datetime
 
 class ExpirationBox(QDialog, ExpirationBox_ui.Ui_ExpirationBox):
@@ -14,8 +15,16 @@ class ExpirationBox(QDialog, ExpirationBox_ui.Ui_ExpirationBox):
         self.config = config
         # Remove title bar
         self.setWindowFlags(Qt.FramelessWindowHint)
+
+        scroller.setupScrolling(self.month_combo.view())
+        scroller.setupScrolling(self.day_combo.view())
+        scroller.setupScrolling(self.year_combo.view())
+        scroller.setupScrolling(self.qty_combo.view())
+
         for d in range(1, 32):
             self.day_combo.addItem(str(d))
         year = datetime.datetime.now().year
         for y in range(year, year + constants.maxExpirationYear + 1):
             self.year_combo.addItem(str(y))
+        for q in range(1, 51):
+            self.qty_combo.addItem(str(q))
