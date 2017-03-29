@@ -104,11 +104,21 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
 
         # Run the dialog, if successfully completed, then add new item to category
         if dialog.exec():
-            catComboInd = dialog.categoryComboBox.currentIndex()
-            name = dialog.nameEdit.text()
-            catID = dialog.categories[catComboInd]['id']
+            item = {}
 
-            #self.dbManager.AddItemToInventory(item)
+            catComboInd = dialog.categoryComboBox.currentIndex()
+            item['name'] = dialog.nameEdit.text()
+            item['category'] = dialog.categories[catComboInd]['id']
+
+            if dialog.favoritesCheckbox.isChecked():
+                index = self.dbManager.GetFavoritesCount()
+                if index is None: # If the values are all NULL, set to 0
+                    index = 0
+
+                index += 1 # Increment index by 1
+                item['favoritesIndex'] = index
+
+            self.dbManager.AddItemToInventory(item)
 
         # If the categories list that was sent to the dialog is not the same when finishing, that means a new category
         # was added and the new category list was queried. Update the categories variable in FavoriteWindow and add the

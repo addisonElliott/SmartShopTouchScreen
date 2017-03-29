@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>487</width>
-    <height>240</height>
+    <height>286</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -97,7 +97,7 @@
      </property>
     </widget>
    </item>
-   <item row="5" column="0">
+   <item row="6" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <property name="spacing">
       <number>15</number>
@@ -199,6 +199,19 @@ border: 0;</string>
      </property>
     </widget>
    </item>
+   <item row="5" column="0">
+    <widget class="TouchCheckbox" name="favoritesCheckbox">
+     <property name="font">
+      <font>
+       <family>Segoe UI</family>
+       <pointsize>15</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Add Item to Favorites</string>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <customwidgets>
@@ -211,6 +224,11 @@ border: 0;</string>
    <class>TouchLineEdit</class>
    <extends>QLineEdit</extends>
    <header>Widgets/touchLineEdit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>TouchCheckbox</class>
+   <extends>QCheckBox</extends>
+   <header>Widgets/touchCheckbox.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>

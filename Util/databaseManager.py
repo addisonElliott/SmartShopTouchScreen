@@ -22,8 +22,26 @@ class DatabaseManager:
         return self.cursor.fetchone()
 
     def AddItemToInventory(self, item):
-        self.cursor.execute("INSERT INTO inventory (name, qty, avg_qty) VALUES (%s, %s, %s) RETURNING item",
-                            (item["name"], item["qty"], item["avgQty"]))
+        if not 'name' in item:
+            print('A valid item name must be given to add item to inventory')
+            # TODO Change to logger since print wont be seen in production
+            return -1
+
+        if not 'qty' in item:
+            item['qty'] = 0
+
+        if not 'avgQty' in item:
+            item['avgQty'] = 0
+
+        if not 'category' in item:
+            item['category'] = 1
+
+        if not 'favoritesIndex' in item:
+            item['favoritesIndex'] = None
+
+        self.cursor.execute("INSERT INTO inventory (name, qty, avg_qty, category, favorites_index) VALUES "
+                            "(%s, %s, %s, %s, %s) RETURNING item",
+                            (item["name"], item["qty"], item["avgQty"], item['category'], item['favoritesIndex']))
         id = self.cursor.fetchone()[0]
         self.connection.commit()
 
@@ -54,6 +72,11 @@ class DatabaseManager:
         self.connection.commit()
 
         return id
+
+    def GetFavoritesCount(self):
+        self.cursor.execute("SELECT MAX(favorites_index) FROM inventory")
+
+        return self.cursor.fetchone()[0]
 
     def GetCategory(self, id):
         self.cursor.execute("SELECT * FROM category WHERE id = %s", (id,))

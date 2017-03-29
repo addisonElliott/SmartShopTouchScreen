@@ -12,7 +12,7 @@ class Ui_ManualAddDialog(object):
     def setupUi(self, ManualAddDialog):
         ManualAddDialog.setObjectName("ManualAddDialog")
         ManualAddDialog.setWindowModality(QtCore.Qt.ApplicationModal)
-        ManualAddDialog.resize(487, 240)
+        ManualAddDialog.resize(487, 286)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Maximum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -85,7 +85,7 @@ class Ui_ManualAddDialog(object):
         self.cancelBtn.setIconSize(QtCore.QSize(48, 48))
         self.cancelBtn.setObjectName("cancelBtn")
         self.horizontalLayout_2.addWidget(self.cancelBtn)
-        self.gridLayout.addLayout(self.horizontalLayout_2, 5, 0, 1, 1)
+        self.gridLayout.addLayout(self.horizontalLayout_2, 6, 0, 1, 1)
         self.categoryComboBox = QtWidgets.QComboBox(ManualAddDialog)
         font = QtGui.QFont()
         font.setFamily("Segoe UI")
@@ -93,6 +93,13 @@ class Ui_ManualAddDialog(object):
         self.categoryComboBox.setFont(font)
         self.categoryComboBox.setObjectName("categoryComboBox")
         self.gridLayout.addWidget(self.categoryComboBox, 2, 0, 1, 1)
+        self.favoritesCheckbox = TouchCheckbox(ManualAddDialog)
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(15)
+        self.favoritesCheckbox.setFont(font)
+        self.favoritesCheckbox.setObjectName("favoritesCheckbox")
+        self.gridLayout.addWidget(self.favoritesCheckbox, 5, 0, 1, 1)
 
         self.retranslateUi(ManualAddDialog)
         QtCore.QMetaObject.connectSlotsByName(ManualAddDialog)
@@ -105,8 +112,10 @@ class Ui_ManualAddDialog(object):
         ManualAddDialog.setWindowTitle(_translate("ManualAddDialog", "Dialog"))
         self.label_3.setText(_translate("ManualAddDialog", "Item Name"))
         self.label_2.setText(_translate("ManualAddDialog", "Product Category"))
+        self.favoritesCheckbox.setText(_translate("ManualAddDialog", "Add Item to Favorites"))
 
 from Widgets.touchButton import TouchButton
+from Widgets.touchCheckbox import TouchCheckbox
 from Widgets.touchLineEdit import TouchLineEdit
 import Resource_BY_rc
 import style_rc
