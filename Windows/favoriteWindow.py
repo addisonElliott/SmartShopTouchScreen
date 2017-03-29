@@ -38,8 +38,13 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
         self.favoritesTabModel.setItem(1, 3, QStandardItem("OOOOOOOOO OOOOOOOO"))
         self.favoritesTabModel.setItem(1, 4, QStandardItem("OOOOOOOO OOOOOOO"))
 
+        # Set Favorite's View to have model
         self.favoritesTableView.setModel(self.favoritesTabModel)
+        # Setup kinetic scrolling on favorite's table view (can use touchscreen to flick and scroll like on phones)
         scroller.setupScrolling(self.favoritesTableView)
+        # Connect selectItem function to the selectionChanged signal that is triggered when an item is deselected or
+        # selected
+        self.favoritesTableView.selectionModel().selectionChanged.connect(self.selectItem)
 
         # Create an empty tabDict which will contain a dictionary for each tab in the window, query all categories and
         # add each tab to the window
@@ -47,6 +52,10 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
         self.categories = self.dbManager.GetCategories(True)
         for category in self.categories:
             self.addTab(category['id'], category['name'])
+
+        # Enable the add and remove button because they are only shown when items are selected on the current tab
+        self.addBtn.setEnabled(False)
+        self.removeBtn.setEnabled(False)
 
     def addTab(self, id, name):
         newTab = CategoryTab(QWidget(self.categoryTabWidget))
@@ -74,10 +83,34 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
         newTab.listModel = SqlTableModel(self.dbManager.connection, 'inventory', 'name', Qt.AscendingOrder, 'category=%s',
                                          (id,), ('name',))
         newTab.listView.setModel(newTab.listModel)
+        newTab.listView.selectionModel().selectionChanged.connect(self.selectItem)
 
         # Add tab to tab widget as well as the tabDict variable
         self.categoryTabWidget.addTab(newTab.widget, name)
         self.tabDict[id] = newTab
+
+    @pyqtSlot()
+    def selectItem(self):
+        hasSelection = not self.sender().selection().isEmpty()
+        self.addBtn.setEnabled(hasSelection)
+        self.removeBtn.setEnabled(hasSelection)
+
+    @pyqtSlot(int)
+    def on_categoryTabWidget_currentChanged(self, index):
+        # If the index is zero, this get the selection model for the favorite's tab, otherwise, get the selection model
+        # for the indexed tab.
+        if index == 0:
+            selectionModel = self.favoritesTableView.selectionModel()
+        else:
+            # Get category ID by looking up index in categories variable
+            categoryID = self.categories[index - 1]['id']
+
+            # Get selection model based on category ID
+            selectionModel = self.tabDict[categoryID].listView.selectionModel()
+
+        hasSelection = not selectionModel.selection().isEmpty()
+        self.addBtn.setEnabled(hasSelection)
+        self.removeBtn.setEnabled(hasSelection)
 
     @pyqtSlot()
     def showEvent(self, event):
