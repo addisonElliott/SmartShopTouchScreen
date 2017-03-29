@@ -101,7 +101,14 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
     @pyqtSlot()
     def on_listAddBtn_clicked(self):
         dialog = ManualAddDialog(self.config, self.dbManager, self.categories, self)
-        dialog.exec()
+
+        # Run the dialog, if successfully completed, then add new item to category
+        if dialog.exec():
+            i = 4
+
+
+        if self.categories is not dialog.categories:
+            print('Categories changed!')
 
     @pyqtSlot(str)
     def primaryScanner_barcodeReceived(self, barcode):
