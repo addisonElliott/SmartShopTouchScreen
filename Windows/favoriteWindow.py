@@ -7,13 +7,15 @@ from Windows.centralWindow import *
 from Windows import favoriteWindow_ui
 from Util import constants, scroller
 from Util.enums import *
+from Util.SqlTableModel import *
 
 class CategoryTab():
-    __slots__ = ['widget', 'horizontalLayout', 'listView']
-    def __init__(self, widget = None, horizontalLayout = None, listView = None):
+    __slots__ = ['widget', 'horizontalLayout', 'listView', 'listModel']
+    def __init__(self, widget = None, horizontalLayout = None, listView = None, listModel = None):
         self.widget = widget
         self.horizontalLayout = horizontalLayout
         self.listView = listView
+        self.listModel = listModel
 
 class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
     def __init__(self, centralWindow, config, dbManager, parent=None):
@@ -69,17 +71,13 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
         newTab.listView.setHorizontalScrollMode(QAbstractItemView.ScrollPerPixel)
         newTab.horizontalLayout.addWidget(newTab.listView)
 
+        newTab.listModel = SqlTableModel(self.dbManager.connection, 'inventory', 'name', Qt.AscendingOrder, 'category=%s',
+                                         (id,), ('name',))
+        newTab.listView.setModel(newTab.listModel)
+
         # Add tab to tab widget as well as the tabDict variable
         self.categoryTabWidget.addTab(newTab.widget, name)
         self.tabDict[id] = newTab
-
-        # Replace the string list with the actual SQL model of the database
-
-        # Set list view to have model to display items
-        self.stringList = QStringListModel(self)
-        self.stringList.setStringList(['One', 'Two', 'Three', 'Four', 'Five'])
-
-        newTab.listView.setModel(self.stringList)
 
     @pyqtSlot()
     def showEvent(self, event):
