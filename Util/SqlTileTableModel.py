@@ -5,12 +5,13 @@ from psycopg2.extensions import AsIs
 import psycopg2
 import datetime
 from decimal import Decimal
+import math
 
 
-class SqlTableModel(QAbstractTableModel):
+class SqlTileTableModel(QAbstractTableModel):
     def __init__(self, connection, tableName = None, columnSortName = None, columnSortOrder = None, filter = None,
-                 filterArgs = [], fields = None, parent = None):
-        super(SqlTableModel, self).__init__(parent)
+                 filterArgs = [], fields = None, columnsPerRow = 5, parent = None):
+        super(SqlTileTableModel, self).__init__(parent)
 
         self.tableName = tableName
         self.columnSortName = columnSortName
@@ -18,13 +19,13 @@ class SqlTableModel(QAbstractTableModel):
         self.filter = filter
         self.filterArgs = filterArgs
         self.fields = fields
+        self.columnsPerRow = columnsPerRow
 
         self.connection = connection
         # Create cursor for SqlTableModel
         self.cursor = self.connection.cursor()
 
         self.resdata = []
-        self.header = []
 
         # Execute the select statement if a table name was given
         if tableName is not None:
@@ -39,7 +40,6 @@ class SqlTableModel(QAbstractTableModel):
         self.cursor.execute(sql, self.filterArgs)
 
         self.resdata = self.cursor.fetchall()
-        self.header = [desc[0] for desc in self.cursor.description]
         self.endResetModel()
         return True
 
@@ -98,34 +98,40 @@ class SqlTableModel(QAbstractTableModel):
             return firstRun
 
     def rowCount(self, parent = None):
-        return len(self.resdata)
+        # Number of rows is the total data divided by columns per row rounded up
+        return math.ceil(len(self.resdata) / self.columnsPerRow)
 
     def columnCount(self, parent = None):
-        return len(self.header)
+        # The number of columns per row is a fixed number but do a min between the length of the data because if there
+        # is not at least columnsPerRow data elements, then just set the column count to that
+        return min(len(self.resdata), self.columnsPerRow)
 
     def data(self, index, role = None):
-        if role != Qt.DisplayRole:
+        if not index.isValid() or role != Qt.DisplayRole:
             return None
 
-        val = self.resdata[index.row()][index.column()]
+        # Convert from 2D index (row, column) to linear index
+        ind = index.column() + index.row() * self.columnCount()
+
+        # If the linear index is out of range, then return no data element there
+        if ind >= len(self.resdata):
+            return QVariant()
+
+        val = self.resdata[ind][0]
 
         if val is None:
-            return None
+            return QVariant("NULL")
         elif isinstance(val, Decimal):
             # make sure to convert special classes (otherwise it is user type in QVariant)
-            return str(val)
+            return QVariant(str(val))
         elif isinstance(val, datetime.datetime):
-            return str(val)
+            return QVariant(str(val))
         else:
-            return val
+            return QVariant(val)
 
     def headerData(self, section, orientation, role):
         if role != Qt.DisplayRole:
-            return None
+            return None()
 
-        if orientation == Qt.Vertical:
-            # header for a row
-            return section + 1
-        else:
-            # header for a column
-            return self.header[section]
+        # Header data means nothing, just set it to the section # (one-indexed)
+        return section + 1
