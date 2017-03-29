@@ -42,10 +42,6 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
     @pyqtSlot()
     def on_SettingsButton_clicked(self):
         self.centralWindow.close()
-#    @pyqtSlot()
-#    def on_SettingsButton_clicked(self):
-#        thing = ExpirationBox(self.config)
-#        thing.exec()
 
     @pyqtSlot()
     def scannerPoll_ticked(self):
