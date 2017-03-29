@@ -14,6 +14,6 @@ class TouchLineEdit(QLineEdit):
 
         # If the virtual keyboard is not visible or non-existent, then create it and show it
         if self.virtualKb is None or not self.virtualKb.isVisible():
-            self.virtualKb = VirtualKeyboard(self)
+            self.virtualKb = VirtualKeyboard(self, self)
             self.virtualKb.show()
             self.virtualKb.raise_()

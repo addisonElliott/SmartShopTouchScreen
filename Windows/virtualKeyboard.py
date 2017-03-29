@@ -8,20 +8,21 @@ from Util.enums import *
 
 
 class VirtualKeyboard(QDialog, virtualKeyboard_ui.Ui_VirtualKeyboard):
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, lineEdit=None):
         super(VirtualKeyboard, self).__init__(parent)
         self.setupUi(self)
 
         # Move dialog to the top left corner of page
         self.move(0, 0)
 
-        self.parentLineEdit = parent
-        self.lineEdit.setAlignment(self.parentLineEdit.alignment())
-        self.lineEdit.setCompleter(self.parentLineEdit.completer())
-        self.lineEdit.setEchoMode(self.parentLineEdit.echoMode())
-        self.lineEdit.setMaxLength(self.parentLineEdit.maxLength())
-        self.lineEdit.setValidator(self.parentLineEdit.validator())
-        self.lineEdit.setText(self.parentLineEdit.text())
+        self.parentLineEdit = lineEdit
+        if self.parentLineEdit:
+            self.lineEdit.setAlignment(self.parentLineEdit.alignment())
+            self.lineEdit.setCompleter(self.parentLineEdit.completer())
+            self.lineEdit.setEchoMode(self.parentLineEdit.echoMode())
+            self.lineEdit.setMaxLength(self.parentLineEdit.maxLength())
+            self.lineEdit.setValidator(self.parentLineEdit.validator())
+            self.lineEdit.setText(self.parentLineEdit.text())
 
         # Remove title bar
         self.setWindowFlags(Qt.Dialog | Qt.FramelessWindowHint)
@@ -83,22 +84,52 @@ class VirtualKeyboard(QDialog, virtualKeyboard_ui.Ui_VirtualKeyboard):
         for buttonInfo in self.layout:
             buttonInfo[0].pressed.connect(self.characterPressed)
 
+    def closeDialog(self, saveText=True):
+        # Only set text variable if supposed to save text
+        if saveText:
+            self.text = self.lineEdit.text()
+
+        if self.isModal():
+            # If the dialog box is modal, then set the text variable to the current text in the line edit. Also, if the
+            # text is empty (len = 0), then cancel the box, otherwise accept it. Also, if saveText is false, then close
+            # the dialog box
+            if len(self.text) > 0 and not saveText:
+                self.accept()
+            else:
+                self.close()
+        else:
+            self.hide()
+
+            if self.parentLineEdit:
+                self.parentLineEdit.clearFocus()
+
+                # Only set the parent line edit to the text if supposed to save the text
+                if saveText:
+                    self.parentLineEdit.setText(self.lineEdit.text())
+
     def changeEvent(self, event):
         super(VirtualKeyboard, self).changeEvent(event)
+
+        if self.isModal():
+            return
 
         # If this dialog window is not active, hide it and clear focus to the parent widget so that it wont pop up
         # immediately after hiding this dialog
         if event.type() == QEvent.ActivationChange:
             if not self.isActiveWindow():
-                self.hide()
-                self.parentWidget().clearFocus()
-                self.parentWidget().setText(self.lineEdit.text())
+                self.closeDialog()
 
     @pyqtSlot(bool, bool)
     def on_enterBtn_clicked(self, checked, longPressed):
-        self.hide()
-        self.parentWidget().clearFocus()
-        self.parentWidget().setText(self.lineEdit.text())
+        self.closeDialog()
+
+    @pyqtSlot(bool, bool)
+    def on_confirmBtn_clicked(self, checked, longPressed):
+        self.closeDialog()
+
+    @pyqtSlot(bool, bool)
+    def on_cancelBtn_clicked(self, checked, longPressed):
+        self.closeDialog(False)
 
     @pyqtSlot(bool, bool)
     def on_leftShiftBtn_clicked(self, checked, longPressed):

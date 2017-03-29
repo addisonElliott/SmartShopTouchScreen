@@ -28,3 +28,6 @@ dbUsername = "jacob"
 dbPassword = "password"
 dbHost = "addison404project.ddns.net"
 dbPort = "5432"
+
+# Maximum length that a category name can be
+maxCategoryNameLength = 20
