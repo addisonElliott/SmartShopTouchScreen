@@ -26,6 +26,11 @@ class ManualAddDialog(QDialog, manualAddDialog_ui.Ui_ManualAddDialog):
 
         scroller.setupScrolling(self.quantitySpinBox, ScrollingType.SpinBox)
 
+        self.updateCategories()
+
+    def updateCategories(self):
+        self.categoryComboBox.clear()
+
         for category in self.categories:
             self.categoryComboBox.addItem(category['name'])
         self.categoryComboBox.addItem('<New Category>')
@@ -39,8 +44,15 @@ class ManualAddDialog(QDialog, manualAddDialog_ui.Ui_ManualAddDialog):
             self.virtualKb.lineEdit.setMaxLength(constants.maxCategoryNameLength)
 
             # If the user successfully closes the keyboard, then add the category
-            if self.virtualKb.exec():
-                i = 4
+            if self.virtualKb.exec() == QDialog.Accepted:
+                self.dbManager.AddCategory(self.virtualKb.text)
+
+                # Query db for categories since a new one was added, update combobox since new category added
+                self.categories = self.dbManager.GetCategories(True)
+                self.updateCategories()
+
+            # Set current index to be the added category
+            self.categoryComboBox.setCurrentIndex(self.categoryComboBox.count() - 2)
 
     @pyqtSlot(bool, bool)
     def on_confirmBtn_clicked(self, checked, longPressed):

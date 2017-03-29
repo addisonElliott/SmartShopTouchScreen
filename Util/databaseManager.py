@@ -43,6 +43,18 @@ class DatabaseManager:
         self.cursor.execute("UPDATE inventory SET qty = %s WHERE item = %s", (inventoryItem[0] - qty, item[0]))
         self.connection.commit()
 
+    def AddCategory(self, name, order_index = -1):
+        if order_index == -1:
+            self.cursor.execute("SELECT COUNT(*) FROM category")
+            numRows = self.cursor.fetchone()[0]
+            order_index = numRows + 1
+
+        self.cursor.execute("INSERT INTO category (name, order_index) VALUES (%s, %s) RETURNING id", (name, order_index))
+        id = self.cursor.fetchone()[0]
+        self.connection.commit()
+
+        return id
+
     def GetCategory(self, id):
         self.cursor.execute("SELECT * FROM category WHERE id = %s", (id,))
 

@@ -53,7 +53,7 @@ class VirtualKeyboard(QDialog, virtualKeyboard_ui.Ui_VirtualKeyboard):
          [self.uBtn,                ['u', 'U', 'U']],
          [self.iBtn,                ['i', 'I', 'I']],
          [self.oBtn,                ['o', 'O', 'O']],
-         [self.pBtn,                ['w', 'W', 'W']],
+         [self.pBtn,                ['p', 'P', 'P']],
          [self.leftBraceBtn,        ['[', '{', '[']],
          [self.rightBraceBtn,       [']', '}', ']']],
          [self.backSlashBtn,        ['\\', '|', '\\']],
@@ -85,15 +85,14 @@ class VirtualKeyboard(QDialog, virtualKeyboard_ui.Ui_VirtualKeyboard):
             buttonInfo[0].pressed.connect(self.characterPressed)
 
     def closeDialog(self, saveText=True):
-        # Only set text variable if supposed to save text
-        if saveText:
-            self.text = self.lineEdit.text()
+        # Set text variable regardless if execution was successful
+        self.text = self.lineEdit.text()
 
         if self.isModal():
             # If the dialog box is modal, then set the text variable to the current text in the line edit. Also, if the
             # text is empty (len = 0), then cancel the box, otherwise accept it. Also, if saveText is false, then close
             # the dialog box
-            if len(self.text) > 0 and not saveText:
+            if len(self.text) > 0 and saveText:
                 self.accept()
             else:
                 self.close()
