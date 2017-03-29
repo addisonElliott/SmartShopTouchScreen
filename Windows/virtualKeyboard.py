@@ -24,6 +24,9 @@ class VirtualKeyboard(QDialog, virtualKeyboard_ui.Ui_VirtualKeyboard):
             self.lineEdit.setValidator(self.parentLineEdit.validator())
             self.lineEdit.setText(self.parentLineEdit.text())
 
+        # Give focus to the line edit so you can see where the caret is located
+        self.lineEdit.setFocus()
+
         # Remove title bar
         self.setWindowFlags(Qt.Dialog | Qt.FramelessWindowHint)
 

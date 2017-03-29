@@ -119,6 +119,11 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
 
             self.dbManager.AddItemToInventory(item)
 
+            # If the category currently exists (check tabDict for the id), then refresh the list model by calling select
+            # Otherwise, the category will be added later on and it will automatically be updated on creation
+            if item['category'] in self.tabDict:
+                self.tabDict[item['category']].listModel.select()
+
         # If the categories list that was sent to the dialog is not the same when finishing, that means a new category
         # was added and the new category list was queried. Update the categories variable in FavoriteWindow and add the
         # appropiate tabs
