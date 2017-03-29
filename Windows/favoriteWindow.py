@@ -73,6 +73,8 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
         self.categoryTabWidget.addTab(newTab.widget, name)
         self.tabDict[id] = newTab
 
+        # Replace the string list with the actual SQL model of the database
+
         # Set list view to have model to display items
         self.stringList = QStringListModel(self)
         self.stringList.setStringList(['One', 'Two', 'Three', 'Four', 'Five'])
@@ -88,7 +90,6 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
     def hideEvent(self, event):
         self.centralWindow.primaryScanner.barcodeReceived.disconnect(self.primaryScanner_barcodeReceived)
         self.centralWindow.secondaryScanner.barcodeReceived.disconnect(self.secondaryScanner_barcodeReceived)
-        print('This widget is being hidden. Handle anything necessary. Favorite Window')
 
     @pyqtSlot()
     def on_backBtn_clicked(self):
@@ -125,6 +126,10 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
         # appropiate tabs
         if self.categories is not dialog.categories:
             self.categories = dialog.categories
+
+            for category in self.categories:
+                if not category['id'] in self.tabDict:
+                    self.addTab(category['id'], category['name'])
 
     @pyqtSlot(str)
     def primaryScanner_barcodeReceived(self, barcode):
