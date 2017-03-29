@@ -39,13 +39,13 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
     def on_ManualAddButton_clicked(self):
         self.parent().setCurrentIndex(WindowType.Favorites)
 
-#    @pyqtSlot()
-#    def on_SettingsButton_clicked(self):
-#        self.centralWindow.close()
     @pyqtSlot()
     def on_SettingsButton_clicked(self):
-        thing = ExpirationBox(self.config)
-        thing.exec()
+        self.centralWindow.close()
+#    @pyqtSlot()
+#    def on_SettingsButton_clicked(self):
+#        thing = ExpirationBox(self.config)
+#        thing.exec()
 
     @pyqtSlot()
     def scannerPoll_ticked(self):
