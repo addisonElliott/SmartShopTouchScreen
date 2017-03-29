@@ -99,7 +99,11 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
 
     @pyqtSlot()
     def on_listAddBtn_clicked(self):
-        dialog = ManualAddDialog(self.config, self.dbManager, self.categories, self)
+        # Create a ManualAddDialog, pass the configuration variables such as config, dbManager and categories
+        # The category combo box in the dialog will be set to the currently selected tab in the Favorite's Menu. However,
+        # if the currently selected tab is the favorite's, then it will default to the first category
+        dialog = ManualAddDialog(self.config, self.dbManager, self.categories,
+                                 max(self.categoryTabWidget.currentIndex() - 1, 0), self)
 
         # Run the dialog, if successfully completed, then add new item to category
         if dialog.exec():

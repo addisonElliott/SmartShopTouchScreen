@@ -10,7 +10,7 @@ from Util import constants
 
 
 class ManualAddDialog(QDialog, manualAddDialog_ui.Ui_ManualAddDialog):
-    def __init__(self, config, dbManager, categories, parent=None):
+    def __init__(self, config, dbManager, categories, currentCategory = 0, parent=None):
         super(ManualAddDialog, self).__init__(parent)
         self.setupUi(self)
 
@@ -25,6 +25,7 @@ class ManualAddDialog(QDialog, manualAddDialog_ui.Ui_ManualAddDialog):
         self.categoryComboBox.view().setVerticalScrollMode(QAbstractItemView.ScrollPerPixel)
 
         self.updateCategories()
+        self.categoryComboBox.setCurrentIndex(currentCategory)
 
     def updateCategories(self):
         self.categoryComboBox.clear()
