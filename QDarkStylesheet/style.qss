@@ -994,6 +994,10 @@ QTableView, QHeaderView
     border-radius: 0px;
 }
 
+QTableView:active, QListView:active {
+	border: 0px;
+}
+
 QTableView::item:pressed, QListView::item:pressed, QTreeView::item:pressed  {
     background: #768289;
     color: #eff0f1;
@@ -1007,7 +1011,6 @@ QTableView::item:selected, QTreeView::item:selected, QListView::item:selected  {
 QTableView::item:focus, QTreeView::item:focus, QListView::item:focus {
 	border: 0px;
 }
-
 
 QHeaderView
 {

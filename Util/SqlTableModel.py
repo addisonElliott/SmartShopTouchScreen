@@ -10,7 +10,8 @@ from decimal import Decimal
 
 class SqlTableModel(QAbstractTableModel):
     def __init__(self, connection, tableName = None, columnSortName = None, columnSortOrder = None, filter = None,
-                 filterArgs = [], fields = None, displayColumnMapping = None, displayHeaders = None, parent = None):
+                 filterArgs = [], fields = None, displayColumnMapping = None, displayHeaders = None, customQuery = None,
+                 parent = None):
         super(SqlTableModel, self).__init__(parent)
 
         self.tableName = tableName
@@ -21,6 +22,8 @@ class SqlTableModel(QAbstractTableModel):
         self.fields = fields
         self.displayColumnMapping = displayColumnMapping
         self.displayHeaders = displayHeaders
+        self.customQuery = customQuery
+        self.columnAlignment = None
 
         self.connection = connection
         # Create cursor for SqlTableModel
@@ -29,9 +32,11 @@ class SqlTableModel(QAbstractTableModel):
         self.resdata = []
         self.header = []
 
-        # Execute the select statement if a table name was given
-        if tableName is not None:
+        # Execute the select statement if a table name was given or a custom query was given
+        # If the select statement is executed, initialize the columnAlignment array to be all left-aligned
+        if tableName is not None or customQuery is not None:
             self.select()
+            self.columnAlignment = [Qt.AlignLeft] * self.columnCount()
 
     def select(self):
         sql = self.selectStatement(False)
@@ -75,6 +80,13 @@ class SqlTableModel(QAbstractTableModel):
     def setDisplayHeaders(self, displayHeaders):
         self.displayHeaders = displayHeaders
 
+    def setCustomQuery(self, query = None):
+        self.customQuery = query
+
+    def setColumnAlignment(self, column, alignment):
+        if column >= 0 and column < self.columnCount():
+            self.columnAlignment[column] = alignment
+
     def getSelectedRecord(self, index):
         if not index.isValid() and index.row() >= len(self.resdata):
             return None
@@ -90,6 +102,9 @@ class SqlTableModel(QAbstractTableModel):
         return records
 
     def selectStatement(self, runTwice = True):
+        if self.customQuery is not None:
+            return self.customQuery
+
         if self.tableName is None:
             print('No table name. Cannot get select statement')
             return None
@@ -127,6 +142,9 @@ class SqlTableModel(QAbstractTableModel):
         return len(self.header) if self.displayColumnMapping is None else len(self.displayColumnMapping)
 
     def data(self, index, role = None):
+        if role == Qt.TextAlignmentRole and self.columnAlignment is not None:
+            return self.columnAlignment[index.column()]
+
         if role != Qt.DisplayRole:
             return None
 
@@ -137,6 +155,8 @@ class SqlTableModel(QAbstractTableModel):
             return None
         elif isinstance(val, Decimal):
             # make sure to convert special classes (otherwise it is user type in QVariant)
+            return str(val)
+        elif isinstance(val, datetime.date):
             return str(val)
         elif isinstance(val, datetime.datetime):
             return str(val)

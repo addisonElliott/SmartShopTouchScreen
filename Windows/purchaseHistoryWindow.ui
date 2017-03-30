@@ -190,6 +190,17 @@ border: 0;</string>
        <pointsize>21</pointsize>
       </font>
      </property>
+     <property name="styleSheet">
+      <string notr="true">QTableView::item {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+QTableView::item:focus {
+	padding-left: 5px;
+	padding-right: 5px;
+}</string>
+     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -213,6 +224,9 @@ border: 0;</string>
      </property>
      <property name="alternatingRowColors">
       <bool>true</bool>
+     </property>
+     <property name="selectionMode">
+      <enum>QAbstractItemView::NoSelection</enum>
      </property>
      <property name="selectionBehavior">
       <enum>QAbstractItemView::SelectRows</enum>

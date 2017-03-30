@@ -86,6 +86,15 @@ class Ui_PurchaseHistoryWindow(object):
         font.setFamily("Segoe UI")
         font.setPointSize(21)
         self.historyView.setFont(font)
+        self.historyView.setStyleSheet("QTableView::item {\n"
+"    padding-left: 5px;\n"
+"    padding-right: 5px;\n"
+"}\n"
+"\n"
+"QTableView::item:focus {\n"
+"    padding-left: 5px;\n"
+"    padding-right: 5px;\n"
+"}")
         self.historyView.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.historyView.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.historyView.setLineWidth(3)
@@ -94,6 +103,7 @@ class Ui_PurchaseHistoryWindow(object):
         self.historyView.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
         self.historyView.setProperty("showDropIndicator", False)
         self.historyView.setAlternatingRowColors(True)
+        self.historyView.setSelectionMode(QtWidgets.QAbstractItemView.NoSelection)
         self.historyView.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
         self.historyView.setVerticalScrollMode(QtWidgets.QAbstractItemView.ScrollPerPixel)
         self.historyView.setHorizontalScrollMode(QtWidgets.QAbstractItemView.ScrollPerPixel)

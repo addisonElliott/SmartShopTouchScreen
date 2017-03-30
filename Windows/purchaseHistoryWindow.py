@@ -20,9 +20,23 @@ class PurchaseHistoryWindow(QWidget, purchaseHistoryWindow_ui.Ui_PurchaseHistory
         self.config = config
         self.dbManager = dbManager
 
-        #self.model = SqlTableModel(self.dbManager.connection, 'purchase_history', '')
+        self.model = SqlTableModel(self.dbManager.connection, displayColumnMapping = (2, 0, 1),
+                    displayHeaders=('Name', 'Purchase Date', 'Qty'),
+                    customQuery = 'SELECT date, qty, '
+                    '(SELECT name FROM inventory WHERE item = history.item) AS name FROM purchase_history history '
+                    'ORDER BY date DESC;')
+        self.model.setColumnAlignment(1, Qt.AlignCenter)
+        self.model.setColumnAlignment(2, Qt.AlignCenter)
 
-        #scroller.setupScrolling(self.favoritesTableView)
+        self.historyView.setModel(self.model)
+
+        # Set the name column to stretch to fill the area while the qty column is resized to contents
+        self.historyView.horizontalHeader().setStretchLastSection(False)
+        self.historyView.horizontalHeader().setSectionResizeMode(2, QHeaderView.ResizeToContents)
+        self.historyView.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
+        self.historyView.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
+
+        scroller.setupScrolling(self.historyView)
 
     @pyqtSlot()
     def showEvent(self, event):
