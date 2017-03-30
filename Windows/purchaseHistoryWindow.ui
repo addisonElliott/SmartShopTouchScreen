@@ -192,11 +192,7 @@ border: 0;</string>
      </property>
      <property name="styleSheet">
       <string notr="true">QTableView::item {
-	padding-left: 5px;
-	padding-right: 5px;
-}
-
-QTableView::item:focus {
+	border: 0px;
 	padding-left: 5px;
 	padding-right: 5px;
 }</string>
@@ -239,6 +235,9 @@ QTableView::item:focus {
      </property>
      <property name="sortingEnabled">
       <bool>true</bool>
+     </property>
+     <property name="wordWrap">
+      <bool>false</bool>
      </property>
      <attribute name="verticalHeaderVisible">
       <bool>false</bool>

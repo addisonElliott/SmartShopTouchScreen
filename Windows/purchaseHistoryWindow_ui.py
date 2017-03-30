@@ -87,11 +87,7 @@ class Ui_PurchaseHistoryWindow(object):
         font.setPointSize(21)
         self.historyView.setFont(font)
         self.historyView.setStyleSheet("QTableView::item {\n"
-"    padding-left: 5px;\n"
-"    padding-right: 5px;\n"
-"}\n"
-"\n"
-"QTableView::item:focus {\n"
+"    border: 0px;\n"
 "    padding-left: 5px;\n"
 "    padding-right: 5px;\n"
 "}")
@@ -108,6 +104,7 @@ class Ui_PurchaseHistoryWindow(object):
         self.historyView.setVerticalScrollMode(QtWidgets.QAbstractItemView.ScrollPerPixel)
         self.historyView.setHorizontalScrollMode(QtWidgets.QAbstractItemView.ScrollPerPixel)
         self.historyView.setSortingEnabled(True)
+        self.historyView.setWordWrap(False)
         self.historyView.setObjectName("historyView")
         self.historyView.verticalHeader().setVisible(False)
         self.historyView.verticalHeader().setDefaultSectionSize(45)
