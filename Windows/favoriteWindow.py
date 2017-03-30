@@ -91,6 +91,9 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
         newTab.listView.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
         newTab.listView.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
 
+        # Setup kinetic scrolling on category listView
+        scroller.setupScrolling(newTab.listView)
+
         # Add tab to tab widget as well as the tabDict variable
         self.categoryTabWidget.addTab(newTab.widget, name)
         self.tabDict[id] = newTab
