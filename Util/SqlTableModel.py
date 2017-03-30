@@ -3,13 +3,14 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from psycopg2.extensions import AsIs
 import psycopg2
+from psycopg2.extras import DictCursor
 import datetime
 from decimal import Decimal
 
 
 class SqlTableModel(QAbstractTableModel):
     def __init__(self, connection, tableName = None, columnSortName = None, columnSortOrder = None, filter = None,
-                 filterArgs = [], fields = None, parent = None):
+                 filterArgs = [], fields = None, displayColumnMapping = None, parent = None):
         super(SqlTableModel, self).__init__(parent)
 
         self.tableName = tableName
@@ -18,10 +19,11 @@ class SqlTableModel(QAbstractTableModel):
         self.filter = filter
         self.filterArgs = filterArgs
         self.fields = fields
+        self.displayColumnMapping = displayColumnMapping
 
         self.connection = connection
         # Create cursor for SqlTableModel
-        self.cursor = self.connection.cursor()
+        self.cursor = self.connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
         self.resdata = []
         self.header = []
@@ -66,6 +68,23 @@ class SqlTableModel(QAbstractTableModel):
     def setFields(self, fields):
         self.fields = fields
 
+    def setDisplayColumnMapping(self, displayColumnMapping):
+        self.displayColumnMapping = displayColumnMapping
+
+    def getSelectedRecord(self, index):
+        if not index.isValid() and index.row() >= len(self.resdata):
+            return None
+
+        return self.resdata[index.row()]
+
+    def getSelectedRecords(self, indexes):
+        records = []
+        for index in indexes:
+            if index.isValid() and index.row() < len(self.resdata):
+                records.append(self.resdata[index.row()])
+
+        return records
+
     def selectStatement(self, runTwice = True):
         if self.tableName is None:
             print('No table name. Cannot get select statement')
@@ -107,7 +126,8 @@ class SqlTableModel(QAbstractTableModel):
         if role != Qt.DisplayRole:
             return None
 
-        val = self.resdata[index.row()][index.column()]
+        columnIndex = index.column() if self.displayColumnMapping is None else self.displayColumnMapping[index.column()]
+        val = self.resdata[index.row()][columnIndex]
 
         if val is None:
             return None
@@ -128,4 +148,4 @@ class SqlTableModel(QAbstractTableModel):
             return section + 1
         else:
             # header for a column
-            return self.header[section]
+            return self.header[section] if self.displayColumnMapping is None else self.header[self.displayColumnMapping[section]]

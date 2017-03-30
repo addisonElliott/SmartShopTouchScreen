@@ -31,7 +31,8 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
         self.dbManager = dbManager
 
         self.favoritesTabModel = SqlTileTableModel(self.dbManager.connection, 'inventory', 'favorites_index',
-                                                    Qt.AscendingOrder, 'favorites_index IS NOT NULL', (1,), ('name',))
+                                                    Qt.AscendingOrder, 'favorites_index IS NOT NULL', (1,),
+                                                    ('item', 'name', 'qty'), 5, 1)
 
         # Set Favorite's View to have model
         self.favoritesTableView.setModel(self.favoritesTabModel)
@@ -40,6 +41,8 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
         # Connect selectItem function to the selectionChanged signal that is triggered when an item is deselected or
         # selected
         self.favoritesTableView.selectionModel().selectionChanged.connect(self.selectItem)
+        # Set the current selection model to be the favorite's tab selection model
+        self.currentSelectionModel = self.favoritesTableView.selectionModel()
 
         # Create an empty tabDict which will contain a dictionary for each tab in the window, query all categories and
         # add each tab to the window
@@ -76,7 +79,7 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
         newTab.horizontalLayout.addWidget(newTab.listView)
 
         newTab.listModel = SqlTableModel(self.dbManager.connection, 'inventory', 'name', Qt.AscendingOrder, 'category=%s',
-                                         (id,), ('name',))
+                                         (id,), ('item', 'name', 'qty'), (1,))
         newTab.listView.setModel(newTab.listModel)
         newTab.listView.selectionModel().selectionChanged.connect(self.selectItem)
 
@@ -95,15 +98,15 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
         # If the index is zero, this get the selection model for the favorite's tab, otherwise, get the selection model
         # for the indexed tab.
         if index == 0:
-            selectionModel = self.favoritesTableView.selectionModel()
+            self.currentSelectionModel = self.favoritesTableView.selectionModel()
         else:
             # Get category ID by looking up index in categories variable
             categoryID = self.categories[index - 1]['id']
 
             # Get selection model based on category ID
-            selectionModel = self.tabDict[categoryID].listView.selectionModel()
+            self.currentSelectionModel = self.tabDict[categoryID].listView.selectionModel()
 
-        hasSelection = not selectionModel.selection().isEmpty()
+        hasSelection = not self.currentSelectionModel.selection().isEmpty()
         self.addBtn.setEnabled(hasSelection)
         self.removeBtn.setEnabled(hasSelection)
 
@@ -127,11 +130,55 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
 
     @pyqtSlot(bool, bool)
     def on_addBtn_clicked(self, checked, longPressed):
-        print('Add Button! %r' % longPressed)
+        index = self.categoryTabWidget.currentIndex()
+
+        # Handle favorite's tab versus category list
+        if index == 0:
+            selectionModel = self.favoritesTableView.selectionModel()
+            records = self.favoritesTabModel.getSelectedRecords(self.currentSelectionModel.selectedIndexes())
+        else:
+            # Get category ID by looking up index in categories variable
+            categoryID = self.categories[index - 1]['id']
+
+            # Get selection model based on category ID
+            tabCategory = self.tabDict[categoryID]
+            selectionModel = tabCategory.listView.selectionModel()
+            records = tabCategory.listModel.getSelectedRecords(self.currentSelectionModel.selectedIndexes())
+
+        if longPressed:
+            # Open up the Expiration Dialog for each item, query information
+            # DeSelect all items currently selected
+            i = 4
+        else:
+            # Add one to each of the items selected
+            # DeSelect all items currently selected
+            i = 5
 
     @pyqtSlot(bool, bool)
     def on_removeBtn_clicked(self, checked, longPressed):
-        print('Remove Button! %r' % longPressed)
+        index = self.categoryTabWidget.currentIndex()
+
+        # Handle favorite's tab versus category list
+        if index == 0:
+            selectionModel = self.favoritesTableView.selectionModel()
+            records = self.favoritesTabModel.getSelectedRecords(self.currentSelectionModel.selectedIndexes())
+        else:
+            # Get category ID by looking up index in categories variable
+            categoryID = self.categories[index - 1]['id']
+
+            # Get selection model based on category ID
+            tabCategory = self.tabDict[categoryID]
+            selectionModel = tabCategory.listView.selectionModel()
+            records = tabCategory.listModel.getSelectedRecords(self.currentSelectionModel.selectedIndexes())
+
+        if longPressed:
+            i = 4
+            # Bring up a box for each one that asks how many to remove
+            # DeSelect all items currently selected
+        else:
+            # Subtract one from each of the items selected
+            # DeSelect all items currently selected
+            i = 5
 
     @pyqtSlot(bool, bool)
     def on_listAddBtn_clicked(self, checked, longPressed):

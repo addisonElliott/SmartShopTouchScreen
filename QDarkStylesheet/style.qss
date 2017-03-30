@@ -859,8 +859,7 @@ QTreeView, QListView
 }
 
 QListView::item:hover,
-QListView::item:disabled:hover,
-QListView::item:hover:!active 
+QListView::item:disabled:hover
 {
 	background: transparent;
 }

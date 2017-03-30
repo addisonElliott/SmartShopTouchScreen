@@ -3,6 +3,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from psycopg2.extensions import AsIs
 import psycopg2
+from psycopg2.extras import DictCursor
 import datetime
 from decimal import Decimal
 import math
@@ -10,7 +11,7 @@ import math
 
 class SqlTileTableModel(QAbstractTableModel):
     def __init__(self, connection, tableName = None, columnSortName = None, columnSortOrder = None, filter = None,
-                 filterArgs = [], fields = None, columnsPerRow = 5, parent = None):
+                 filterArgs = [], fields = None, columnsPerRow = 5, displayColumnIndex = 0, parent = None):
         super(SqlTileTableModel, self).__init__(parent)
 
         self.tableName = tableName
@@ -20,10 +21,11 @@ class SqlTileTableModel(QAbstractTableModel):
         self.filterArgs = filterArgs
         self.fields = fields
         self.columnsPerRow = columnsPerRow
+        self.displayColumnIndex = displayColumnIndex
 
         self.connection = connection
         # Create cursor for SqlTableModel
-        self.cursor = self.connection.cursor()
+        self.cursor = self.connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
         self.resdata = []
 
@@ -66,6 +68,37 @@ class SqlTileTableModel(QAbstractTableModel):
     def setFields(self, fields):
         self.fields = fields
 
+    def setDisplayColumnIndex(self, index):
+        self.displayColumnIndex = index
+
+    def getSelectedRecord(self, index):
+        if not index.isValid():
+            return None
+
+        # Convert from 2D index (row, column) to linear index
+        ind = index.column() + index.row() * self.columnCount()
+
+        # If the linear index is out of range, then continue to next index
+        if ind >= len(self.resdata):
+            return None
+
+        return self.resdata[ind]
+
+    def getSelectedRecords(self, indexes):
+        records = []
+        for index in indexes:
+            if index.isValid():
+                # Convert from 2D index (row, column) to linear index
+                ind = index.column() + index.row() * self.columnCount()
+
+                # If the linear index is out of range, then continue to next index
+                if ind >= len(self.resdata):
+                    continue
+
+                records.append(self.resdata[ind])
+
+        return records
+
     def selectStatement(self, runTwice = True):
         if self.tableName is None:
             print('No table name. Cannot get select statement')
@@ -107,7 +140,7 @@ class SqlTileTableModel(QAbstractTableModel):
         return min(len(self.resdata), self.columnsPerRow)
 
     def flags(self, index):
-        # If the index isnt valid, no item flags
+        # If the index isn't valid, no item flags
         if not index.isValid():
             return Qt.NoItemFlags
 
@@ -121,7 +154,11 @@ class SqlTileTableModel(QAbstractTableModel):
         return Qt.ItemIsSelectable | Qt.ItemIsEnabled | Qt.ItemNeverHasChildren
 
     def data(self, index, role = None):
-        if not index.isValid() or role != Qt.DisplayRole:
+        if not index.isValid():
+            return None
+        elif role == Qt.SizeHintRole:
+            return QSize(300, 300)
+        elif role != Qt.DisplayRole:
             return None
 
         # Convert from 2D index (row, column) to linear index
@@ -131,21 +168,21 @@ class SqlTileTableModel(QAbstractTableModel):
         if ind >= len(self.resdata):
             return None
 
-        val = self.resdata[ind][0]
+        val = self.resdata[ind][self.displayColumnIndex]
 
         if val is None:
             return None
         elif isinstance(val, Decimal):
             # make sure to convert special classes (otherwise it is user type in QVariant)
-            return QVariant(str(val))
+            return str(val)
         elif isinstance(val, datetime.datetime):
-            return QVariant(str(val))
+            return str(val)
         else:
             return val
 
     def headerData(self, section, orientation, role):
         if role != Qt.DisplayRole:
-            return None()
+            return None
 
         # Header data means nothing, just set it to the section # (one-indexed)
         return section + 1
