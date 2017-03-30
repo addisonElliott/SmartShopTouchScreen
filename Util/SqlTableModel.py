@@ -10,7 +10,7 @@ from decimal import Decimal
 
 class SqlTableModel(QAbstractTableModel):
     def __init__(self, connection, tableName = None, columnSortName = None, columnSortOrder = None, filter = None,
-                 filterArgs = [], fields = None, displayColumnMapping = None, parent = None):
+                 filterArgs = [], fields = None, displayColumnMapping = None, displayHeaders = None, parent = None):
         super(SqlTableModel, self).__init__(parent)
 
         self.tableName = tableName
@@ -20,6 +20,7 @@ class SqlTableModel(QAbstractTableModel):
         self.filterArgs = filterArgs
         self.fields = fields
         self.displayColumnMapping = displayColumnMapping
+        self.displayHeaders = displayHeaders
 
         self.connection = connection
         # Create cursor for SqlTableModel
@@ -71,6 +72,9 @@ class SqlTableModel(QAbstractTableModel):
     def setDisplayColumnMapping(self, displayColumnMapping):
         self.displayColumnMapping = displayColumnMapping
 
+    def setDisplayHeaders(self, displayHeaders):
+        self.displayHeaders = displayHeaders
+
     def getSelectedRecord(self, index):
         if not index.isValid() and index.row() >= len(self.resdata):
             return None
@@ -120,7 +124,7 @@ class SqlTableModel(QAbstractTableModel):
         return len(self.resdata)
 
     def columnCount(self, parent = None):
-        return len(self.header)
+        return len(self.header) if self.displayColumnMapping is None else len(self.displayColumnMapping)
 
     def data(self, index, role = None):
         if role != Qt.DisplayRole:
@@ -148,4 +152,8 @@ class SqlTableModel(QAbstractTableModel):
             return section + 1
         else:
             # header for a column
-            return self.header[section] if self.displayColumnMapping is None else self.header[self.displayColumnMapping[section]]
+            if self.displayHeaders is not None:
+                return self.displayHeaders[section]
+            else:
+                return self.header[section] if self.displayColumnMapping is None else self.header[
+                    self.displayColumnMapping[section]]

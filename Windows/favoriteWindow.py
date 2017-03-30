@@ -61,7 +61,7 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
         newTab.horizontalLayout.setContentsMargins(0, 0, 0, 0)
 
         # Create list view for category and with the appropiate settings
-        newTab.listView = QListView(newTab.widget)
+        newTab.listView = QTableView(newTab.widget)
         font = QFont()
         font.setPointSize(21)
         newTab.listView.setFont(font)
@@ -79,9 +79,14 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
         newTab.horizontalLayout.addWidget(newTab.listView)
 
         newTab.listModel = SqlTableModel(self.dbManager.connection, 'inventory', 'name', Qt.AscendingOrder, 'category=%s',
-                                         (id,), ('item', 'name', 'qty'), (1,))
+                                         (id,), ('item', 'name', 'qty'), (1, 2), ('Name', 'Qty'))
         newTab.listView.setModel(newTab.listModel)
         newTab.listView.selectionModel().selectionChanged.connect(self.selectItem)
+
+        # Set the name column to stretch to fill the area while the qty column is resized to contents
+        newTab.listView.horizontalHeader().setStretchLastSection(False)
+        newTab.listView.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
+        newTab.listView.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
 
         # Add tab to tab widget as well as the tabDict variable
         self.categoryTabWidget.addTab(newTab.widget, name)
