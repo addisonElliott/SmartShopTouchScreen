@@ -127,9 +127,6 @@ class SqlTileTableModel(QAbstractTableModel):
         # Convert from 2D index (row, column) to linear index
         ind = index.column() + index.row() * self.columnCount()
 
-        print('Flags for %i %i: ' % (index.row(), index.column()))
-        print(int(self.flags(index)))
-
         # If the linear index is out of range, then return no data element there
         if ind >= len(self.resdata):
             return None
@@ -137,14 +134,14 @@ class SqlTileTableModel(QAbstractTableModel):
         val = self.resdata[ind][0]
 
         if val is None:
-            return QVariant("NULL")
+            return None
         elif isinstance(val, Decimal):
             # make sure to convert special classes (otherwise it is user type in QVariant)
             return QVariant(str(val))
         elif isinstance(val, datetime.datetime):
             return QVariant(str(val))
         else:
-            return QVariant(val)
+            return val
 
     def headerData(self, section, orientation, role):
         if role != Qt.DisplayRole:

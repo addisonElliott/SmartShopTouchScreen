@@ -9,6 +9,9 @@ from Util import constants, scroller
 from Util.enums import *
 from Util.SqlTableModel import *
 from Util.SqlTileTableModel import *
+import logging
+
+logger = logging.getLogger(__name__)
 
 class CategoryTab():
     __slots__ = ['widget', 'horizontalLayout', 'listView', 'listModel']
@@ -114,16 +117,24 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
         self.centralWindow.primaryScanner.barcodeReceived.disconnect(self.primaryScanner_barcodeReceived)
         self.centralWindow.secondaryScanner.barcodeReceived.disconnect(self.secondaryScanner_barcodeReceived)
 
-    @pyqtSlot()
-    def on_backBtn_clicked(self):
+    @pyqtSlot(bool, bool)
+    def on_backBtn_clicked(self, checked, longPressed):
         self.parent().setCurrentIndex(WindowType.Main)
 
-    @pyqtSlot()
-    def on_homeBtn_clicked(self):
+    @pyqtSlot(bool, bool)
+    def on_homeBtn_clicked(self, checked, longPressed):
         self.parent().setCurrentIndex(WindowType.Main)
 
-    @pyqtSlot()
-    def on_listAddBtn_clicked(self):
+    @pyqtSlot(bool, bool)
+    def on_addBtn_clicked(self, checked, longPressed):
+        print('Add Button! %r' % longPressed)
+
+    @pyqtSlot(bool, bool)
+    def on_removeBtn_clicked(self, checked, longPressed):
+        print('Remove Button! %r' % longPressed)
+
+    @pyqtSlot(bool, bool)
+    def on_listAddBtn_clicked(self, checked, longPressed):
         # Create a ManualAddDialog, pass the configuration variables such as config, dbManager and categories
         # The category combo box in the dialog will be set to the currently selected tab in the Favorite's Menu. However,
         # if the currently selected tab is the favorite's, then it will default to the first category
@@ -165,10 +176,8 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
 
     @pyqtSlot(str)
     def primaryScanner_barcodeReceived(self, barcode):
-        print("Fav: Primary barcode scanner got: %s" % barcode)
-        # TODO Send the barcode scanner information to be processed
+        logger.info("Primary barcode scanned in Favorite's Menu: Note, this does nothing. You must be on the main menu")
 
     @pyqtSlot(str)
     def secondaryScanner_barcodeReceived(self, barcode):
-        print("Fav: Secondary barcode scanner got: %s" % barcode)
-        # TODO Send the barcode scanner information to be processed
+        logger.info("Secondary barcode scanned in Favorite's Menu: Note, this does nothing. You must be on the main menu")

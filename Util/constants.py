@@ -31,3 +31,8 @@ dbPort = "5432"
 
 # Maximum length that a category name can be
 maxCategoryNameLength = 20
+
+# Log filename, where information will be stored
+logFilename = 'log.txt'
+import logging
+logLevel = logging.DEBUG
