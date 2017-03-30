@@ -1048,13 +1048,6 @@ QHeaderView::section::horizontal
     border-left: transparent;
 }
 
-
-QHeaderView::section:checked
- {
-    color: white;
-    background-color: #334e5e;
- }
-
  /* style the sort indicator */
 QHeaderView::down-arrow {
     image: url(:/qss_icons/rc/down_arrow.png);

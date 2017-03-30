@@ -76,6 +76,9 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
         newTab.listView.setSelectionMode(QAbstractItemView.MultiSelection)
         newTab.listView.setVerticalScrollMode(QAbstractItemView.ScrollPerPixel)
         newTab.listView.setHorizontalScrollMode(QAbstractItemView.ScrollPerPixel)
+        newTab.listView.verticalHeader().setVisible(False)
+        newTab.listView.verticalHeader().setDefaultSectionSize(45)
+        newTab.listView.setSelectionBehavior(QAbstractItemView.SelectRows)
         newTab.horizontalLayout.addWidget(newTab.listView)
 
         newTab.listModel = SqlTableModel(self.dbManager.connection, 'inventory', 'name', Qt.AscendingOrder, 'category=%s',
