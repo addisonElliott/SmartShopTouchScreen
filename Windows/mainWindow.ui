@@ -221,7 +221,7 @@ border: 0;</string>
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="PlusMinusButton">
+        <widget class="TouchButton" name="checkInOutBtn">
          <property name="minimumSize">
           <size>
            <width>64</width>
@@ -757,6 +757,13 @@ border: 0;</string>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>TouchButton</class>
+   <extends>QPushButton</extends>
+   <header>Widgets/touchButton.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../Resource_BY.qrc"/>
   <include location="../QDarkStylesheet/style.qrc"/>

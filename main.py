@@ -24,6 +24,9 @@ def load_stylesheet():
         return stylesheet
 
 def main():
+    logging.basicConfig(format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s', filename = constants.logFilename,
+                        level = constants.logLevel)
+
     # Load config spec, config file, and validate the config file with config spec
     configspec = ConfigObj('./configspec.ini', raise_errors=True, _inspec=True)
     validator = Validator()
@@ -52,6 +55,7 @@ def main():
     if len(msg) > 0:
         # An error occurred, save the config file in case any default data was copied
         config.write()
+        logger.error('Could not parse config file: %s', msg)
         raise SmartShopException("Could not parse config file:\n%s" % msg)
 
     # Create application

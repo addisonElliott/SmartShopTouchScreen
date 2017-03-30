@@ -5,6 +5,10 @@ from Windows.mainWindow import *
 from Windows.favoriteWindow import *
 from Util.scanner import *
 from Util.enums import *
+from Util.databaseManager import *
+from Util import constants
+
+from Widgets.touchSpinBox import *
 
 class CentralWindow(QMainWindow):
     def __init__(self, config, parent=None):
@@ -12,6 +16,9 @@ class CentralWindow(QMainWindow):
 
         # Save config variable in class
         self.config = config
+
+        self.dbManager = DatabaseManager(constants.dbDatabase, constants.dbUsername, constants.dbPassword,
+                                    constants.dbHost, constants.dbPort)
 
         # Initialize central widget, horizontal layout and stacked which which fills the entire QMainWindow
         self.centralwidget = QWidget(self)
@@ -23,15 +30,11 @@ class CentralWindow(QMainWindow):
         self.setCentralWidget(self.centralwidget)
 
         # Add main window to list of stacked widgets
-        self.mainWindow = MainWindow(self)
-        self.mainWindow.centralWindow = self
-        self.mainWindow.config = self.config
+        self.mainWindow = MainWindow(self, self.config, self.dbManager, self.stackedWidget)
         self.stackedWidget.addWidget(self.mainWindow)
 
         # Add favorite window to list of stacked widgets
-        self.favoriteWindow = FavoriteWindow(self)
-        self.favoriteWindow.centralWindow = self
-        self.favoriteWindow.config = self.config
+        self.favoriteWindow = FavoriteWindow(self, self.config, self.dbManager, self.stackedWidget)
         self.stackedWidget.addWidget(self.favoriteWindow)
 
         # Set the current widget to be shown is the main
