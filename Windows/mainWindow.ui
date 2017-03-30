@@ -164,7 +164,7 @@
       </widget>
      </item>
      <item row="0" column="0" colspan="2">
-      <widget class="QPushButton" name="EditShopingListButton">
+      <widget class="TouchButton" name="EditShopingListButton">
        <property name="minimumSize">
         <size>
          <width>0</width>
@@ -271,7 +271,7 @@ border: 0;</string>
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="ManualAddButton">
+        <widget class="TouchButton" name="ManualAddButton">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -323,7 +323,7 @@ border: 0;</string>
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="ViewInventoryButton">
+        <widget class="TouchButton" name="PurchaseHistoryButton">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -381,7 +381,7 @@ border: 0;</string>
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="SettingsButton">
+        <widget class="TouchButton" name="SettingsButton">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
            <horstretch>0</horstretch>

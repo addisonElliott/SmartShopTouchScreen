@@ -13,6 +13,7 @@ class ScrollingType(IntEnum):
 class WindowType(IntEnum):
     Main = 0
     Favorites = 1
+    PurchaseHistory = 2
 
 class KeyboardState(IntEnum):
     Normal = 0
