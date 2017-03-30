@@ -357,7 +357,7 @@ border: 0;</string>
          </property>
          <property name="icon">
           <iconset resource="../Resource_BY.qrc">
-           <normaloff>:/Icons/Icons/BinocularsIcon_Finished.png</normaloff>:/Icons/Icons/BinocularsIcon_Finished.png</iconset>
+           <normaloff>:/Icons/Icons/ShoppingCart_Finished.png</normaloff>:/Icons/Icons/ShoppingCart_Finished.png</iconset>
          </property>
          <property name="iconSize">
           <size>
