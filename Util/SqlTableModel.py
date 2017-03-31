@@ -51,7 +51,6 @@ class SqlTableModel(QAbstractTableModel):
 
         self.resdata = self.cursor.fetchall()
         self.header = [desc[0] for desc in self.cursor.description]
-        print(len(self.header))
         self.endResetModel()
         return True
 
