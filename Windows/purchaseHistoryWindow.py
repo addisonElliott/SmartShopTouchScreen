@@ -23,12 +23,15 @@ class PurchaseHistoryWindow(QWidget, purchaseHistoryWindow_ui.Ui_PurchaseHistory
         self.model = SqlTableModel(self.dbManager.connection, displayColumnMapping = (2, 0, 1),
                     displayHeaders=('Name', 'Purchase Date', 'Qty'),
                     customQuery = 'SELECT date, qty, '
-                    '(SELECT name FROM inventory WHERE item = history.item) AS name FROM purchase_history history '
-                    'ORDER BY date DESC;')
+                    '(SELECT name FROM inventory WHERE item = history.item) AS name FROM purchase_history history ')
         self.model.setColumnAlignment(1, Qt.AlignCenter)
         self.model.setColumnAlignment(2, Qt.AlignCenter)
 
         self.historyView.setModel(self.model)
+
+        # Setup sorting on the model and list view (default is the date column descending)
+        self.model.setSort('date', Qt.DescendingOrder)
+        self.historyView.sortByColumn(1, Qt.DescendingOrder)
 
         # Set the name column to stretch to fill the area while the qty column is resized to contents
         self.historyView.horizontalHeader().setStretchLastSection(False)

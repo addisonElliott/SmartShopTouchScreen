@@ -6,6 +6,9 @@ import psycopg2
 from psycopg2.extras import DictCursor
 import datetime
 from decimal import Decimal
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class SqlTableModel(QAbstractTableModel):
@@ -48,6 +51,7 @@ class SqlTableModel(QAbstractTableModel):
 
         self.resdata = self.cursor.fetchall()
         self.header = [desc[0] for desc in self.cursor.description]
+        print(len(self.header))
         self.endResetModel()
         return True
 
@@ -63,6 +67,9 @@ class SqlTableModel(QAbstractTableModel):
         self.connection.commit()
 
     def setSort(self, column, order):
+        if isinstance(column, int):
+            column = self.getColumnName(column)
+
         self.columnSortName = column
         self.columnSortOrder = order
 
@@ -87,6 +94,9 @@ class SqlTableModel(QAbstractTableModel):
         if column >= 0 and column < self.columnCount():
             self.columnAlignment[column] = alignment
 
+    def getColumnName(self, column):
+        return self.header[column] if self.displayColumnMapping is None else self.header[self.displayColumnMapping[column]]
+
     def getSelectedRecord(self, index):
         if not index.isValid() and index.row() >= len(self.resdata):
             return None
@@ -102,23 +112,26 @@ class SqlTableModel(QAbstractTableModel):
         return records
 
     def selectStatement(self, runTwice = True):
-        if self.customQuery is not None:
-            return self.customQuery
-
-        if self.tableName is None:
-            print('No table name. Cannot get select statement')
+        if self.tableName is None and self.customQuery is None:
+            logger.debug("Cannot retrieve select statement with no table name AND no custom query.")
             return None
 
         filter = ''
         orderByClause = ''
         fields = ''
 
-        if self.filter is not None:
-            filter = ' WHERE ' + self.filter
-
         if self.columnSortName is not None and self.columnSortOrder is not None:
             orderByClause = ' ORDER BY ' + self.columnSortName
             orderByClause += (' ASC' if self.columnSortOrder == Qt.AscendingOrder else ' DESC')
+
+        # If sorting is enabled, then we still want to append the ORDER clause to the custom query; thus, return the
+        # custom query concatenated with the order by clause
+        if self.customQuery is not None:
+            # We can safely use + to concatenate the strings because orderByClause is safe (cannot be SQL injected)
+            return self.customQuery + orderByClause
+
+        if self.filter is not None:
+            filter = ' WHERE ' + self.filter
 
         if self.fields is None:
             fields = '*'
@@ -134,6 +147,18 @@ class SqlTableModel(QAbstractTableModel):
             return self.cursor.mogrify(firstRun, self.filterArgs)
         else:
             return firstRun
+
+    def sort(self, column, order = None):
+        self.setSort(column, order)
+        self.select()
+        # void
+        # QSqlTableModel::sort(int
+        # column, Qt::SortOrder
+        # order)
+        # {
+        #     setSort(column, order);
+        # select();
+        # }
 
     def rowCount(self, parent = None):
         return len(self.resdata)
@@ -175,5 +200,4 @@ class SqlTableModel(QAbstractTableModel):
             if self.displayHeaders is not None:
                 return self.displayHeaders[section]
             else:
-                return self.header[section] if self.displayColumnMapping is None else self.header[
-                    self.displayColumnMapping[section]]
+                return self.getColumnName(section)

@@ -79,6 +79,8 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
         newTab.listView.verticalHeader().setVisible(False)
         newTab.listView.verticalHeader().setDefaultSectionSize(45)
         newTab.listView.setSelectionBehavior(QAbstractItemView.SelectRows)
+        newTab.listView.setSortingEnabled(True)
+        newTab.listView.sortByColumn(0, Qt.AscendingOrder)
         newTab.horizontalLayout.addWidget(newTab.listView)
 
         newTab.listModel = SqlTableModel(self.dbManager.connection, 'inventory', 'name', Qt.AscendingOrder, 'category=%s',
