@@ -1,3 +1,4 @@
+
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 
@@ -22,6 +23,17 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
         self.recItemsWidget.horizontalHeader().setStretchLastSection(False)
         self.recItemsWidget.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
         self.recItemsWidget.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
+        #Configure floating buttons
+
+        #self.centralwidget.layout().removeWidget(self.floatingBtnWidget)
+        self.centralWindow.layout().removeWidget(self.floatingPB1)
+        self.floatingPB1.setEnabled(False)
+        floatingPB1Width = 70#48 * 2 + 40
+        floatingPB1Height = 70#48 + 12
+        floatingPB1X = (self.width() - floatingPB1Width) / 2
+        floatingPB1Y = self.height() - floatingPB1Height - 1
+        self.floatingPB1.setGeometry(floatingPB1X, floatingPB1Y, floatingPB1Width, floatingPB1Height)
+        self.floatingPB1.raise_()
 
     @pyqtSlot()
     def showEvent(self, event):
@@ -66,3 +78,8 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
     def secondaryScanner_barcodeReceived(self, barcode):
         print("Main: Secondary barcode scanner got: %s" % barcode)
         # TODO Send the barcode scanner information to be processed
+
+    # Make the buttons at bottom of the screen floating; this cannot be done in Qt Designer
+    # Remove the widget containing the floating buttons from the layout since Qt Designer does not allow this
+    # Then setGeometry on the widget and finally raise the widget so it has a higher z-order than rest of items
+  #
