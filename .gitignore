@@ -13,7 +13,7 @@
 .idea/sqlDataSources.xml
 .idea/dynamic.xml
 .idea/uiDesigner.xml
-.idea/SmartShopTouchScreen.iml
+#.idea/SmartShopTouchScreen.iml
 .idea/misc.xml
 
 # Gradle:
