@@ -68,6 +68,8 @@ class CentralWindow(QMainWindow):
         self.scannerPoll.timeout.connect(self.scannerPoll_ticked)
         self.scannerPoll.start(constants.scannerPollInterval)
 
+        print(self.geometry())
+
     @pyqtSlot()
     def scannerPoll_ticked(self):
         self.primaryScanner.poll()
