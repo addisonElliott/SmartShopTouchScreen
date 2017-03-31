@@ -26,7 +26,8 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
         #Configure floating buttons
 
         #self.centralwidget.layout().removeWidget(self.floatingBtnWidget)
-        self.centralWindow.layout().removeWidget(self.floatingPB1)
+        #self.verticalLayout_4.removeWidget(self.floatingPB1)
+        self.gridLayout_3.removeWidget(self.floatingPB1)
         self.floatingPB1.setEnabled(False)
         floatingPB1Width = 70#48 * 2 + 40
         floatingPB1Height = 70#48 + 12
@@ -34,6 +35,7 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
         floatingPB1Y = self.height() - floatingPB1Height - 1
         self.floatingPB1.setGeometry(floatingPB1X, floatingPB1Y, floatingPB1Width, floatingPB1Height)
         self.floatingPB1.raise_()
+        
 
     @pyqtSlot()
     def showEvent(self, event):
