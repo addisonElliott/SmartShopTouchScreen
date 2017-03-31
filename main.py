@@ -69,11 +69,9 @@ def main():
     if "-fullscreen" in sys.argv:
         constants.fullscreen = True
         form.showFullScreen()
-        print('Fullscreen!')
     else:
         constants.fullscreen = False
         form.show()
-        print('Windowed!')
 
     # Execute application and retrieve return value when done
     ret = app.exec()
