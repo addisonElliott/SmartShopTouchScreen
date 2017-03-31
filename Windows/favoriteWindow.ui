@@ -220,7 +220,7 @@ border: 0;</string>
       <number>0</number>
      </property>
      <property name="usesScrollButtons">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
      <property name="documentMode">
       <bool>false</bool>

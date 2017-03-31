@@ -35,21 +35,21 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
         self.centralWindow.secondaryScanner.barcodeReceived.disconnect(self.secondaryScanner_barcodeReceived)
         print('This widget is being hidden. Handle anything necessary. Main Window')
 
-    @pyqtSlot()
-    def on_purchaseHistoryBtn_clicked(self):
-        self.close()
-
-    @pyqtSlot()
-    def on_ManualAddButton_clicked(self):
+    @pyqtSlot(bool, bool)
+    def on_ManualAddButton_clicked(self, checked, longPressed):
         self.parent().setCurrentIndex(WindowType.Favorites)
 
-    @pyqtSlot()
-    def on_SettingsButton_clicked(self):
+    @pyqtSlot(bool, bool)
+    def on_PurchaseHistoryButton_clicked(self, checked, longPressed):
+        self.parent().setCurrentIndex(WindowType.PurchaseHistory)
+
+    @pyqtSlot(bool, bool)
+    def on_SettingsButton_clicked(self, checked, longPressed):
         self.centralWindow.close()
 
     @pyqtSlot(bool, bool)
-    def on_checkInOutBtn_clicked(self, checked, longPress):
-        print('Button hit: checked: %r longPress: %r' % (checked, longPress))
+    def on_checkInOutBtn_clicked(self, checked, longPressed):
+        print('Button hit: checked: %r longPress: %r' % (checked, longPressed))
         print('yesss')
 
     @pyqtSlot()

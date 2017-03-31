@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import *
 
 from Windows.mainWindow import *
 from Windows.favoriteWindow import *
+from Windows.purchaseHistoryWindow import *
 from Util.scanner import *
 from Util.enums import *
 from Util.databaseManager import *
@@ -37,6 +38,10 @@ class CentralWindow(QMainWindow):
         self.favoriteWindow = FavoriteWindow(self, self.config, self.dbManager, self.stackedWidget)
         self.stackedWidget.addWidget(self.favoriteWindow)
 
+        # Add purchase history window to list of stacked widgets
+        self.purchaseHistoryWindow = PurchaseHistoryWindow(self, self.config, self.dbManager, self.stackedWidget)
+        self.stackedWidget.addWidget(self.purchaseHistoryWindow)
+
         # Set the current widget to be shown is the main
         self.stackedWidget.setCurrentIndex(WindowType.Main)
 
@@ -62,6 +67,8 @@ class CentralWindow(QMainWindow):
         self.scannerPoll = QTimer()
         self.scannerPoll.timeout.connect(self.scannerPoll_ticked)
         self.scannerPoll.start(constants.scannerPollInterval)
+
+        print(self.geometry())
 
     @pyqtSlot()
     def scannerPoll_ticked(self):

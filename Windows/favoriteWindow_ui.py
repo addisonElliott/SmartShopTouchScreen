@@ -96,7 +96,7 @@ class Ui_FavoriteWindow(object):
         self.categoryTabWidget.setFont(font)
         self.categoryTabWidget.setAcceptDrops(True)
         self.categoryTabWidget.setStyleSheet("")
-        self.categoryTabWidget.setUsesScrollButtons(False)
+        self.categoryTabWidget.setUsesScrollButtons(True)
         self.categoryTabWidget.setDocumentMode(False)
         self.categoryTabWidget.setMovable(False)
         self.categoryTabWidget.setObjectName("categoryTabWidget")

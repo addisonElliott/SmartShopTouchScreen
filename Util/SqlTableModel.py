@@ -6,11 +6,15 @@ import psycopg2
 from psycopg2.extras import DictCursor
 import datetime
 from decimal import Decimal
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class SqlTableModel(QAbstractTableModel):
     def __init__(self, connection, tableName = None, columnSortName = None, columnSortOrder = None, filter = None,
-                 filterArgs = [], fields = None, displayColumnMapping = None, parent = None):
+                 filterArgs = [], fields = None, displayColumnMapping = None, displayHeaders = None, customQuery = None,
+                 parent = None):
         super(SqlTableModel, self).__init__(parent)
 
         self.tableName = tableName
@@ -20,6 +24,9 @@ class SqlTableModel(QAbstractTableModel):
         self.filterArgs = filterArgs
         self.fields = fields
         self.displayColumnMapping = displayColumnMapping
+        self.displayHeaders = displayHeaders
+        self.customQuery = customQuery
+        self.columnAlignment = None
 
         self.connection = connection
         # Create cursor for SqlTableModel
@@ -28,9 +35,11 @@ class SqlTableModel(QAbstractTableModel):
         self.resdata = []
         self.header = []
 
-        # Execute the select statement if a table name was given
-        if tableName is not None:
+        # Execute the select statement if a table name was given or a custom query was given
+        # If the select statement is executed, initialize the columnAlignment array to be all left-aligned
+        if tableName is not None or customQuery is not None:
             self.select()
+            self.columnAlignment = [Qt.AlignLeft] * self.columnCount()
 
     def select(self):
         sql = self.selectStatement(False)
@@ -57,6 +66,9 @@ class SqlTableModel(QAbstractTableModel):
         self.connection.commit()
 
     def setSort(self, column, order):
+        if isinstance(column, int):
+            column = self.getColumnName(column)
+
         self.columnSortName = column
         self.columnSortOrder = order
 
@@ -70,6 +82,19 @@ class SqlTableModel(QAbstractTableModel):
 
     def setDisplayColumnMapping(self, displayColumnMapping):
         self.displayColumnMapping = displayColumnMapping
+
+    def setDisplayHeaders(self, displayHeaders):
+        self.displayHeaders = displayHeaders
+
+    def setCustomQuery(self, query = None):
+        self.customQuery = query
+
+    def setColumnAlignment(self, column, alignment):
+        if column >= 0 and column < self.columnCount():
+            self.columnAlignment[column] = alignment
+
+    def getColumnName(self, column):
+        return self.header[column] if self.displayColumnMapping is None else self.header[self.displayColumnMapping[column]]
 
     def getSelectedRecord(self, index):
         if not index.isValid() and index.row() >= len(self.resdata):
@@ -86,20 +111,26 @@ class SqlTableModel(QAbstractTableModel):
         return records
 
     def selectStatement(self, runTwice = True):
-        if self.tableName is None:
-            print('No table name. Cannot get select statement')
+        if self.tableName is None and self.customQuery is None:
+            logger.debug("Cannot retrieve select statement with no table name AND no custom query.")
             return None
 
         filter = ''
         orderByClause = ''
         fields = ''
 
-        if self.filter is not None:
-            filter = ' WHERE ' + self.filter
-
         if self.columnSortName is not None and self.columnSortOrder is not None:
             orderByClause = ' ORDER BY ' + self.columnSortName
             orderByClause += (' ASC' if self.columnSortOrder == Qt.AscendingOrder else ' DESC')
+
+        # If sorting is enabled, then we still want to append the ORDER clause to the custom query; thus, return the
+        # custom query concatenated with the order by clause
+        if self.customQuery is not None:
+            # We can safely use + to concatenate the strings because orderByClause is safe (cannot be SQL injected)
+            return self.customQuery + orderByClause
+
+        if self.filter is not None:
+            filter = ' WHERE ' + self.filter
 
         if self.fields is None:
             fields = '*'
@@ -116,13 +147,28 @@ class SqlTableModel(QAbstractTableModel):
         else:
             return firstRun
 
+    def sort(self, column, order = None):
+        self.setSort(column, order)
+        self.select()
+        # void
+        # QSqlTableModel::sort(int
+        # column, Qt::SortOrder
+        # order)
+        # {
+        #     setSort(column, order);
+        # select();
+        # }
+
     def rowCount(self, parent = None):
         return len(self.resdata)
 
     def columnCount(self, parent = None):
-        return len(self.header)
+        return len(self.header) if self.displayColumnMapping is None else len(self.displayColumnMapping)
 
     def data(self, index, role = None):
+        if role == Qt.TextAlignmentRole and self.columnAlignment is not None:
+            return self.columnAlignment[index.column()]
+
         if role != Qt.DisplayRole:
             return None
 
@@ -133,6 +179,8 @@ class SqlTableModel(QAbstractTableModel):
             return None
         elif isinstance(val, Decimal):
             # make sure to convert special classes (otherwise it is user type in QVariant)
+            return str(val)
+        elif isinstance(val, datetime.date):
             return str(val)
         elif isinstance(val, datetime.datetime):
             return str(val)
@@ -148,4 +196,7 @@ class SqlTableModel(QAbstractTableModel):
             return section + 1
         else:
             # header for a column
-            return self.header[section] if self.displayColumnMapping is None else self.header[self.displayColumnMapping[section]]
+            if self.displayHeaders is not None:
+                return self.displayHeaders[section]
+            else:
+                return self.getColumnName(section)
