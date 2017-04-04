@@ -8,7 +8,11 @@ from Util.enums import *
 
 
 class VirtualKeyboard(QDialog, virtualKeyboard_ui.Ui_VirtualKeyboard):
-    def __init__(self, parent=None, lineEdit=None):
+    WIDTH = 800
+    HEIGHT_NO_SUGGESTIONS = 334
+    HEIGHT_WITH_SUGGESTIONS = 480
+
+    def __init__(self, parent=None, lineEdit=None, suggestionsListModel=None):
         super(VirtualKeyboard, self).__init__(parent)
         self.setupUi(self)
 
@@ -24,8 +28,15 @@ class VirtualKeyboard(QDialog, virtualKeyboard_ui.Ui_VirtualKeyboard):
             self.lineEdit.setValidator(self.parentLineEdit.validator())
             self.lineEdit.setText(self.parentLineEdit.text())
 
-        # Give focus to the line edit so you can see where the caret is located
-        self.lineEdit.setFocus()
+        self.suggestionsListModel = suggestionsListModel
+        if self.suggestionsListModel:
+            self.suggestionsListView.setModel(suggestionsListModel)
+            self.resize(self.WIDTH, self.HEIGHT_WITH_SUGGESTIONS)
+        else:
+            self.gridLayout.removeWidget(self.suggestionsListView)
+            self.suggestionsListView.setParent(None) # This works for modal dialog boxes where deleteLater DOES NOT
+            self.suggestionsListView = None
+            self.resize(self.WIDTH, self.HEIGHT_NO_SUGGESTIONS)
 
         # Remove title bar
         self.setWindowFlags(Qt.Dialog | Qt.FramelessWindowHint)
@@ -86,6 +97,11 @@ class VirtualKeyboard(QDialog, virtualKeyboard_ui.Ui_VirtualKeyboard):
 
         for buttonInfo in self.layout:
             buttonInfo[0].pressed.connect(self.characterPressed)
+
+    @pyqtSlot()
+    def showEvent(self, event):
+        # Give focus to the line edit so you can see where the caret is located
+        self.lineEdit.setFocus()
 
     def closeDialog(self, saveText=True):
         # Set text variable regardless if execution was successful
