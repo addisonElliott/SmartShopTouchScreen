@@ -14,6 +14,7 @@ class WindowType(IntEnum):
     Main = 0
     Favorites = 1
     PurchaseHistory = 2
+    Settings = 3
 
 class KeyboardState(IntEnum):
     Normal = 0
