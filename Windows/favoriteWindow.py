@@ -55,6 +55,10 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
         self.addBtn.setEnabled(False)
         self.removeBtn.setEnabled(False)
 
+        # TODO Allow user to scroll through categories tab widget with their finger.
+        # TODO Integrate drag/drop functions to allow items to be transferred from one category to another
+        # TODO Create category edit menu to edit information regarding the category. Allow reordering of categories
+
     def addTab(self, id, name):
         newTab = CategoryTab(QWidget(self.categoryTabWidget))
         newTab.horizontalLayout = QHBoxLayout(newTab.widget)
@@ -118,7 +122,6 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
 
             # Get selection model based on category ID
             self.currentSelectionModel = self.tabDict[categoryID].listView.selectionModel()
-
         hasSelection = not self.currentSelectionModel.selection().isEmpty()
         self.addBtn.setEnabled(hasSelection)
         self.removeBtn.setEnabled(hasSelection)
@@ -127,6 +130,13 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
     def showEvent(self, event):
         self.centralWindow.primaryScanner.barcodeReceived.connect(self.primaryScanner_barcodeReceived)
         self.centralWindow.secondaryScanner.barcodeReceived.connect(self.secondaryScanner_barcodeReceived)
+
+        # On show, set the current tab to favorite's, clear selections for each tab and set sort back to default
+        self.categoryTabWidget.setCurrentIndex(0)
+        self.favoritesTableView.selectionModel().clearSelection()
+        for id, category in self.tabDict.items():
+            category.listView.selectionModel().clearSelection()
+            category.listView.sortByColumn(0, Qt.AscendingOrder)
 
     @pyqtSlot()
     def hideEvent(self, event):
