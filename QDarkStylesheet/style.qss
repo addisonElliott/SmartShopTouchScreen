@@ -76,9 +76,7 @@ QCheckBox::indicator:unchecked
     image: url(:/qss_icons/rc/checkbox_unchecked.png);
 }
 
-QCheckBox::indicator:unchecked:focus,
 QCheckBox::indicator:unchecked:pressed,
-QGroupBox::indicator:unchecked:focus,
 QGroupBox::indicator:unchecked:pressed
 {
   border: none;
@@ -90,22 +88,18 @@ QCheckBox::indicator:checked
     image: url(:/qss_icons/rc/checkbox_checked.png);
 }
 
-QCheckBox::indicator:checked:focus,
 QCheckBox::indicator:checked:pressed,
-QGroupBox::indicator:checked:focus,
 QGroupBox::indicator:checked:pressed
 {
   border: none;
     image: url(:/qss_icons/rc/checkbox_checked_focus.png);
 }
 
-
 QCheckBox::indicator:indeterminate
 {
     image: url(:/qss_icons/rc/checkbox_indeterminate.png);
 }
 
-QCheckBox::indicator:indeterminate:focus,
 QCheckBox::indicator:indeterminate:pressed
 {
     image: url(:/qss_icons/rc/checkbox_indeterminate_focus.png);
@@ -146,7 +140,6 @@ QRadioButton::indicator:unchecked
     image: url(:/qss_icons/rc/radio_unchecked.png);
 }
 
-QRadioButton::indicator:unchecked:focus,
 QRadioButton::indicator:unchecked:pressed
 {
     border: none;
@@ -161,7 +154,6 @@ QRadioButton::indicator:checked
     image: url(:/qss_icons/rc/radio_checked.png);
 }
 
-QRadioButton::indicator:checked:focus,
 QRadioButton::indicator:checked:pressed
 {
     border: none;
@@ -337,6 +329,11 @@ QAbstractScrollArea
     border-radius: 2px;
     border: 1px solid #76797C;
     background-color: transparent;
+}
+
+QAbstractScrollArea:hover, QAbstractScrollArea:focus, QAbstractScrollArea:active
+{
+	border: 0px;
 }
 
 QScrollBar:horizontal
@@ -609,6 +606,10 @@ QComboBox
     min-width: 75px;
 }
 
+QComboBox:hover, QComboBox:focus {
+	border: 1px solid #76797C;
+}
+
 QPushButton:checked{
     background-color: #76797C;
     border-color: #6A6969;
@@ -660,6 +661,10 @@ QAbstractSpinBox {
     color: #eff0f1;
     border-radius: 2px;
     min-width: 75px;
+}
+
+QAbstractSpinBox:focus {
+	border: 1px solid #76797C;
 }
 
 QAbstractSpinBox:up-button

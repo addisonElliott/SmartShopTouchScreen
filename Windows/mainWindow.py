@@ -36,6 +36,11 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
         print('This widget is being hidden. Handle anything necessary. Main Window')
 
     @pyqtSlot(bool, bool)
+    def on_checkInOutBtn_clicked(self, checked, longPressed):
+        print('Button hit: checked: %r longPress: %r' % (checked, longPressed))
+        print('yesss')
+
+    @pyqtSlot(bool, bool)
     def on_ManualAddButton_clicked(self, checked, longPressed):
         self.parent().setCurrentIndex(WindowType.Favorites)
 
@@ -45,12 +50,7 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
 
     @pyqtSlot(bool, bool)
     def on_SettingsButton_clicked(self, checked, longPressed):
-        self.centralWindow.close()
-
-    @pyqtSlot(bool, bool)
-    def on_checkInOutBtn_clicked(self, checked, longPressed):
-        print('Button hit: checked: %r longPress: %r' % (checked, longPressed))
-        print('yesss')
+        self.parent().setCurrentIndex(WindowType.Settings)
 
     @pyqtSlot()
     def scannerPoll_ticked(self):
