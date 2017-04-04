@@ -331,7 +331,7 @@ QAbstractScrollArea
     background-color: transparent;
 }
 
-QAbstractScrollArea:hover, QAbstractScrollArea:focus
+QAbstractScrollArea:hover, QAbstractScrollArea:focus, QAbstractScrollArea:active
 {
 	border: 0px;
 }

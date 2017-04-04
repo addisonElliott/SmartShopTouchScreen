@@ -24,6 +24,10 @@ class SettingsWindow(QWidget, settingsWindow_ui.Ui_SettingsWindow):
         # Set current index to first page
         self.settingsStack.setCurrentIndex(0)
 
+        scroller.setupScrolling(self.shelfTimeSpinBox, ScrollingType.SpinBox)
+        scroller.setupScrolling(self.usageRateSpinBox, ScrollingType.SpinBox)
+        scroller.setupScrolling(self.expDateSpinBox, ScrollingType.SpinBox)
+
     @pyqtSlot()
     def showEvent(self, event):
         self.centralWindow.primaryScanner.barcodeReceived.connect(self.primaryScanner_barcodeReceived)
