@@ -238,10 +238,10 @@ border: 0;</string>
           <bool>true</bool>
          </property>
          <property name="selectionMode">
-          <enum>QAbstractItemView::NoSelection</enum>
+          <enum>QAbstractItemView::SingleSelection</enum>
          </property>
          <property name="selectionBehavior">
-          <enum>QAbstractItemView::SelectRows</enum>
+          <enum>QAbstractItemView::SelectItems</enum>
          </property>
          <property name="iconSize">
           <size>
@@ -262,7 +262,7 @@ border: 0;</string>
           <enum>QListView::SinglePass</enum>
          </property>
          <property name="spacing">
-          <number>5</number>
+          <number>0</number>
          </property>
          <property name="viewMode">
           <enum>QListView::ListMode</enum>
@@ -385,7 +385,7 @@ border: 0;</string>
               </widget>
              </item>
              <item row="0" column="3" rowspan="2">
-              <widget class="QPushButton" name="pushButton">
+              <widget class="TouchButton" name="swapScannersBtn">
                <property name="minimumSize">
                 <size>
                  <width>64</width>
@@ -418,7 +418,7 @@ border: 0;</string>
               </widget>
              </item>
              <item row="1" column="1">
-              <widget class="QLabel" name="label_5">
+              <widget class="QLabel" name="secondaryLabel">
                <property name="font">
                 <font>
                  <family>Segoe UI</family>
@@ -444,7 +444,7 @@ border: 0;</string>
               </spacer>
              </item>
              <item row="0" column="1">
-              <widget class="QLabel" name="label_4">
+              <widget class="QLabel" name="primaryLabel">
                <property name="font">
                 <font>
                  <family>Segoe UI</family>
@@ -513,6 +513,12 @@ border: 0;</string>
        </property>
        <item>
         <widget class="QScrollArea" name="scrollArea_2">
+         <property name="styleSheet">
+          <string notr="true">QWidget
+{
+	background-color: #232629;
+}</string>
+         </property>
          <property name="verticalScrollBarPolicy">
           <enum>Qt::ScrollBarAlwaysOn</enum>
          </property>
@@ -538,7 +544,7 @@ border: 0;</string>
               <number>0</number>
              </property>
              <item row="2" column="3">
-              <widget class="QSpinBox" name="spinBox_3">
+              <widget class="TouchSpinBox" name="expDateSpinBox">
                <property name="font">
                 <font>
                  <family>Segoe UI</family>
@@ -567,7 +573,7 @@ border: 0;</string>
               </widget>
              </item>
              <item row="0" column="0">
-              <widget class="QCheckBox" name="checkBox">
+              <widget class="TouchCheckbox" name="shelfTimeCheckBox">
                <property name="font">
                 <font>
                  <family>Segoe UI</family>
@@ -593,7 +599,7 @@ border: 0;</string>
               </widget>
              </item>
              <item row="2" column="0">
-              <widget class="QCheckBox" name="checkBox_3">
+              <widget class="TouchCheckbox" name="expDateCheckBox">
                <property name="font">
                 <font>
                  <family>Segoe UI</family>
@@ -606,7 +612,7 @@ border: 0;</string>
               </widget>
              </item>
              <item row="1" column="0">
-              <widget class="QCheckBox" name="checkBox_2">
+              <widget class="TouchCheckbox" name="usageRateCheckBox">
                <property name="font">
                 <font>
                  <family>Segoe UI</family>
@@ -632,7 +638,7 @@ border: 0;</string>
               </widget>
              </item>
              <item row="1" column="3">
-              <widget class="QSpinBox" name="spinBox_2">
+              <widget class="TouchSpinBox" name="usageRateSpinBox">
                <property name="font">
                 <font>
                  <family>Segoe UI</family>
@@ -648,7 +654,7 @@ border: 0;</string>
               </widget>
              </item>
              <item row="0" column="3">
-              <widget class="QSpinBox" name="spinBox">
+              <widget class="TouchSpinBox" name="shelfTimeSpinBox">
                <property name="font">
                 <font>
                  <family>Segoe UI</family>
@@ -761,7 +767,7 @@ border: 0;</string>
              <property name="sizeHint" stdset="0">
               <size>
                <width>20</width>
-               <height>197</height>
+               <height>203</height>
               </size>
              </property>
             </spacer>
@@ -785,6 +791,16 @@ border: 0;</string>
    <class>TouchButton</class>
    <extends>QPushButton</extends>
    <header>Widgets/touchButton.h</header>
+  </customwidget>
+  <customwidget>
+   <class>TouchSpinBox</class>
+   <extends>QSpinBox</extends>
+   <header>Widgets/touchSpinBox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>TouchCheckbox</class>
+   <extends>QCheckBox</extends>
+   <header>Widgets/touchCheckbox.h</header>
   </customwidget>
  </customwidgets>
  <resources>
