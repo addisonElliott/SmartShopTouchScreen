@@ -44,7 +44,8 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
 
     @pyqtSlot()
     def temp(self):
-        # DONT FORGET TO REMOVE VIRTUAL KEYBOARD IMPORT
+        # TODO Remove this function and the one above temp2 when auto complete virtual keyboard is integrated correctly
+        # TODO Also DONT FORGET TO REMOVE VIRTUAL KEYBOARD IMPORT
         self.testModel = SqlTableModel(self.dbManager.connection, columnSortName='rank', columnSortOrder=Qt.DescendingOrder,
                                        customQuery='SELECT item, name, CASE\n'
                                         'WHEN name LIKE %s THEN 3\n'
