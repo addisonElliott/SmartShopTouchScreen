@@ -729,6 +729,8 @@ class Ui_VirtualKeyboard(object):
         font = QtGui.QFont()
         font.setPointSize(20)
         self.suggestionsListView.setFont(font)
+        self.suggestionsListView.setVerticalScrollMode(QtWidgets.QAbstractItemView.ScrollPerPixel)
+        self.suggestionsListView.setHorizontalScrollMode(QtWidgets.QAbstractItemView.ScrollPerPixel)
         self.suggestionsListView.setObjectName("suggestionsListView")
         self.gridLayout.addWidget(self.suggestionsListView, 1, 0, 1, 1)
 

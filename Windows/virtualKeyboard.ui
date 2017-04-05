@@ -2049,6 +2049,12 @@ border: 0;</string>
        <pointsize>20</pointsize>
       </font>
      </property>
+     <property name="verticalScrollMode">
+      <enum>QAbstractItemView::ScrollPerPixel</enum>
+     </property>
+     <property name="horizontalScrollMode">
+      <enum>QAbstractItemView::ScrollPerPixel</enum>
+     </property>
     </widget>
    </item>
   </layout>

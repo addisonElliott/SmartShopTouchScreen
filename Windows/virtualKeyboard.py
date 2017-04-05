@@ -39,6 +39,7 @@ class VirtualKeyboard(QDialog, virtualKeyboard_ui.Ui_VirtualKeyboard):
             self.suggestionsListView.setModel(suggestionsListModel)
             self.resize(self.WIDTH, self.HEIGHT_WITH_SUGGESTIONS)
             self.suggestionsListView.selectionModel().selectionChanged.connect(self.selectSuggestion)
+            scroller.setupScrolling(self.suggestionsListView)
         else:
             self.gridLayout.removeWidget(self.suggestionsListView)
             self.suggestionsListView.setParent(None) # This works for modal dialog boxes where deleteLater DOES NOT
@@ -258,3 +259,4 @@ class VirtualKeyboard(QDialog, virtualKeyboard_ui.Ui_VirtualKeyboard):
 
         self.lineEdit.setText(records[0]['name'])
         self.lineEdit.setFocus()
+        self.sender().clearSelection()
