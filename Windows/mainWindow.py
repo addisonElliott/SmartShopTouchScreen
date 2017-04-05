@@ -5,9 +5,9 @@ from Windows import mainWindow_ui
 from Util import constants
 from Windows.favoriteWindow import *
 from Windows.centralWindow import *
-from Windows.ExpirationBox import *
 from Util.scanner import *
 from Util.enums import *
+from BarcodeAPI.barcodeManager import BarcodeManager
 
 class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
     def __init__(self, parent=None):
@@ -18,6 +18,9 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
         self.recItemsWidget.horizontalHeader().setStretchLastSection(False)
         self.recItemsWidget.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
         self.recItemsWidget.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
+
+        #instantiate barcode api object
+        self.barcodeManager = BarcodeManager()
 
     @pyqtSlot()
     def showEvent(self, event):
@@ -39,13 +42,9 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
     def on_ManualAddButton_clicked(self):
         self.parent().setCurrentIndex(WindowType.Favorites)
 
-#    @pyqtSlot()
-#    def on_SettingsButton_clicked(self):
-#        self.centralWindow.close()
     @pyqtSlot()
     def on_SettingsButton_clicked(self):
-        thing = ExpirationBox(self.config)
-        thing.exec()
+        self.centralWindow.close()
 
     @pyqtSlot()
     def scannerPoll_ticked(self):
@@ -56,6 +55,9 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
     def primaryScanner_barcodeReceived(self, barcode):
         print("Main: Primary barcode scanner got: %s" % barcode)
         # TODO Send the barcode scanner information to be processed
+        checkedIn = True
+        #if checkedIn:
+
         
     @pyqtSlot(str)
     def secondaryScanner_barcodeReceived(self, barcode):

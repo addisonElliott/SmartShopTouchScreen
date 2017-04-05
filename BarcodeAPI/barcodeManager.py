@@ -1,11 +1,16 @@
 import urllib.request  # For internet operations
 import json  # To internet JSON data format
 from .databaseManager import DatabaseManager
+from Windows.ExpirationBox import *
 
 
 class BarcodeManager:
     def __init__(self):
         self.dbManager = DatabaseManager()
+        self.expBox = ExpirationBox()
+
+    def ShowExpirationBox(self):
+        self.expBox.exec()
 
     def AddItemToInventory(self, barcode):
         cachedItem = self.dbManager.GetCachedUPCItem()
