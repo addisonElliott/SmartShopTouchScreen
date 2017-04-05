@@ -4,12 +4,9 @@ from Util.databaseManager import DatabaseManager
 from Windows.ExpirationBox import *
 
 class BarcodeManager:
-    def __init__(self, dbManager):
+    def __init__(self, dbManager, config):
         self.dbManager = dbManager
-        self.expBox = ExpirationBox()
-
-    def ShowExpirationBox(self):
-        self.expBox.exec()
+        self.expBox = ExpirationBox(config)
 
     def AddItemToInventory(self, barcode):
         cachedItem = self.dbManager.GetCachedUPCItem()

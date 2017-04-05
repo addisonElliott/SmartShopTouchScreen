@@ -93,7 +93,7 @@ class Ui_ExpirationBox(object):
         self.horizontalLayout_1.addWidget(self.cancel_label)
         spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_1.addItem(spacerItem1)
-        self.accept_button = QtWidgets.QPushButton(ExpirationBox)
+        self.accept_button = TouchButton(ExpirationBox)
         self.accept_button.setMinimumSize(QtCore.QSize(45, 45))
         self.accept_button.setMaximumSize(QtCore.QSize(45, 45))
         self.accept_button.setStyleSheet("background-color: #31363B;\n"
@@ -105,7 +105,7 @@ class Ui_ExpirationBox(object):
         self.accept_button.setIconSize(QtCore.QSize(40, 40))
         self.accept_button.setObjectName("accept_button")
         self.horizontalLayout_1.addWidget(self.accept_button)
-        self.cancel_button = QtWidgets.QPushButton(ExpirationBox)
+        self.cancel_button = TouchButton(ExpirationBox)
         self.cancel_button.setMinimumSize(QtCore.QSize(45, 45))
         self.cancel_button.setMaximumSize(QtCore.QSize(45, 45))
         self.cancel_button.setStyleSheet("background-color: #31363B;\n"
@@ -168,5 +168,6 @@ class Ui_ExpirationBox(object):
         self.qty_label.setText(_translate("ExpirationBox", "Quantity"))
         self.exp_label.setText(_translate("ExpirationBox", "Expiration Date"))
 
+from Widgets.touchButton import TouchButton
 import Resource_BY_rc
 import style_rc

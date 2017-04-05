@@ -28,3 +28,11 @@ class ExpirationBox(QDialog, ExpirationBox_ui.Ui_ExpirationBox):
             self.year_combo.addItem(str(y))
         for q in range(1, 51):
             self.qty_combo.addItem(str(q))
+
+    @pyqtSlot(bool, bool)
+    def on_accept_button_clicked(self, checked, longPressed):
+        self.accept()
+
+    @pyqtSlot(bool, bool)
+    def on_cancel_button_clicked(self, checked, longPressed):
+        self.close()

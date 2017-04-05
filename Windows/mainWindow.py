@@ -15,7 +15,7 @@ from Windows.virtualKeyboard import *
 from Util.SqlTableModel import *
 
 class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
-    def __init__(self, centralWindow, config, dbManager, parent=None):
+    def __init__(self, centralWindow, config, dbManager, barcodeManager, parent=None):
         super(MainWindow, self).__init__(parent)
         self.setupUi(self)
 
@@ -31,6 +31,8 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
         self.recItemsWidget.horizontalHeader().setStretchLastSection(False)
         self.recItemsWidget.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
         self.recItemsWidget.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
+
+        self.barcodeManager = barcodeManager
 
     def temp2(self, str):
         if str:
@@ -97,9 +99,6 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
     def primaryScanner_barcodeReceived(self, barcode):
         print("Main: Primary barcode scanner got: %s" % barcode)
         # TODO Send the barcode scanner information to be processed
-        checkedIn = True
-        #if checkedIn:
-
 
     @pyqtSlot(str)
     def secondaryScanner_barcodeReceived(self, barcode):
