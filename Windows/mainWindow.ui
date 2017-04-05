@@ -164,7 +164,7 @@
       </widget>
      </item>
      <item row="0" column="0" colspan="2">
-      <widget class="QPushButton" name="EditShopingListButton">
+      <widget class="TouchButton" name="EditShopingListButton">
        <property name="minimumSize">
         <size>
          <width>0</width>
@@ -221,7 +221,7 @@ border: 0;</string>
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="PlusMinusButton">
+        <widget class="TouchButton" name="checkInOutBtn">
          <property name="minimumSize">
           <size>
            <width>64</width>
@@ -271,7 +271,7 @@ border: 0;</string>
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="ManualAddButton">
+        <widget class="TouchButton" name="ManualAddButton">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -323,7 +323,7 @@ border: 0;</string>
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="ViewInventoryButton">
+        <widget class="TouchButton" name="PurchaseHistoryButton">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -357,7 +357,7 @@ border: 0;</string>
          </property>
          <property name="icon">
           <iconset resource="../Resource_BY.qrc">
-           <normaloff>:/Icons/Icons/BinocularsIcon_Finished.png</normaloff>:/Icons/Icons/BinocularsIcon_Finished.png</iconset>
+           <normaloff>:/Icons/Icons/ShoppingCart_Finished.png</normaloff>:/Icons/Icons/ShoppingCart_Finished.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -381,7 +381,7 @@ border: 0;</string>
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="SettingsButton">
+        <widget class="TouchButton" name="SettingsButton">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -757,6 +757,13 @@ border: 0;</string>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>TouchButton</class>
+   <extends>QPushButton</extends>
+   <header>Widgets/touchButton.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../Resource_BY.qrc"/>
   <include location="../QDarkStylesheet/style.qrc"/>

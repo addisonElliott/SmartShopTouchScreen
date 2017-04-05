@@ -51,6 +51,27 @@ if sys.platform.startswith("linux"):
                 KEY_SCROLLLOCK: 0,  # Scroll Lock
             }
 
+            # Setup the device by calling setPort with the desired port number
+            self.usbPortNumber = None
+            self.setPort(usbPortNumber)
+
+            # Set the current string buffer to none
+            self.curStr = ""
+
+            # Set the current string buffer to none
+            if shortcut is not None:
+                self.shortcut = QShortcut(shortcut, self.parent)
+                self.shortcut.activated.connect(self.shortcut_activated)
+                if scannerTitle:
+                    self.shortcutMessage = "Enter %s barcode: " % scannerTitle
+                else:
+                    self.shortcutMessage = "Enter barcode: "
+
+        def setPort(self, usbPortNumber):
+            # Do nothing if the given port is the same as the current port
+            if self.usbPortNumber == usbPortNumber:
+                return
+
             if constants.barcodeScannerDeviceEnable:
                 # This regex expression identifies a device on a specified USB port number
                 # I am not entirely sure if this is Raspbian specific, Linux specific or what,
@@ -76,17 +97,8 @@ if sys.platform.startswith("linux"):
                 if LED_NUML in ledStates: self.state[KEY_NUMLOCK] = 1
                 if LED_SCROLLL in ledStates: self.state[KEY_SCROLLLOCK] = 1
 
-            # Set the current string buffer to none
-            self.curStr = ""
-
-            # Set the current string buffer to none
-            if shortcut is not None:
-                self.shortcut = QShortcut(shortcut, self.parent)
-                self.shortcut.activated.connect(self.shortcut_activated)
-                if scannerTitle:
-                    self.shortcutMessage = "Enter %s barcode: " % scannerTitle
-                else:
-                    self.shortcutMessage = "Enter barcode: "
+                # Set current port number to the given port number
+                self.usbPortNumber = usbPortNumber
 
         def poll(self):
             try:
@@ -146,6 +158,11 @@ elif sys.platform.startswith("win32"):
                     self.shortcutMessage = "Enter %s barcode: " % scannerTitle
                 else:
                     self.shortcutMessage = "Enter barcode: "
+
+        def setPort(self, usbPortNumber):
+            # Do nothing
+            pass
+
         def poll(self):
             # Do nothing in poll
             pass

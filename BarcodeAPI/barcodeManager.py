@@ -1,12 +1,11 @@
 import urllib.request  # For internet operations
 import json  # To internet JSON data format
-from .databaseManager import DatabaseManager
+from Util.databaseManager import DatabaseManager
 from Windows.ExpirationBox import *
 
-
 class BarcodeManager:
-    def __init__(self):
-        self.dbManager = DatabaseManager()
+    def __init__(self, dbManager):
+        self.dbManager = dbManager
         self.expBox = ExpirationBox()
 
     def ShowExpirationBox(self):

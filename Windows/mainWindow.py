@@ -9,18 +9,55 @@ from Util.scanner import *
 from Util.enums import *
 from BarcodeAPI.barcodeManager import BarcodeManager
 
+
+
+from Windows.virtualKeyboard import *
+from Util.SqlTableModel import *
+
 class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
-    def __init__(self, parent=None):
+    def __init__(self, centralWindow, config, dbManager, parent=None):
         super(MainWindow, self).__init__(parent)
         self.setupUi(self)
+
+        self.centralWindow = centralWindow
+        self.config = config
+        self.dbManager = dbManager
+
+        # Temporary to test Auto-Complete Virtual Keyboard
+        self.tempShortcut = QShortcut(Qt.Key_1, self)
+        self.tempShortcut.activated.connect(self.temp)
 
         # Set size of the recommended items columns
         self.recItemsWidget.horizontalHeader().setStretchLastSection(False)
         self.recItemsWidget.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
         self.recItemsWidget.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
 
-        #instantiate barcode api object
-        self.barcodeManager = BarcodeManager()
+    def temp2(self, str):
+        if str:
+            prefixMatch = str + '%'
+            anyMatch = '%' + prefixMatch
+            self.testModel.filterArgs = (prefixMatch, prefixMatch, anyMatch, anyMatch)
+            self.testModel.hideItems = False
+        else:
+            self.testModel.hideItems = True
+        self.testModel.select()
+
+    @pyqtSlot()
+    def temp(self):
+        # TODO Remove this function and the one above temp2 when auto complete virtual keyboard is integrated correctly
+        # TODO Also DONT FORGET TO REMOVE VIRTUAL KEYBOARD IMPORT
+        self.testModel = SqlTableModel(self.dbManager.connection, columnSortName='rank', columnSortOrder=Qt.DescendingOrder,
+                                       customQuery='SELECT item, name, CASE\n'
+                                        'WHEN name LIKE %s THEN 3\n'
+                                       'WHEN name ILIKE %s THEN 2\n'
+                                        'WHEN name LIKE %s THEN 1\n'
+                                        'ELSE 0 END AS rank FROM inventory\n'
+                                        'WHERE name ILIKE %s', filterArgs=('%', '%%', '%', '%%'),
+                                       displayColumnMapping=(1,), limitCount = 10, hideItems=True)
+
+        self.test = VirtualKeyboard(self, None, self.testModel)
+        self.test.updateSuggestions.connect(self.temp2)
+        self.test.exec()
 
     @pyqtSlot()
     def showEvent(self, event):
@@ -34,17 +71,22 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
         self.centralWindow.secondaryScanner.barcodeReceived.disconnect(self.secondaryScanner_barcodeReceived)
         print('This widget is being hidden. Handle anything necessary. Main Window')
 
-    @pyqtSlot()
-    def on_purchaseHistoryBtn_clicked(self):
-        self.close()
+    @pyqtSlot(bool, bool)
+    def on_checkInOutBtn_clicked(self, checked, longPressed):
+        print('Button hit: checked: %r longPress: %r' % (checked, longPressed))
+        print('yesss')
 
-    @pyqtSlot()
-    def on_ManualAddButton_clicked(self):
+    @pyqtSlot(bool, bool)
+    def on_ManualAddButton_clicked(self, checked, longPressed):
         self.parent().setCurrentIndex(WindowType.Favorites)
 
-    @pyqtSlot()
-    def on_SettingsButton_clicked(self):
-        self.centralWindow.close()
+    @pyqtSlot(bool, bool)
+    def on_PurchaseHistoryButton_clicked(self, checked, longPressed):
+        self.parent().setCurrentIndex(WindowType.PurchaseHistory)
+
+    @pyqtSlot(bool, bool)
+    def on_SettingsButton_clicked(self, checked, longPressed):
+        self.parent().setCurrentIndex(WindowType.Settings)
 
     @pyqtSlot()
     def scannerPoll_ticked(self):
@@ -58,7 +100,7 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
         checkedIn = True
         #if checkedIn:
 
-        
+
     @pyqtSlot(str)
     def secondaryScanner_barcodeReceived(self, barcode):
         print("Main: Secondary barcode scanner got: %s" % barcode)
