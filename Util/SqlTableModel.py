@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 class SqlTableModel(QAbstractTableModel):
     def __init__(self, connection, tableName = None, columnSortName = None, columnSortOrder = None, filter = None,
                  filterArgs = [], fields = None, displayColumnMapping = None, displayHeaders = None, customQuery = None,
-                 parent = None):
+                 limitCount = None, hideItems = False, parent = None):
         super(SqlTableModel, self).__init__(parent)
 
         self.tableName = tableName
@@ -26,7 +26,9 @@ class SqlTableModel(QAbstractTableModel):
         self.displayColumnMapping = displayColumnMapping
         self.displayHeaders = displayHeaders
         self.customQuery = customQuery
+        self.limitCount = limitCount
         self.columnAlignment = None
+        self.hideItems = hideItems
 
         self.connection = connection
         # Create cursor for SqlTableModel
@@ -47,10 +49,14 @@ class SqlTableModel(QAbstractTableModel):
             return False
 
         self.beginResetModel()
-        self.cursor.execute(sql, self.filterArgs)
+        if self.hideItems:
+            self.resdata = []
+            self.header = []
+        else:
+            self.cursor.execute(sql, self.filterArgs)
 
-        self.resdata = self.cursor.fetchall()
-        self.header = [desc[0] for desc in self.cursor.description]
+            self.resdata = self.cursor.fetchall()
+            self.header = [desc[0] for desc in self.cursor.description]
         self.endResetModel()
         return True
 
@@ -79,6 +85,9 @@ class SqlTableModel(QAbstractTableModel):
     # Contains a list of column names that the query should retrieve. If None, then set to all columns (*)
     def setFields(self, fields):
         self.fields = fields
+
+    def setLimitCount(self, limitCount):
+        self.limitCount = limitCount
 
     def setDisplayColumnMapping(self, displayColumnMapping):
         self.displayColumnMapping = displayColumnMapping
@@ -115,9 +124,13 @@ class SqlTableModel(QAbstractTableModel):
             logger.debug("Cannot retrieve select statement with no table name AND no custom query.")
             return None
 
-        filter = ''
+        limitClause = ''
         orderByClause = ''
+        filter = ''
         fields = ''
+
+        if self.limitCount is not None:
+            limitClause = '  LIMIT ' + str(self.limitCount)
 
         if self.columnSortName is not None and self.columnSortOrder is not None:
             orderByClause = ' ORDER BY ' + self.columnSortName
@@ -127,7 +140,7 @@ class SqlTableModel(QAbstractTableModel):
         # custom query concatenated with the order by clause
         if self.customQuery is not None:
             # We can safely use + to concatenate the strings because orderByClause is safe (cannot be SQL injected)
-            return self.customQuery + orderByClause
+            return self.customQuery + orderByClause + limitClause
 
         if self.filter is not None:
             filter = ' WHERE ' + self.filter
@@ -139,8 +152,8 @@ class SqlTableModel(QAbstractTableModel):
 
         # Run through the statement once. Run it through again because the filter string might have additional arguments
         # to add in (filterArgs)
-        firstRun = self.cursor.mogrify("SELECT %s FROM %s%s%s", (AsIs(fields), AsIs(self.tableName), AsIs(filter),
-                                                               AsIs(orderByClause)))
+        firstRun = self.cursor.mogrify("SELECT %s FROM %s%s%s%s", (AsIs(fields), AsIs(self.tableName), AsIs(filter),
+                                                               AsIs(orderByClause), AsIs(limitClause)))
 
         if runTwice:
             return self.cursor.mogrify(firstRun, self.filterArgs)
@@ -150,14 +163,6 @@ class SqlTableModel(QAbstractTableModel):
     def sort(self, column, order = None):
         self.setSort(column, order)
         self.select()
-        # void
-        # QSqlTableModel::sort(int
-        # column, Qt::SortOrder
-        # order)
-        # {
-        #     setSort(column, order);
-        # select();
-        # }
 
     def rowCount(self, parent = None):
         return len(self.resdata)

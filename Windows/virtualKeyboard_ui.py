@@ -25,6 +25,15 @@ class Ui_VirtualKeyboard(object):
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
         spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_5.addItem(spacerItem)
+        self.clearBtn = TouchButton(VirtualKeyboard)
+        self.clearBtn.setMinimumSize(QtCore.QSize(80, 48))
+        self.clearBtn.setMaximumSize(QtCore.QSize(80, 48))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(15)
+        self.clearBtn.setFont(font)
+        self.clearBtn.setObjectName("clearBtn")
+        self.horizontalLayout_5.addWidget(self.clearBtn)
         self.spaceBarBtn = TouchButton(VirtualKeyboard)
         self.spaceBarBtn.setMinimumSize(QtCore.QSize(300, 48))
         self.spaceBarBtn.setMaximumSize(QtCore.QSize(300, 48))
@@ -729,6 +738,7 @@ class Ui_VirtualKeyboard(object):
     def retranslateUi(self, VirtualKeyboard):
         _translate = QtCore.QCoreApplication.translate
         VirtualKeyboard.setWindowTitle(_translate("VirtualKeyboard", "Form"))
+        self.clearBtn.setText(_translate("VirtualKeyboard", "Clear"))
         self.spaceBarBtn.setText(_translate("VirtualKeyboard", "Space Bar"))
         self.leftBtn.setText(_translate("VirtualKeyboard", "←"))
         self.rightBtn.setText(_translate("VirtualKeyboard", "→"))

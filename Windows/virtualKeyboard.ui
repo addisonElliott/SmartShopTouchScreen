@@ -54,6 +54,31 @@
       </spacer>
      </item>
      <item>
+      <widget class="TouchButton" name="clearBtn">
+       <property name="minimumSize">
+        <size>
+         <width>80</width>
+         <height>48</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>80</width>
+         <height>48</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>15</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Clear</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="TouchButton" name="spaceBarBtn">
        <property name="minimumSize">
         <size>
