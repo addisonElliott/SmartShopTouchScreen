@@ -8,13 +8,13 @@ class BarcodeManager:
         self.dbManager = dbManager
         self.expBox = ExpirationBox(config)
 
-    def AddItemToInventory(self, barcode):
+    def AddItemToInventory(self, barcode, expirationDate, quantity):
         cachedItem = self.dbManager.GetCachedUPCItem()
 
         if cachedItem is not None:
-            self.dbManager.UpdateItemInDatabase(cachedItem)
+            self.dbManager.UpdateItemInDatabase(cachedItem, expirationDate, quantity)
         else:
-            self.AddItemToDatabase(barcode)
+            self.AddItemToDatabase(barcode, expirationDate, quantity)
 
     def CheckOutItemInInventory(self, barcode):
         item = self.dbManager.GetCachedUPCItem(barcode)
@@ -28,10 +28,10 @@ class BarcodeManager:
 
         return data
 
-    def AddItemToDatabase(self, barcode):
+    def AddItemToDatabase(self, barcode, expirationDate, quantity):
         data = self.GetJsonFrom3rdParty(barcode)
         if data["status"]["code"] == "200":
-            item = self.ParseJsonObject(data)
+            item = self.ParseJsonObject(data, expirationDate, quantity)
             id = self.dbManager.AddItemToInventory(item)
             self.dbManager.AddUPCToCachedUPCs(barcode, id, item["qty"])
         else:
@@ -43,11 +43,12 @@ class BarcodeManager:
             self.dbManager.AddUPCToCachedUPCs(barcode, id, item["qty"])
 
 
-    def ParseJsonObject(self, data):
+    def ParseJsonObject(self, data, expirationDate, quantity):
         item = {}
         item["name"] = data["product"]["attributes"]["product"]
-        item["qty"] = 1
-        item["avgQty"] = 1
+        item["qty"] = quantity
+        item["avgQty"] = quantity
+        item['expirationDate'] = expirationDate
 
         return item
 

@@ -39,9 +39,10 @@ class DatabaseManager:
         if not 'favoritesIndex' in item:
             item['favoritesIndex'] = None
 
-        self.cursor.execute("INSERT INTO inventory (name, qty, avg_qty, category, favorites_index) VALUES "
-                            "(%s, %s, %s, %s, %s) RETURNING item",
-                            (item["name"], item["qty"], item["avgQty"], item['category'], item['favoritesIndex']))
+        self.cursor.execute("INSERT INTO inventory (name, qty, avg_qty, category, favorites_index, expiration) VALUES "
+                            "(%s, %s, %s, %s, %s, %s) RETURNING item",
+                            (item["name"], item["qty"], item["avgQty"], item['category'], item['favoritesIndex'],
+                             item['expirationDate']))
         id = self.cursor.fetchone()[0]
         self.connection.commit()
 
@@ -51,9 +52,15 @@ class DatabaseManager:
         self.cursor.execute("INSERT INTO cached_upcs (upc, item, qty) VALUES (%s, %s, %s)", (barcode, id, qty))
         self.connection.commit()
 
-    def UpdateItemInDatabase(self, cachedItem):
+    def UpdateItemInDatabase(self, cachedItem, expirationDate, quantity):
+        expirationString = ''
+        if expirationDate != '':
+            expirationString = ', expiration = %s'.format(expirationDate.date())
+
         inventoryItem = self.GetItemFromInventory(cachedItem[0])
-        self.cursor.execute("UPDATE inventory SET qty = %s WHERE item = %s", (cachedItem[1] + inventoryItem[0], cachedItem[0]))
+        self.cursor.execute("UPDATE inventory SET qty = %s%s WHERE item = %s",
+                            ((quantity * cachedItem[1]) + inventoryItem[0],
+                             expirationString, cachedItem[0]))
         self.connection.commit()
 
     def DecrementQuantityForItem(self, item, qty=1):

@@ -10,6 +10,7 @@ from Util.enums import *
 from Util.databaseManager import *
 from BarcodeAPI.barcodeManager import *
 from Util import constants
+from datetime import datetime
 
 from Widgets.touchSpinBox import *
 
@@ -86,11 +87,17 @@ class CentralWindow(QMainWindow):
         # TODO Send the barcode scanner information to be processed
         checkedIn = True
         if checkedIn:
+            expirationDate = ''
+            quantity = 1
             if self.barcodeManager.expBox.exec():
-                j = 3  # random code, remove this
-                # grab info from exp box and save to variables
+                month = str(self.barcodeManager.expBox.month_combo.currentText())
+                day = str(self.barcodeManager.expBox.day_combo.currentText())
+                year = str(self.barcodeManager.expBox.year_combo.currentText())
+                expirationDate = str(datetime.datetime(month=month, day=day, year=year).date())
+                quantity = int(self.barcodeManager.expBox.qty_combo.currentText())
 
             # pass barcode possibly null expiration info to barcode manager for check in
+            self.barcodeManager.AddItemToInventory(barcode, expirationDate, quantity)
         else:
             i = 4  # random code, remove this
             # pass barcode to barcode manager for check out
