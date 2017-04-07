@@ -1,6 +1,7 @@
 import psycopg2
 from psycopg2.extensions import AsIs
 from psycopg2.extras import DictCursor
+from datetime import datetime
 
 class DatabaseManager:
     def __init__(self, database, username, password, host, port):
@@ -55,12 +56,12 @@ class DatabaseManager:
     def UpdateItemInDatabase(self, cachedItem, expirationDate, quantity):
         inventoryItem = self.GetItemFromInventory(cachedItem[0])
         if expirationDate != '':
-            self.cursor.execute("UPDATE inventory SET qty = %s, expiration = %s WHERE item = %s",
-                                ((quantity * cachedItem[1]) + inventoryItem[0],
+            self.cursor.execute("UPDATE inventory SET qty = %s, last_buy_date = %s, expiration = %s WHERE item = %s",
+                                ((quantity * cachedItem[1]) + inventoryItem[0], str(datetime.now()),
                                 expirationDate, cachedItem[0]))
         else:
-            self.cursor.execute("UPDATE inventory SET qty = %s WHERE item = %s",
-                                ((quantity * cachedItem[1]) + inventoryItem[0], cachedItem[0]))
+            self.cursor.execute("UPDATE inventory SET qty = %s, last_buy_date = %s WHERE item = %s",
+                                ((quantity * cachedItem[1]) + inventoryItem[0], str(datetime.now()), cachedItem[0]))
 
         self.connection.commit()
 
