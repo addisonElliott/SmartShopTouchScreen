@@ -73,6 +73,9 @@ class CentralWindow(QMainWindow):
         self.scannerPoll.timeout.connect(self.scannerPoll_ticked)
         self.scannerPoll.start(constants.scannerPollInterval)
 
+        self.primaryScanner.barcodeReceived.connect(self.primaryScanner_barcodeReceived)
+        self.secondaryScanner.barcodeReceived.connect(self.secondaryScanner_barcodeReceived)
+
     @pyqtSlot()
     def scannerPoll_ticked(self):
         self.primaryScanner.poll()

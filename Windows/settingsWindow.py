@@ -30,9 +30,6 @@ class SettingsWindow(QWidget, settingsWindow_ui.Ui_SettingsWindow):
 
     @pyqtSlot()
     def showEvent(self, event):
-        self.centralWindow.primaryScanner.barcodeReceived.connect(self.primaryScanner_barcodeReceived)
-        self.centralWindow.secondaryScanner.barcodeReceived.connect(self.secondaryScanner_barcodeReceived)
-
         # Move selected row to -1 so that no items are selected by default
         self.settingsView.setCurrentRow(-1)
 
@@ -41,9 +38,6 @@ class SettingsWindow(QWidget, settingsWindow_ui.Ui_SettingsWindow):
 
     @pyqtSlot()
     def hideEvent(self, event):
-        self.centralWindow.primaryScanner.barcodeReceived.disconnect(self.primaryScanner_barcodeReceived)
-        self.centralWindow.secondaryScanner.barcodeReceived.disconnect(self.secondaryScanner_barcodeReceived)
-
         # Save the settings
         self.saveSettings()
 
@@ -80,14 +74,6 @@ class SettingsWindow(QWidget, settingsWindow_ui.Ui_SettingsWindow):
     @pyqtSlot(bool, bool)
     def on_expDateCheckBox_clicked(self, checked, longPressed):
         self.expDateSpinBox.setEnabled(checked)
-
-    @pyqtSlot(str)
-    def primaryScanner_barcodeReceived(self, barcode):
-        logger.info("Primary barcode scanned in Settings's Menu: Note, this does nothing. You must be on the main menu")
-
-    @pyqtSlot(str)
-    def secondaryScanner_barcodeReceived(self, barcode):
-        logger.info("Secondary barcode scanned in Settings's Menu: Note, this does nothing. You must be on the main menu")
 
     def loadSettings(self):
         # System Settings
