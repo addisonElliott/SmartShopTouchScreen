@@ -14,7 +14,7 @@ class DatabaseManager:
     def GetCachedUPCItem(self, barcode):
         self.cursor.execute("SELECT item,qty FROM cached_upcs WHERE upc = %s", (barcode,))
 
-        return self.cursor.fetchall()
+        return self.cursor.fetchone()
 
     def GetItemFromInventory(self, id):
         self.cursor.execute("SELECT qty,avg_qty,avg_shelf_time,last_buy_date FROM inventory WHERE item = %s", (id,))
@@ -53,14 +53,15 @@ class DatabaseManager:
         self.connection.commit()
 
     def UpdateItemInDatabase(self, cachedItem, expirationDate, quantity):
-        expirationString = ''
-        if expirationDate != '':
-            expirationString = ', expiration = %s'.format(expirationDate.date())
-
         inventoryItem = self.GetItemFromInventory(cachedItem[0])
-        self.cursor.execute("UPDATE inventory SET qty = %s%s WHERE item = %s",
-                            ((quantity * cachedItem[1]) + inventoryItem[0],
-                             expirationString, cachedItem[0]))
+        if expirationDate != '':
+            self.cursor.execute("UPDATE inventory SET qty = %s, expiration = %s WHERE item = %s",
+                                ((quantity * cachedItem[1]) + inventoryItem[0],
+                                expirationDate, cachedItem[0]))
+        else:
+            self.cursor.execute("UPDATE inventory SET qty = %s WHERE item = %s",
+                                ((quantity * cachedItem[1]) + inventoryItem[0], cachedItem[0]))
+
         self.connection.commit()
 
     def DecrementQuantityForItem(self, item, qty=1):

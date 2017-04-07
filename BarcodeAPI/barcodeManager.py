@@ -9,7 +9,7 @@ class BarcodeManager:
         self.expBox = ExpirationBox(config)
 
     def AddItemToInventory(self, barcode, expirationDate, quantity):
-        cachedItem = self.dbManager.GetCachedUPCItem()
+        cachedItem = self.dbManager.GetCachedUPCItem(barcode)
 
         if cachedItem is not None:
             self.dbManager.UpdateItemInDatabase(cachedItem, expirationDate, quantity)

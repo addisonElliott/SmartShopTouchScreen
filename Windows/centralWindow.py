@@ -93,13 +93,12 @@ class CentralWindow(QMainWindow):
             expirationDate = ''
             quantity = 1
             if self.barcodeManager.expBox.exec():
-                month = str(self.barcodeManager.expBox.month_combo.currentText())
-                day = str(self.barcodeManager.expBox.day_combo.currentText())
-                year = str(self.barcodeManager.expBox.year_combo.currentText())
-                expirationDate = str(datetime.datetime(month=month, day=day, year=year).date())
+                month = int(self.barcodeManager.expBox.month_combo.currentText())
+                day = int(self.barcodeManager.expBox.day_combo.currentText())
+                year = int(self.barcodeManager.expBox.year_combo.currentText())
+                expirationDate = str(datetime(month=month, day=day, year=year).date())
                 quantity = int(self.barcodeManager.expBox.qty_combo.currentText())
 
-            # pass barcode possibly null expiration info to barcode manager for check in
             self.barcodeManager.AddItemToInventory(barcode, expirationDate, quantity)
         else:
             i = 4  # random code, remove this
