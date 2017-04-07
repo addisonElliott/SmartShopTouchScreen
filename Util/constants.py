@@ -32,6 +32,9 @@ dbPort = "5432"
 # Maximum length that a category name can be
 maxCategoryNameLength = 20
 
+# The time of day where the usage rate will be calculated on a day by day basis
+usageRateTime = QTime.fromString('01:10:00 AM', 'hh:mm:ss AP')
+
 # Log filename, where information will be stored
 logFilename = 'log.txt'
 import logging

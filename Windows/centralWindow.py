@@ -9,6 +9,7 @@ from Util.scanner import *
 from Util.enums import *
 from Util.databaseManager import *
 from Util import constants
+from datetime import *
 
 from Widgets.touchSpinBox import *
 
@@ -72,6 +73,21 @@ class CentralWindow(QMainWindow):
         self.scannerPoll = QTimer()
         self.scannerPoll.timeout.connect(self.scannerPoll_ticked)
         self.scannerPoll.start(constants.scannerPollInterval)
+
+        desiredDate = datetime.now() + timedelta(days=1)
+        desiredDate.replace(hour=0, minute=0, second=0)
+        #desiredDate = QDateTime.currentDateTime()
+        #desiredDate.addDays(1)
+        #desiredDate.setTime(constants.usageRateTime)
+
+        #relativeTime = desiredDate - QDateTime.currentDateTime()
+        #print(relativeTime)
+
+        #relativeTime = QDateTime(desired) - QDateTime.currentDateTime()
+        self.usageRateUpdateTimer = QTimer()
+        self.usageRateUpdateTimer.setTimerType(Qt.VeryCoarseTimer)
+        self.usageRateUpdateTimer.setSingleShot(True)
+        self.usageRateUpdateTimer.start(1000)
 
     @pyqtSlot()
     def scannerPoll_ticked(self):

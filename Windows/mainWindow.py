@@ -49,7 +49,7 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
         self.testModel = SqlTableModel(self.dbManager.connection, columnSortName='rank', columnSortOrder=Qt.DescendingOrder,
                                        customQuery='SELECT item, name, CASE\n'
                                         'WHEN name LIKE %s THEN 3\n'
-                                       'WHEN name ILIKE %s THEN 2\n'
+                                        'WHEN name ILIKE %s THEN 2\n'
                                         'WHEN name LIKE %s THEN 1\n'
                                         'ELSE 0 END AS rank FROM inventory\n'
                                         'WHERE name ILIKE %s', filterArgs=('%', '%%', '%', '%%'),
