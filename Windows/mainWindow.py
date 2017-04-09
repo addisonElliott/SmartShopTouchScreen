@@ -61,15 +61,11 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
 
     @pyqtSlot()
     def showEvent(self, event):
-        self.centralWindow.primaryScanner.barcodeReceived.connect(self.primaryScanner_barcodeReceived)
-        self.centralWindow.secondaryScanner.barcodeReceived.connect(self.secondaryScanner_barcodeReceived)
-        print('This widget is being shown. Handle anything necessary. Main Window')
+        pass
 
     @pyqtSlot()
     def hideEvent(self, event):
-        self.centralWindow.primaryScanner.barcodeReceived.disconnect(self.primaryScanner_barcodeReceived)
-        self.centralWindow.secondaryScanner.barcodeReceived.disconnect(self.secondaryScanner_barcodeReceived)
-        print('This widget is being hidden. Handle anything necessary. Main Window')
+        pass
 
     @pyqtSlot(bool, bool)
     def on_checkInOutBtn_clicked(self, checked, longPressed):
@@ -92,13 +88,3 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
     def scannerPoll_ticked(self):
         self.primaryScanner.poll()
         self.secondaryScanner.poll()
-
-    @pyqtSlot(str)
-    def primaryScanner_barcodeReceived(self, barcode):
-        print("Main: Primary barcode scanner got: %s" % barcode)
-        # TODO Send the barcode scanner information to be processed
-        
-    @pyqtSlot(str)
-    def secondaryScanner_barcodeReceived(self, barcode):
-        print("Main: Secondary barcode scanner got: %s" % barcode)
-        # TODO Send the barcode scanner information to be processed

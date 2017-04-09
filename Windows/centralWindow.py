@@ -147,6 +147,9 @@ class CentralWindow(QMainWindow):
                     str(desiredDateTime))
         self.usageRateUpdateTimer.start(timeUntilDate.total_seconds() * 1000.0)
 
+        self.primaryScanner.barcodeReceived.connect(self.primaryScanner_barcodeReceived)
+        self.secondaryScanner.barcodeReceived.connect(self.secondaryScanner_barcodeReceived)
+
     @pyqtSlot()
     def scannerPoll_ticked(self):
         self.primaryScanner.poll()

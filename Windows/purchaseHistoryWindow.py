@@ -43,13 +43,11 @@ class PurchaseHistoryWindow(QWidget, purchaseHistoryWindow_ui.Ui_PurchaseHistory
 
     @pyqtSlot()
     def showEvent(self, event):
-        self.centralWindow.primaryScanner.barcodeReceived.connect(self.primaryScanner_barcodeReceived)
-        self.centralWindow.secondaryScanner.barcodeReceived.connect(self.secondaryScanner_barcodeReceived)
+        pass
 
     @pyqtSlot()
     def hideEvent(self, event):
-        self.centralWindow.primaryScanner.barcodeReceived.disconnect(self.primaryScanner_barcodeReceived)
-        self.centralWindow.secondaryScanner.barcodeReceived.disconnect(self.secondaryScanner_barcodeReceived)
+        pass
 
     @pyqtSlot(bool, bool)
     def on_backBtn_clicked(self, checked, longPressed):
@@ -58,11 +56,3 @@ class PurchaseHistoryWindow(QWidget, purchaseHistoryWindow_ui.Ui_PurchaseHistory
     @pyqtSlot(bool, bool)
     def on_homeBtn_clicked(self, checked, longPressed):
         self.parent().setCurrentIndex(WindowType.Main)
-
-    @pyqtSlot(str)
-    def primaryScanner_barcodeReceived(self, barcode):
-        logger.info("Primary barcode scanned in Favorite's Menu: Note, this does nothing. You must be on the main menu")
-
-    @pyqtSlot(str)
-    def secondaryScanner_barcodeReceived(self, barcode):
-        logger.info("Secondary barcode scanned in Favorite's Menu: Note, this does nothing. You must be on the main menu")
