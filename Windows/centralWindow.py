@@ -100,7 +100,6 @@ class CentralWindow(QMainWindow):
             lastUsageRateDateChecked = None
 
         usageList = self.dbManager.getUsageHistory(lastUsageRateDateChecked)
-        print(usageList)
         lastItem = -1
         prevDate = lastUsageRateDateChecked
         updateUsageRateDict = {}
@@ -114,11 +113,11 @@ class CentralWindow(QMainWindow):
                 # the first item (A.K.A oldest in the list). Otherwise, set the initial avg_usage_rate to be the old
                 # avg_usage_rate divided by the number of days between now and the last time checked
                 if usageItem['avg_usage_rate'] is None or lastUsageRateDateChecked is None:
-                    daysDelta = ((curDate - usageItem['date']).days)
-                    updateUsageRateDict[usageItem['item']] = usageItem['qty'] / 2**(daysDelta)
+                    daysDelta = (curDate - usageItem['date']).days
+                    updateUsageRateDict[usageItem['item']] = usageItem['qty'] / 2**daysDelta
                 else:
-                    daysDelta = ((curDate - lastUsageRateDateChecked).days)
-                    updateUsageRateDict[usageItem['item']] = usageItem['avg_usage_rate'] / 2**(daysDelta)
+                    daysDelta = (curDate - lastUsageRateDateChecked).days
+                    updateUsageRateDict[usageItem['item']] = usageItem['avg_usage_rate'] / 2**daysDelta
 
             # This is equal to (n - days) by taking the number of days.
             # The number of days between today and the usage date of the item
@@ -144,7 +143,8 @@ class CentralWindow(QMainWindow):
         desiredDateTime = datetime.combine(datetime.now().date() + timedelta(days=1), constants.usageRateTime)
         timeUntilDate = desiredDateTime - datetime.now()
 
-        logger.info('Calculating usage rate for all items in database. Set next update to be at %s', str(desiredDateTime))
+        logger.info('Calculating usage rate for all items in database. Set next update to be at %s',
+                    str(desiredDateTime))
         self.usageRateUpdateTimer.start(timeUntilDate.total_seconds() * 1000.0)
 
     @pyqtSlot()
