@@ -1,6 +1,9 @@
 import psycopg2
 from psycopg2.extensions import AsIs
 from psycopg2.extras import DictCursor
+import psycopg2.extras
+import os
+import pickle
 
 class DatabaseManager:
     def __init__(self, database, username, password, host, port):
@@ -90,3 +93,20 @@ class DatabaseManager:
             self.cursor.execute("SELECT * FROM category ORDER BY order_index %s", (AsIs(('ASC' if order else 'DESC')),))
 
         return self.cursor.fetchall()
+
+    def getUsageHistory(self, prevDateChecked=None):
+        if prevDateChecked:
+            self.cursor.execute("SELECT item, date, qty, (SELECT avg_usage_rate FROM inventory WHERE item = history.item) "
+                                "AS avg_usage_rate FROM usage_history history WHERE date < CURRENT_DATE AND date > "
+                                "DATE %s ORDER BY item, date ASC", (prevDateChecked,))
+        else:
+            self.cursor.execute("SELECT item, date, qty, (SELECT avg_usage_rate FROM inventory WHERE item = history.item) "
+                                "AS avg_usage_rate FROM usage_history history WHERE date < CURRENT_DATE ORDER BY item, "
+                                "date ASC")
+
+        return self.cursor.fetchall()
+
+    def updateUsageRates(self, params):
+        psycopg2.extras.execute_batch(self.cursor, "UPDATE inventory SET avg_usage_rate = %s WHERE item = %s", params)
+
+        self.connection.commit()
