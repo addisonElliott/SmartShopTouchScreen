@@ -84,7 +84,3 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
     def on_SettingsButton_clicked(self, checked, longPressed):
         self.parent().setCurrentIndex(WindowType.Settings)
 
-    @pyqtSlot()
-    def scannerPoll_ticked(self):
-        self.primaryScanner.poll()
-        self.secondaryScanner.poll()

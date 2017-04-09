@@ -74,6 +74,9 @@ class CentralWindow(QMainWindow):
             self.primaryScanner = BarcodeScanner(self, self.config['Scanners']['primaryPort'])
             self.secondaryScanner = BarcodeScanner(self, self.config['Scanners']['secondaryPort'])
 
+        self.primaryScanner.barcodeReceived.connect(self.primaryScanner_barcodeReceived)
+        self.secondaryScanner.barcodeReceived.connect(self.secondaryScanner_barcodeReceived)
+
         # Setup timer to regularly poll for new barcodes from scanners
         self.scannerPoll = QTimer()
         self.scannerPoll.timeout.connect(self.scannerPoll_ticked)
@@ -146,9 +149,6 @@ class CentralWindow(QMainWindow):
         logger.info('Calculating usage rate for all items in database. Set next update to be at %s',
                     str(desiredDateTime))
         self.usageRateUpdateTimer.start(timeUntilDate.total_seconds() * 1000.0)
-
-        self.primaryScanner.barcodeReceived.connect(self.primaryScanner_barcodeReceived)
-        self.secondaryScanner.barcodeReceived.connect(self.secondaryScanner_barcodeReceived)
 
     @pyqtSlot()
     def scannerPoll_ticked(self):
