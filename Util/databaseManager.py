@@ -8,7 +8,7 @@ class DatabaseManager:
         try:
             self.connection = psycopg2.connect(database=database, user=username, password=password, host=host, port=port)
         except:
-            raise Exception("Cannot Connect to Database")
+            raise Exception('Cannot Connect to Database')
 
         self.cursor = self.connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
@@ -42,15 +42,15 @@ class DatabaseManager:
 
         self.cursor.execute("INSERT INTO inventory (name, qty, avg_qty, category, favorites_index, expiration) VALUES "
                             "(%s, %s, %s, %s, %s, %s) RETURNING item",
-                            (item["name"], item["qty"], item["avgQty"], item['category'], item['favoritesIndex'],
+                            (item['name'], item['qty'], item['avgQty'], item['category'], item['favoritesIndex'],
                              item['expirationDate']))
         id = self.cursor.fetchone()[0]
         self.connection.commit()
 
         return id
 
-    def AddUPCToCachedUPCs(self, barcode, id, qty):
-        self.cursor.execute("INSERT INTO cached_upcs (upc, item, qty) VALUES (%s, %s, %s)", (barcode, id, qty))
+    def AddUPCToCachedUPCs(self, barcode, id, pkgQty):
+        self.cursor.execute("INSERT INTO cached_upcs (upc, item, qty) VALUES (%s, %s, %s)", (barcode, id, pkgQty))
         self.connection.commit()
 
     def UpdateItemInDatabase(self, cachedItem, expirationDate, quantity):

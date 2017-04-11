@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import *
 
 from Windows import mainWindow_ui
 from Util import constants
+from Windows.NewItemDetails import NewItemDetails
 from Windows.favoriteWindow import *
 from Windows.centralWindow import *
 from Util.scanner import *
@@ -85,6 +86,7 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
     @pyqtSlot(bool, bool)
     def on_SettingsButton_clicked(self, checked, longPressed):
         self.parent().setCurrentIndex(WindowType.Settings)
+
 
     @pyqtSlot()
     def scannerPoll_ticked(self):

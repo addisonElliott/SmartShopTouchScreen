@@ -42,6 +42,11 @@
        <bold>true</bold>
       </font>
      </property>
+     <item>
+      <property name="text">
+       <string/>
+      </property>
+     </item>
     </widget>
    </item>
    <item row="2" column="1">
@@ -70,62 +75,7 @@
      </property>
      <item>
       <property name="text">
-       <string>1</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>2</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>3</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>4</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>5</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>6</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>7</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>8</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>9</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>10</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>11</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>12</string>
+       <string/>
       </property>
      </item>
     </widget>
@@ -141,6 +91,11 @@
        <bold>false</bold>
       </font>
      </property>
+     <item>
+      <property name="text">
+       <string/>
+      </property>
+     </item>
     </widget>
    </item>
    <item row="2" column="3">
@@ -284,19 +239,6 @@ border: 0;</string>
      </property>
     </widget>
    </item>
-   <item row="5" column="1">
-    <widget class="QLabel" name="qty_label">
-     <property name="font">
-      <font>
-       <family>Cronus Round</family>
-       <pointsize>19</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>Quantity</string>
-     </property>
-    </widget>
-   </item>
    <item row="1" column="2">
     <widget class="QLabel" name="exp_label">
      <property name="font">
@@ -310,6 +252,19 @@ border: 0;</string>
      </property>
      <property name="margin">
       <number>0</number>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1" colspan="2">
+    <widget class="QLabel" name="qty_label">
+     <property name="font">
+      <font>
+       <family>Cronus Round</family>
+       <pointsize>19</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Quantity Per Package</string>
      </property>
     </widget>
    </item>

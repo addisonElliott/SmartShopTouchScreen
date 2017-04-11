@@ -90,16 +90,7 @@ class CentralWindow(QMainWindow):
         # TODO Send the barcode scanner information to be processed
         checkedIn = True
         if checkedIn:
-            expirationDate = ''
-            quantity = 1
-            if self.barcodeManager.expBox.exec():
-                month = int(self.barcodeManager.expBox.month_combo.currentText())
-                day = int(self.barcodeManager.expBox.day_combo.currentText())
-                year = int(self.barcodeManager.expBox.year_combo.currentText())
-                expirationDate = str(datetime(month=month, day=day, year=year).date())
-                quantity = int(self.barcodeManager.expBox.qty_combo.currentText())
-
-            self.barcodeManager.AddItemToInventory(barcode, expirationDate, quantity)
+            self.barcodeManager.AddItemToInventory(barcode)
         else:
             i = 4  # random code, remove this
             # pass barcode to barcode manager for check out
