@@ -9,6 +9,7 @@ from Util.scanner import *
 from Util.enums import *
 from Util.databaseManager import *
 from Util import constants
+from Util.tcpServer import *
 from datetime import *
 import logging
 import pickle
@@ -18,6 +19,7 @@ from Widgets.touchSpinBox import *
 
 logger = logging.getLogger(__name__)
 
+
 class CentralWindow(QMainWindow):
     def __init__(self, config, parent=None):
         super(CentralWindow, self).__init__(parent)
@@ -26,7 +28,9 @@ class CentralWindow(QMainWindow):
         self.config = config
 
         self.dbManager = DatabaseManager(constants.dbDatabase, constants.dbUsername, constants.dbPassword,
-                                    constants.dbHost, constants.dbPort)
+                                         constants.dbHost, constants.dbPort)
+
+        self.tcpServer = TcpServer("127.0.0.1", 5050)
 
         # Initialize central widget, horizontal layout and stacked which which fills the entire QMainWindow
         self.centralwidget = QWidget(self)
@@ -69,7 +73,8 @@ class CentralWindow(QMainWindow):
         # Setup primary and secondary scanner based on if the shortcuts should be enabled
         if constants.barcodeScannerShortcut:
             self.primaryScanner = BarcodeScanner(self, self.config['Scanners']['primaryPort'], "Ctrl+1", "primary")
-            self.secondaryScanner = BarcodeScanner(self, self.config['Scanners']['secondaryPort'], "Ctrl+2", "secondary")
+            self.secondaryScanner = BarcodeScanner(self, self.config['Scanners']['secondaryPort'], "Ctrl+2",
+                                                   "secondary")
         else:
             self.primaryScanner = BarcodeScanner(self, self.config['Scanners']['primaryPort'])
             self.secondaryScanner = BarcodeScanner(self, self.config['Scanners']['secondaryPort'])
@@ -117,16 +122,16 @@ class CentralWindow(QMainWindow):
                 # avg_usage_rate divided by the number of days between now and the last time checked
                 if usageItem['avg_usage_rate'] is None or lastUsageRateDateChecked is None:
                     daysDelta = (curDate - usageItem['date']).days
-                    updateUsageRateDict[usageItem['item']] = usageItem['qty'] / 2**daysDelta
+                    updateUsageRateDict[usageItem['item']] = usageItem['qty'] / 2 ** daysDelta
                 else:
                     daysDelta = (curDate - lastUsageRateDateChecked).days
-                    updateUsageRateDict[usageItem['item']] = usageItem['avg_usage_rate'] / 2**daysDelta
+                    updateUsageRateDict[usageItem['item']] = usageItem['avg_usage_rate'] / 2 ** daysDelta
 
             # This is equal to (n - days) by taking the number of days.
             # The number of days between today and the usage date of the item
             # Increment the usage rate to be the quantity used on that day divided by 2^(# of days until today)
             daysDelta = (curDate - usageItem['date']).days
-            updateUsageRateDict[usageItem['item']] += usageItem['qty'] / 2**(daysDelta)
+            updateUsageRateDict[usageItem['item']] += usageItem['qty'] / 2 ** (daysDelta)
 
         # Update the updateusageRateDict
         updateUsageRateList = updateUsageRateDict.items()
@@ -154,6 +159,8 @@ class CentralWindow(QMainWindow):
     def scannerPoll_ticked(self):
         self.primaryScanner.poll()
         self.secondaryScanner.poll()
+
+        self.tcpServer.run()
 
     @pyqtSlot(str)
     def primaryScanner_barcodeReceived(self, barcode):
