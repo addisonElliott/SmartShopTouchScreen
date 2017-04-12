@@ -53,6 +53,22 @@ class TcpServer:
         # Append socket to the readers list
         self.readers.append(self.socket)
 
+    def send(self, IP, message):
+        # Loop through each IP in IPs dictionary, get the sock associated with the IP
+        sock_ = None
+        for sock, IP_ in self.IPs:
+            if IP_ is IP:
+                sock_ = sock
+
+        # If no socket found, then throw an error
+        if sock_ is None:
+            raise ValueError("Invalid socket to send data to, IP: %s" % (IP))
+
+        # Append the message to the socket's queue and put it in the writers list if not already present
+        self.queues[sock_].put(message)
+        if sock_ not in self.writers:
+            self.writers.append(sock_)
+
     def run(self):
         # Select what sockets are available to read from readers (as well as any read errors) and what sockets to write
         # with writers. Set timeout to zero so that if nothing is available for reading or writing, then just return
