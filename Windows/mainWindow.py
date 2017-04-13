@@ -19,10 +19,24 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
         self.config = config
         self.dbManager = dbManager
 
+        self.reqItemsModel = SqlTableModel(self.dbManager.connection, 'inventory', 'name', Qt.AscendingOrder,
+                                         'list_flags = 1',None, ('item', 'name', 'qty'), (1, 2), ('Name', 'Qty'))
+        self.recItemsModel = SqlTableModel(self.dbManager.connection, 'inventory', 'name', Qt.AscendingOrder,
+                                           'list_flags = 2', None, ('item', 'name', 'qty'), (1, 2), ('Name', 'Qty'))
+
+        self.reqItemsWidget.setModel(self.reqItemsModel)
+        self.recItemsWidget.setModel(self.reqItemsModel)
+        self.reqItemsWidget.selectionModel().selectionChanged.connect(self.selectItem)
+        self.recItemsWidget.selectionModel().selectionChanged.connect(self.selectItem)
+
         # Set size of the recommended items columns
         self.recItemsWidget.horizontalHeader().setStretchLastSection(False)
         self.recItemsWidget.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
         self.recItemsWidget.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
+
+        self.reqItemsWidget.horizontalHeader().setStretchLastSection(False)
+        self.reqItemsWidget.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
+        self.reqItemsWidget.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
 
         #Configure floating buttons
 
@@ -91,17 +105,17 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
         print("Main: Secondary barcode scanner got: %s" % barcode)
         # TODO Send the barcode scanner information to be processed.
 
-    @pyqtSlot(bool, bool)
-    def on_printShoppingListButton_clicked(self, checked, longPressed):
-        self.floatingPB1.setEnabled(True)
-        self.floatingPB1.show()
-        #self.reqItemsWidget.itemClicked(self,QListWidgetItem)
-
     @pyqtSlot()
     def selectItem(self):
-        hasSelection = not self.sender().selection().isEmpty()
-        self.addBtn.setEnabled(hasSelection)
-        self.removeBtn.setEnabled(hasSelection)
+        hasSelection = self.sender().hasSelection()
+        print('has selection %r' % (hasSelection))
+        if self.sender() is self.reqItemsWidget.selectionModel():
+            self.floatingPB1.setEnabled(hasSelection)
+            self.floatingPB1.setVisible(hasSelection)
+        else:
+            self.floatingPB2.setEnabled(hasSelection)
+            self.floatingPB2.setVisible(hasSelection)
+
 
     # Make the buttons at bottom of the screen floating; this cannot be done in Qt Designer
     # Remove the widget containing the floating buttons from the layout since Qt Designer does not allow this

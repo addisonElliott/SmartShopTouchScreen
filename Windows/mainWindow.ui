@@ -460,33 +460,6 @@ border: 0;</string>
        </property>
       </widget>
      </item>
-     <item row="4" column="0">
-      <widget class="QListView" name="reqItemsWidget">
-       <property name="font">
-        <font>
-         <pointsize>19</pointsize>
-        </font>
-       </property>
-       <property name="editTriggers">
-        <set>QAbstractItemView::NoEditTriggers</set>
-       </property>
-       <property name="dragDropMode">
-        <enum>QAbstractItemView::DropOnly</enum>
-       </property>
-       <property name="defaultDropAction">
-        <enum>Qt::MoveAction</enum>
-       </property>
-       <property name="alternatingRowColors">
-        <bool>true</bool>
-       </property>
-       <property name="selectionMode">
-        <enum>QAbstractItemView::MultiSelection</enum>
-       </property>
-       <property name="viewMode">
-        <enum>QListView::ListMode</enum>
-       </property>
-      </widget>
-     </item>
      <item row="4" column="1">
       <widget class="QTableView" name="recItemsWidget">
        <property name="font">
@@ -521,6 +494,42 @@ border: 0;</string>
        <property name="showGrid">
         <bool>false</bool>
        </property>
+       <property name="sortingEnabled">
+        <bool>true</bool>
+       </property>
+       <attribute name="verticalHeaderVisible">
+        <bool>false</bool>
+       </attribute>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QTableView" name="reqItemsWidget">
+       <property name="font">
+        <font>
+         <pointsize>19</pointsize>
+        </font>
+       </property>
+       <property name="editTriggers">
+        <set>QAbstractItemView::NoEditTriggers</set>
+       </property>
+       <property name="dragDropMode">
+        <enum>QAbstractItemView::DropOnly</enum>
+       </property>
+       <property name="defaultDropAction">
+        <enum>Qt::MoveAction</enum>
+       </property>
+       <property name="alternatingRowColors">
+        <bool>true</bool>
+       </property>
+       <property name="selectionMode">
+        <enum>QAbstractItemView::MultiSelection</enum>
+       </property>
+       <property name="sortingEnabled">
+        <bool>true</bool>
+       </property>
+       <attribute name="verticalHeaderVisible">
+        <bool>false</bool>
+       </attribute>
       </widget>
      </item>
     </layout>
