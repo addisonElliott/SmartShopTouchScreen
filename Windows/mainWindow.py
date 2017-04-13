@@ -151,9 +151,3 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
         else:
             self.floatingPB2.setEnabled(hasSelection)
             self.floatingPB2.setVisible(hasSelection)
-
-
-    # Make the buttons at bottom of the screen floating; this cannot be done in Qt Designer
-    # Remove the widget containing the floating buttons from the layout since Qt Designer does not allow this
-    # Then setGeometry on the widget and finally raise the widget so it has a higher z-order than rest of items
-  #
