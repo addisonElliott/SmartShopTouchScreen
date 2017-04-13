@@ -66,7 +66,22 @@
      <property name="bottomMargin">
       <number>6</number>
      </property>
-     <item row="0" column="7" rowspan="4">
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="font">
+        <font>
+         <family>Cronus Round</family>
+         <pointsize>16</pointsize>
+         <weight>50</weight>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Required Items</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="7" rowspan="5">
       <layout class="QVBoxLayout" name="verticalLayout_4">
        <property name="rightMargin">
         <number>0</number>
@@ -264,6 +279,9 @@ border: 0;</string>
            <height>64</height>
           </size>
          </property>
+         <property name="layoutDirection">
+          <enum>Qt::LeftToRight</enum>
+         </property>
          <property name="styleSheet">
           <string notr="true">background-color: transparent;
 border: 0;</string>
@@ -313,18 +331,53 @@ border: 0;</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="label_3">
-       <property name="font">
-        <font>
-         <family>Cronus Round</family>
-         <pointsize>16</pointsize>
-         <weight>50</weight>
-         <bold>false</bold>
-        </font>
+     <item row="0" column="3" rowspan="5">
+      <widget class="Line" name="line_2">
+       <property name="lineWidth">
+        <number>1</number>
+       </property>
+       <property name="midLineWidth">
+        <number>1</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="6">
+      <spacer name="horizontalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>6</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="2" column="0">
+      <widget class="QPushButton" name="floatingPB1">
+       <property name="styleSheet">
+        <string notr="true">background-color: transparent;
+border: 0;</string>
        </property>
        <property name="text">
-        <string>Required Items</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../Resource_BY.qrc">
+         <normaloff>:/Icons/Icons/RedMinusIcon_Finished.png</normaloff>:/Icons/Icons/RedMinusIcon_Finished.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>58</width>
+         <height>58</height>
+        </size>
        </property>
       </widget>
      </item>
@@ -344,24 +397,8 @@ border: 0;</string>
        </property>
       </spacer>
      </item>
-     <item row="0" column="6">
-      <spacer name="horizontalSpacer_3">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>6</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
      <item row="0" column="0" colspan="2">
-      <widget class="TouchButton" name="EditShopingListButton">
+      <widget class="TouchButton" name="printShoppingListButton">
        <property name="minimumSize">
         <size>
          <width>0</width>
@@ -397,10 +434,34 @@ border: 0;</string>
          <height>32</height>
         </size>
        </property>
+       <property name="checkable">
+        <bool>false</bool>
+       </property>
       </widget>
      </item>
      <item row="3" column="0">
-      <widget class="QListWidget" name="reqItemsWidget">
+      <widget class="QPushButton" name="floatingPB2">
+       <property name="styleSheet">
+        <string notr="true">background-color: transparent;
+border: 0;</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../Resource_BY.qrc">
+         <normaloff>:/Icons/Icons/RedMinusIcon_Finished.png</normaloff>:/Icons/Icons/RedMinusIcon_Finished.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>58</width>
+         <height>58</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QListView" name="reqItemsWidget">
        <property name="font">
         <font>
          <pointsize>19</pointsize>
@@ -424,93 +485,10 @@ border: 0;</string>
        <property name="viewMode">
         <enum>QListView::ListMode</enum>
        </property>
-       <item>
-        <property name="text">
-         <string>Apples</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>New Item</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>New Item</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>New Item</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>New Item</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>New Item</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>New Item</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>New Item</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>New Item</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>New Item</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>New Item</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>New Item</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Bananas</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Onions</string>
-        </property>
-       </item>
       </widget>
      </item>
-     <item row="0" column="3" rowspan="4">
-      <widget class="Line" name="line_2">
-       <property name="lineWidth">
-        <number>1</number>
-       </property>
-       <property name="midLineWidth">
-        <number>1</number>
-       </property>
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="1">
-      <widget class="QTableWidget" name="recItemsWidget">
+     <item row="4" column="1">
+      <widget class="QTableView" name="recItemsWidget">
        <property name="font">
         <font>
          <pointsize>19</pointsize>
@@ -542,136 +520,6 @@ border: 0;</string>
        </property>
        <property name="showGrid">
         <bool>false</bool>
-       </property>
-       <property name="rowCount">
-        <number>12</number>
-       </property>
-       <property name="columnCount">
-        <number>2</number>
-       </property>
-       <attribute name="horizontalHeaderVisible">
-        <bool>true</bool>
-       </attribute>
-       <attribute name="horizontalHeaderStretchLastSection">
-        <bool>true</bool>
-       </attribute>
-       <attribute name="verticalHeaderVisible">
-        <bool>false</bool>
-       </attribute>
-       <row/>
-       <row/>
-       <row/>
-       <row/>
-       <row/>
-       <row/>
-       <row/>
-       <row/>
-       <row/>
-       <row/>
-       <row/>
-       <row/>
-       <column>
-        <property name="text">
-         <string>Item</string>
-        </property>
-        <property name="textAlignment">
-         <set>AlignCenter</set>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Qty</string>
-        </property>
-        <property name="textAlignment">
-         <set>AlignCenter</set>
-        </property>
-       </column>
-       <item row="0" column="0">
-        <property name="text">
-         <string>New Item</string>
-        </property>
-       </item>
-       <item row="0" column="1">
-        <property name="text">
-         <string>101</string>
-        </property>
-       </item>
-       <item row="1" column="0">
-        <property name="text">
-         <string>New Item</string>
-        </property>
-       </item>
-       <item row="1" column="1">
-        <property name="text">
-         <string>102</string>
-        </property>
-       </item>
-       <item row="2" column="0">
-        <property name="text">
-         <string>New Item</string>
-        </property>
-       </item>
-       <item row="2" column="1">
-        <property name="text">
-         <string>103</string>
-        </property>
-       </item>
-       <item row="3" column="0">
-        <property name="text">
-         <string>New Item</string>
-        </property>
-       </item>
-       <item row="3" column="1">
-        <property name="text">
-         <string>104</string>
-        </property>
-       </item>
-       <item row="4" column="0">
-        <property name="text">
-         <string>New Item</string>
-        </property>
-       </item>
-       <item row="4" column="1">
-        <property name="text">
-         <string>401</string>
-        </property>
-       </item>
-       <item row="5" column="0">
-        <property name="text">
-         <string>New Item</string>
-        </property>
-       </item>
-       <item row="5" column="1">
-        <property name="text">
-         <string>301</string>
-        </property>
-       </item>
-       <item row="6" column="0">
-        <property name="text">
-         <string>New Item</string>
-        </property>
-       </item>
-       <item row="6" column="1">
-        <property name="text">
-         <string>201</string>
-        </property>
-       </item>
-       <item row="7" column="0">
-        <property name="text">
-         <string>New Item</string>
-        </property>
-       </item>
-       <item row="7" column="1">
-        <property name="text">
-         <string>100</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-     <item row="2" column="0">
-      <widget class="QPushButton" name="floatingPB1">
-       <property name="text">
-        <string>PushButton</string>
        </property>
       </widget>
      </item>
