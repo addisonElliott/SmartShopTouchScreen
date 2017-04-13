@@ -1,3 +1,4 @@
+import logging
 from Windows import virtualKeyboard_ui
 from PyQt5.QtWidgets import QApplication, QWidget, QDialog
 from PyQt5.QtCore import *
@@ -6,9 +7,18 @@ from PyQt5.QtWidgets import *
 from Util import scroller
 from Util.enums import *
 
+logger = logging.getLogger(__name__)
+
 
 class VirtualKeyboard(QDialog, virtualKeyboard_ui.Ui_VirtualKeyboard):
-    def __init__(self, parent=None, lineEdit=None):
+    WIDTH = 800
+    HEIGHT_NO_SUGGESTIONS = 334
+    HEIGHT_WITH_SUGGESTIONS = 480
+
+    # Signal is emitted when the text changes to update suggestions model
+    updateSuggestions = pyqtSignal(str)
+
+    def __init__(self, parent=None, lineEdit=None, suggestionsListModel=None):
         super(VirtualKeyboard, self).__init__(parent)
         self.setupUi(self)
 
@@ -24,8 +34,17 @@ class VirtualKeyboard(QDialog, virtualKeyboard_ui.Ui_VirtualKeyboard):
             self.lineEdit.setValidator(self.parentLineEdit.validator())
             self.lineEdit.setText(self.parentLineEdit.text())
 
-        # Give focus to the line edit so you can see where the caret is located
-        self.lineEdit.setFocus()
+        self.suggestionsListModel = suggestionsListModel
+        if self.suggestionsListModel:
+            self.suggestionsListView.setModel(suggestionsListModel)
+            self.resize(self.WIDTH, self.HEIGHT_WITH_SUGGESTIONS)
+            self.suggestionsListView.selectionModel().selectionChanged.connect(self.selectSuggestion)
+            scroller.setupScrolling(self.suggestionsListView)
+        else:
+            self.gridLayout.removeWidget(self.suggestionsListView)
+            self.suggestionsListView.setParent(None) # This works for modal dialog boxes where deleteLater DOES NOT
+            self.suggestionsListView = None
+            self.resize(self.WIDTH, self.HEIGHT_NO_SUGGESTIONS)
 
         # Remove title bar
         self.setWindowFlags(Qt.Dialog | Qt.FramelessWindowHint)
@@ -86,6 +105,11 @@ class VirtualKeyboard(QDialog, virtualKeyboard_ui.Ui_VirtualKeyboard):
 
         for buttonInfo in self.layout:
             buttonInfo[0].pressed.connect(self.characterPressed)
+
+    @pyqtSlot()
+    def showEvent(self, event):
+        # Give focus to the line edit so you can see where the caret is located
+        self.lineEdit.setFocus()
 
     def closeDialog(self, saveText=True):
         # Set text variable regardless if execution was successful
@@ -171,6 +195,10 @@ class VirtualKeyboard(QDialog, virtualKeyboard_ui.Ui_VirtualKeyboard):
         self.lineEdit.insert("\t")
 
     @pyqtSlot(bool, bool)
+    def on_clearBtn_clicked(self, checked, longPressed):
+        self.lineEdit.clear()
+
+    @pyqtSlot(bool, bool)
     def on_spaceBarBtn_clicked(self, checked, longPressed):
         self.lineEdit.insert(" ")
 
@@ -183,6 +211,10 @@ class VirtualKeyboard(QDialog, virtualKeyboard_ui.Ui_VirtualKeyboard):
     def on_rightBtn_clicked(self, checked, longPressed):
         # Move cursor forward without selecting the text
         self.lineEdit.cursorForward(False)
+
+    @pyqtSlot(str)
+    def on_lineEdit_textChanged(self, str):
+        self.updateSuggestions.emit(str)
 
     @pyqtSlot(bool, bool)
     def characterPressed(self, checked, longPressed):
@@ -216,3 +248,15 @@ class VirtualKeyboard(QDialog, virtualKeyboard_ui.Ui_VirtualKeyboard):
         else:
             for buttonInfo in self.layout:
                 buttonInfo[0].setText(buttonInfo[1][0])
+
+    @pyqtSlot()
+    def selectSuggestion(self):
+        records = self.suggestionsListModel.getSelectedRecords(self.sender().selectedIndexes())
+        if len(records) != 1:
+            logger.warning('Invalid number of records retrieved from suggestions list in selectSuggestion of Virtual '
+                           'Keyboard.')
+            return
+
+        self.lineEdit.setText(records[0]['name'])
+        self.lineEdit.setFocus()
+        self.sender().clearSelection()

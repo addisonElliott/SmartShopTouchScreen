@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>334</height>
+    <height>430</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -32,13 +32,16 @@
    <property name="bottomMargin">
     <number>5</number>
    </property>
-   <item row="1" column="0">
-    <layout class="QHBoxLayout" name="horizontalLayout">
+   <item row="6" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout_5">
      <property name="spacing">
-      <number>5</number>
+      <number>6</number>
+     </property>
+     <property name="rightMargin">
+      <number>11</number>
      </property>
      <item>
-      <spacer name="horizontalSpacer_2">
+      <spacer name="horizontalSpacer">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -51,16 +54,41 @@
       </spacer>
      </item>
      <item>
-      <widget class="TouchButton" name="tildeBtn">
+      <widget class="TouchButton" name="clearBtn">
        <property name="minimumSize">
         <size>
-         <width>36</width>
+         <width>80</width>
          <height>48</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>36</width>
+         <width>80</width>
+         <height>48</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>15</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Clear</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="TouchButton" name="spaceBarBtn">
+       <property name="minimumSize">
+        <size>
+         <width>300</width>
+         <height>48</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>300</width>
          <height>48</height>
         </size>
        </property>
@@ -74,7 +102,7 @@
         <enum>Qt::NoFocus</enum>
        </property>
        <property name="text">
-        <string>`</string>
+        <string>Space Bar</string>
        </property>
        <property name="autoRepeat">
         <bool>true</bool>
@@ -82,38 +110,7 @@
       </widget>
      </item>
      <item>
-      <widget class="TouchButton" name="oneBtn">
-       <property name="minimumSize">
-        <size>
-         <width>48</width>
-         <height>48</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>48</width>
-         <height>48</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <family>Segoe UI</family>
-         <pointsize>15</pointsize>
-        </font>
-       </property>
-       <property name="focusPolicy">
-        <enum>Qt::NoFocus</enum>
-       </property>
-       <property name="text">
-        <string>1</string>
-       </property>
-       <property name="autoRepeat">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="TouchButton" name="twoBtn">
+      <widget class="TouchButton" name="leftBtn">
        <property name="minimumSize">
         <size>
          <width>48</width>
@@ -136,7 +133,7 @@
         <enum>Qt::NoFocus</enum>
        </property>
        <property name="text">
-        <string>2</string>
+        <string>←</string>
        </property>
        <property name="autoRepeat">
         <bool>true</bool>
@@ -144,7 +141,7 @@
       </widget>
      </item>
      <item>
-      <widget class="TouchButton" name="threeBtn">
+      <widget class="TouchButton" name="rightBtn">
        <property name="minimumSize">
         <size>
          <width>48</width>
@@ -167,7 +164,7 @@
         <enum>Qt::NoFocus</enum>
        </property>
        <property name="text">
-        <string>3</string>
+        <string>→</string>
        </property>
        <property name="autoRepeat">
         <bool>true</bool>
@@ -175,7 +172,143 @@
       </widget>
      </item>
      <item>
-      <widget class="TouchButton" name="fourBtn">
+      <widget class="TouchButton" name="confirmBtn">
+       <property name="minimumSize">
+        <size>
+         <width>48</width>
+         <height>48</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>48</width>
+         <height>48</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: transparent;
+border: 0;</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../Resource_BY.qrc">
+         <normaloff>:/Icons/Icons/GreenCheckIcon_Finished.png</normaloff>:/Icons/Icons/GreenCheckIcon_Finished.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>48</width>
+         <height>48</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="TouchButton" name="cancelBtn">
+       <property name="minimumSize">
+        <size>
+         <width>48</width>
+         <height>48</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>48</width>
+         <height>48</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: transparent;
+border: 0;</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../Resource_BY.qrc">
+         <normaloff>:/Icons/Icons/RedCancelIcon_Finished.png</normaloff>:/Icons/Icons/RedCancelIcon_Finished.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>48</width>
+         <height>48</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLineEdit" name="lineEdit">
+     <property name="font">
+      <font>
+       <family>Segoe UI</family>
+       <pointsize>15</pointsize>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QWidget
+{
+	border: 1px solid #76797C;
+}</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <property name="spacing">
+      <number>5</number>
+     </property>
+     <item>
+      <spacer name="horizontalSpacer_6">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="TouchButton" name="leftShiftBtn">
+       <property name="minimumSize">
+        <size>
+         <width>108</width>
+         <height>48</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>108</width>
+         <height>48</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>15</pointsize>
+        </font>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
+       <property name="text">
+        <string>Shift</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="TouchButton" name="zBtn">
        <property name="minimumSize">
         <size>
          <width>48</width>
@@ -198,7 +331,7 @@
         <enum>Qt::NoFocus</enum>
        </property>
        <property name="text">
-        <string>4</string>
+        <string>z</string>
        </property>
        <property name="autoRepeat">
         <bool>true</bool>
@@ -206,7 +339,7 @@
       </widget>
      </item>
      <item>
-      <widget class="TouchButton" name="fiveBtn">
+      <widget class="TouchButton" name="xBtn">
        <property name="minimumSize">
         <size>
          <width>48</width>
@@ -229,7 +362,7 @@
         <enum>Qt::NoFocus</enum>
        </property>
        <property name="text">
-        <string>5</string>
+        <string>x</string>
        </property>
        <property name="autoRepeat">
         <bool>true</bool>
@@ -237,7 +370,7 @@
       </widget>
      </item>
      <item>
-      <widget class="TouchButton" name="sixBtn">
+      <widget class="TouchButton" name="cBtn">
        <property name="minimumSize">
         <size>
          <width>48</width>
@@ -260,7 +393,7 @@
         <enum>Qt::NoFocus</enum>
        </property>
        <property name="text">
-        <string>6</string>
+        <string>c</string>
        </property>
        <property name="autoRepeat">
         <bool>true</bool>
@@ -268,7 +401,7 @@
       </widget>
      </item>
      <item>
-      <widget class="TouchButton" name="sevenBtn">
+      <widget class="TouchButton" name="vBtn">
        <property name="minimumSize">
         <size>
          <width>48</width>
@@ -291,7 +424,7 @@
         <enum>Qt::NoFocus</enum>
        </property>
        <property name="text">
-        <string>7</string>
+        <string>v</string>
        </property>
        <property name="autoRepeat">
         <bool>true</bool>
@@ -299,7 +432,7 @@
       </widget>
      </item>
      <item>
-      <widget class="TouchButton" name="eightBtn">
+      <widget class="TouchButton" name="bBtn">
        <property name="minimumSize">
         <size>
          <width>48</width>
@@ -322,7 +455,7 @@
         <enum>Qt::NoFocus</enum>
        </property>
        <property name="text">
-        <string>8</string>
+        <string>b</string>
        </property>
        <property name="autoRepeat">
         <bool>true</bool>
@@ -330,7 +463,7 @@
       </widget>
      </item>
      <item>
-      <widget class="TouchButton" name="nineBtn">
+      <widget class="TouchButton" name="nBtn">
        <property name="minimumSize">
         <size>
          <width>48</width>
@@ -353,7 +486,7 @@
         <enum>Qt::NoFocus</enum>
        </property>
        <property name="text">
-        <string>9</string>
+        <string>n</string>
        </property>
        <property name="autoRepeat">
         <bool>true</bool>
@@ -361,7 +494,7 @@
       </widget>
      </item>
      <item>
-      <widget class="TouchButton" name="zeroBtn">
+      <widget class="TouchButton" name="mBtn">
        <property name="minimumSize">
         <size>
          <width>48</width>
@@ -384,7 +517,7 @@
         <enum>Qt::NoFocus</enum>
        </property>
        <property name="text">
-        <string>0</string>
+        <string>m</string>
        </property>
        <property name="autoRepeat">
         <bool>true</bool>
@@ -392,7 +525,7 @@
       </widget>
      </item>
      <item>
-      <widget class="TouchButton" name="minusBtn">
+      <widget class="TouchButton" name="commaBtn">
        <property name="minimumSize">
         <size>
          <width>48</width>
@@ -415,7 +548,7 @@
         <enum>Qt::NoFocus</enum>
        </property>
        <property name="text">
-        <string>-</string>
+        <string>,</string>
        </property>
        <property name="autoRepeat">
         <bool>true</bool>
@@ -423,7 +556,7 @@
       </widget>
      </item>
      <item>
-      <widget class="TouchButton" name="equalBtn">
+      <widget class="TouchButton" name="periodBtn">
        <property name="minimumSize">
         <size>
          <width>48</width>
@@ -446,7 +579,7 @@
         <enum>Qt::NoFocus</enum>
        </property>
        <property name="text">
-        <string>=</string>
+        <string>.</string>
        </property>
        <property name="autoRepeat">
         <bool>true</bool>
@@ -454,16 +587,16 @@
       </widget>
      </item>
      <item>
-      <widget class="TouchButton" name="backspaceBtn">
+      <widget class="TouchButton" name="forwardSlashBtn">
        <property name="minimumSize">
         <size>
-         <width>88</width>
+         <width>48</width>
          <height>48</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>88</width>
+         <width>48</width>
          <height>48</height>
         </size>
        </property>
@@ -477,7 +610,7 @@
         <enum>Qt::NoFocus</enum>
        </property>
        <property name="text">
-        <string>Bksp</string>
+        <string>/</string>
        </property>
        <property name="autoRepeat">
         <bool>true</bool>
@@ -485,7 +618,44 @@
       </widget>
      </item>
      <item>
-      <spacer name="horizontalSpacer_3">
+      <widget class="TouchButton" name="rightShiftBtn">
+       <property name="minimumSize">
+        <size>
+         <width>125</width>
+         <height>48</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>125</width>
+         <height>48</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>15</pointsize>
+        </font>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
+       <property name="text">
+        <string>Shift</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+       <property name="checked">
+        <bool>false</bool>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_7">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -499,7 +669,7 @@
      </item>
     </layout>
    </item>
-   <item row="2" column="0">
+   <item row="3" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <property name="spacing">
       <number>5</number>
@@ -966,211 +1136,13 @@
      </item>
     </layout>
    </item>
-   <item row="5" column="0">
-    <layout class="QHBoxLayout" name="horizontalLayout_5">
-     <property name="spacing">
-      <number>6</number>
-     </property>
-     <property name="rightMargin">
-      <number>11</number>
-     </property>
-     <item>
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="TouchButton" name="spaceBarBtn">
-       <property name="minimumSize">
-        <size>
-         <width>300</width>
-         <height>48</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>300</width>
-         <height>48</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <family>Segoe UI</family>
-         <pointsize>15</pointsize>
-        </font>
-       </property>
-       <property name="focusPolicy">
-        <enum>Qt::NoFocus</enum>
-       </property>
-       <property name="text">
-        <string>Space Bar</string>
-       </property>
-       <property name="autoRepeat">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="TouchButton" name="leftBtn">
-       <property name="minimumSize">
-        <size>
-         <width>48</width>
-         <height>48</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>48</width>
-         <height>48</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <family>Segoe UI</family>
-         <pointsize>15</pointsize>
-        </font>
-       </property>
-       <property name="focusPolicy">
-        <enum>Qt::NoFocus</enum>
-       </property>
-       <property name="text">
-        <string>←</string>
-       </property>
-       <property name="autoRepeat">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="TouchButton" name="rightBtn">
-       <property name="minimumSize">
-        <size>
-         <width>48</width>
-         <height>48</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>48</width>
-         <height>48</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <family>Segoe UI</family>
-         <pointsize>15</pointsize>
-        </font>
-       </property>
-       <property name="focusPolicy">
-        <enum>Qt::NoFocus</enum>
-       </property>
-       <property name="text">
-        <string>→</string>
-       </property>
-       <property name="autoRepeat">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="TouchButton" name="confirmBtn">
-       <property name="minimumSize">
-        <size>
-         <width>48</width>
-         <height>48</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>48</width>
-         <height>48</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: transparent;
-border: 0;</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="../Resource_BY.qrc">
-         <normaloff>:/Icons/Icons/GreenCheckIcon_Finished.png</normaloff>:/Icons/Icons/GreenCheckIcon_Finished.png</iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>48</width>
-         <height>48</height>
-        </size>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="TouchButton" name="cancelBtn">
-       <property name="minimumSize">
-        <size>
-         <width>48</width>
-         <height>48</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>48</width>
-         <height>48</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: transparent;
-border: 0;</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="../Resource_BY.qrc">
-         <normaloff>:/Icons/Icons/RedCancelIcon_Finished.png</normaloff>:/Icons/Icons/RedCancelIcon_Finished.png</iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>48</width>
-         <height>48</height>
-        </size>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item row="0" column="0">
-    <widget class="QLineEdit" name="lineEdit">
-     <property name="font">
-      <font>
-       <family>Segoe UI</family>
-       <pointsize>15</pointsize>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QWidget
-{
-	border: 1px solid #76797C;
-}</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="0">
-    <layout class="QHBoxLayout" name="horizontalLayout_4">
+   <item row="2" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout">
      <property name="spacing">
       <number>5</number>
      </property>
      <item>
-      <spacer name="horizontalSpacer_6">
+      <spacer name="horizontalSpacer_2">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -1183,16 +1155,16 @@ border: 0;</string>
       </spacer>
      </item>
      <item>
-      <widget class="TouchButton" name="leftShiftBtn">
+      <widget class="TouchButton" name="tildeBtn">
        <property name="minimumSize">
         <size>
-         <width>108</width>
+         <width>36</width>
          <height>48</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>108</width>
+         <width>36</width>
          <height>48</height>
         </size>
        </property>
@@ -1206,41 +1178,7 @@ border: 0;</string>
         <enum>Qt::NoFocus</enum>
        </property>
        <property name="text">
-        <string>Shift</string>
-       </property>
-       <property name="checkable">
-        <bool>true</bool>
-       </property>
-       <property name="autoDefault">
-        <bool>false</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="TouchButton" name="zBtn">
-       <property name="minimumSize">
-        <size>
-         <width>48</width>
-         <height>48</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>48</width>
-         <height>48</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <family>Segoe UI</family>
-         <pointsize>15</pointsize>
-        </font>
-       </property>
-       <property name="focusPolicy">
-        <enum>Qt::NoFocus</enum>
-       </property>
-       <property name="text">
-        <string>z</string>
+        <string>`</string>
        </property>
        <property name="autoRepeat">
         <bool>true</bool>
@@ -1248,7 +1186,7 @@ border: 0;</string>
       </widget>
      </item>
      <item>
-      <widget class="TouchButton" name="xBtn">
+      <widget class="TouchButton" name="oneBtn">
        <property name="minimumSize">
         <size>
          <width>48</width>
@@ -1271,7 +1209,7 @@ border: 0;</string>
         <enum>Qt::NoFocus</enum>
        </property>
        <property name="text">
-        <string>x</string>
+        <string>1</string>
        </property>
        <property name="autoRepeat">
         <bool>true</bool>
@@ -1279,7 +1217,7 @@ border: 0;</string>
       </widget>
      </item>
      <item>
-      <widget class="TouchButton" name="cBtn">
+      <widget class="TouchButton" name="twoBtn">
        <property name="minimumSize">
         <size>
          <width>48</width>
@@ -1302,7 +1240,7 @@ border: 0;</string>
         <enum>Qt::NoFocus</enum>
        </property>
        <property name="text">
-        <string>c</string>
+        <string>2</string>
        </property>
        <property name="autoRepeat">
         <bool>true</bool>
@@ -1310,7 +1248,7 @@ border: 0;</string>
       </widget>
      </item>
      <item>
-      <widget class="TouchButton" name="vBtn">
+      <widget class="TouchButton" name="threeBtn">
        <property name="minimumSize">
         <size>
          <width>48</width>
@@ -1333,7 +1271,7 @@ border: 0;</string>
         <enum>Qt::NoFocus</enum>
        </property>
        <property name="text">
-        <string>v</string>
+        <string>3</string>
        </property>
        <property name="autoRepeat">
         <bool>true</bool>
@@ -1341,7 +1279,7 @@ border: 0;</string>
       </widget>
      </item>
      <item>
-      <widget class="TouchButton" name="bBtn">
+      <widget class="TouchButton" name="fourBtn">
        <property name="minimumSize">
         <size>
          <width>48</width>
@@ -1364,7 +1302,7 @@ border: 0;</string>
         <enum>Qt::NoFocus</enum>
        </property>
        <property name="text">
-        <string>b</string>
+        <string>4</string>
        </property>
        <property name="autoRepeat">
         <bool>true</bool>
@@ -1372,7 +1310,7 @@ border: 0;</string>
       </widget>
      </item>
      <item>
-      <widget class="TouchButton" name="nBtn">
+      <widget class="TouchButton" name="fiveBtn">
        <property name="minimumSize">
         <size>
          <width>48</width>
@@ -1395,7 +1333,7 @@ border: 0;</string>
         <enum>Qt::NoFocus</enum>
        </property>
        <property name="text">
-        <string>n</string>
+        <string>5</string>
        </property>
        <property name="autoRepeat">
         <bool>true</bool>
@@ -1403,7 +1341,7 @@ border: 0;</string>
       </widget>
      </item>
      <item>
-      <widget class="TouchButton" name="mBtn">
+      <widget class="TouchButton" name="sixBtn">
        <property name="minimumSize">
         <size>
          <width>48</width>
@@ -1426,7 +1364,7 @@ border: 0;</string>
         <enum>Qt::NoFocus</enum>
        </property>
        <property name="text">
-        <string>m</string>
+        <string>6</string>
        </property>
        <property name="autoRepeat">
         <bool>true</bool>
@@ -1434,7 +1372,7 @@ border: 0;</string>
       </widget>
      </item>
      <item>
-      <widget class="TouchButton" name="commaBtn">
+      <widget class="TouchButton" name="sevenBtn">
        <property name="minimumSize">
         <size>
          <width>48</width>
@@ -1457,7 +1395,7 @@ border: 0;</string>
         <enum>Qt::NoFocus</enum>
        </property>
        <property name="text">
-        <string>,</string>
+        <string>7</string>
        </property>
        <property name="autoRepeat">
         <bool>true</bool>
@@ -1465,7 +1403,7 @@ border: 0;</string>
       </widget>
      </item>
      <item>
-      <widget class="TouchButton" name="periodBtn">
+      <widget class="TouchButton" name="eightBtn">
        <property name="minimumSize">
         <size>
          <width>48</width>
@@ -1488,7 +1426,7 @@ border: 0;</string>
         <enum>Qt::NoFocus</enum>
        </property>
        <property name="text">
-        <string>.</string>
+        <string>8</string>
        </property>
        <property name="autoRepeat">
         <bool>true</bool>
@@ -1496,7 +1434,7 @@ border: 0;</string>
       </widget>
      </item>
      <item>
-      <widget class="TouchButton" name="forwardSlashBtn">
+      <widget class="TouchButton" name="nineBtn">
        <property name="minimumSize">
         <size>
          <width>48</width>
@@ -1519,7 +1457,7 @@ border: 0;</string>
         <enum>Qt::NoFocus</enum>
        </property>
        <property name="text">
-        <string>/</string>
+        <string>9</string>
        </property>
        <property name="autoRepeat">
         <bool>true</bool>
@@ -1527,16 +1465,16 @@ border: 0;</string>
       </widget>
      </item>
      <item>
-      <widget class="TouchButton" name="rightShiftBtn">
+      <widget class="TouchButton" name="zeroBtn">
        <property name="minimumSize">
         <size>
-         <width>125</width>
+         <width>48</width>
          <height>48</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>125</width>
+         <width>48</width>
          <height>48</height>
         </size>
        </property>
@@ -1550,21 +1488,108 @@ border: 0;</string>
         <enum>Qt::NoFocus</enum>
        </property>
        <property name="text">
-        <string>Shift</string>
+        <string>0</string>
        </property>
-       <property name="checkable">
+       <property name="autoRepeat">
         <bool>true</bool>
-       </property>
-       <property name="checked">
-        <bool>false</bool>
-       </property>
-       <property name="autoDefault">
-        <bool>false</bool>
        </property>
       </widget>
      </item>
      <item>
-      <spacer name="horizontalSpacer_7">
+      <widget class="TouchButton" name="minusBtn">
+       <property name="minimumSize">
+        <size>
+         <width>48</width>
+         <height>48</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>48</width>
+         <height>48</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>15</pointsize>
+        </font>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
+       <property name="text">
+        <string>-</string>
+       </property>
+       <property name="autoRepeat">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="TouchButton" name="equalBtn">
+       <property name="minimumSize">
+        <size>
+         <width>48</width>
+         <height>48</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>48</width>
+         <height>48</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>15</pointsize>
+        </font>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
+       <property name="text">
+        <string>=</string>
+       </property>
+       <property name="autoRepeat">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="TouchButton" name="backspaceBtn">
+       <property name="minimumSize">
+        <size>
+         <width>88</width>
+         <height>48</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>88</width>
+         <height>48</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>15</pointsize>
+        </font>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
+       <property name="text">
+        <string>Bksp</string>
+       </property>
+       <property name="autoRepeat">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_3">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -1578,7 +1603,7 @@ border: 0;</string>
      </item>
     </layout>
    </item>
-   <item row="3" column="0">
+   <item row="4" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout_3">
      <property name="spacing">
       <number>5</number>
@@ -2010,6 +2035,27 @@ border: 0;</string>
       </spacer>
      </item>
     </layout>
+   </item>
+   <item row="1" column="0">
+    <widget class="QListView" name="suggestionsListView">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>20</pointsize>
+      </font>
+     </property>
+     <property name="verticalScrollMode">
+      <enum>QAbstractItemView::ScrollPerPixel</enum>
+     </property>
+     <property name="horizontalScrollMode">
+      <enum>QAbstractItemView::ScrollPerPixel</enum>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
