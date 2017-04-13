@@ -30,7 +30,7 @@ class CentralWindow(QMainWindow):
         self.dbManager = DatabaseManager(constants.dbDatabase, constants.dbUsername, constants.dbPassword,
                                          constants.dbHost, constants.dbPort)
 
-        self.tcpServer = TcpServer("127.0.0.1", 5050)
+        self.tcpServer = TcpServer("0.0.0.0", 5050)
 
         # Initialize central widget, horizontal layout and stacked which which fills the entire QMainWindow
         self.centralwidget = QWidget(self)
