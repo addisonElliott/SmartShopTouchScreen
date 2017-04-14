@@ -42,6 +42,11 @@
        <bold>true</bold>
       </font>
      </property>
+     <item>
+      <property name="text">
+       <string/>
+      </property>
+     </item>
     </widget>
    </item>
    <item row="2" column="1">
@@ -70,62 +75,7 @@
      </property>
      <item>
       <property name="text">
-       <string>1</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>2</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>3</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>4</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>5</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>6</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>7</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>8</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>9</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>10</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>11</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>12</string>
+       <string/>
       </property>
      </item>
     </widget>
@@ -141,6 +91,11 @@
        <bold>false</bold>
       </font>
      </property>
+     <item>
+      <property name="text">
+       <string/>
+      </property>
+     </item>
     </widget>
    </item>
    <item row="2" column="3">
@@ -186,7 +141,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Scan to cancel : 10</string>
+        <string>Scan to cancel</string>
        </property>
       </widget>
      </item>
@@ -204,7 +159,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="accept_button">
+      <widget class="TouchButton" name="accept_button">
        <property name="minimumSize">
         <size>
          <width>45</width>
@@ -225,7 +180,7 @@ border: 0;</string>
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="Resource_BY.qrc">
+        <iconset resource="../Resource_BY.qrc">
          <normaloff>:/Icons/Icons/GreenCheckIcon_Finished.png</normaloff>:/Icons/Icons/GreenCheckIcon_Finished.png</iconset>
        </property>
        <property name="iconSize">
@@ -237,7 +192,7 @@ border: 0;</string>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="cancel_button">
+      <widget class="TouchButton" name="cancel_button">
        <property name="minimumSize">
         <size>
          <width>45</width>
@@ -258,7 +213,7 @@ border: 0;</string>
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="Resource_BY.qrc">
+        <iconset resource="../Resource_BY.qrc">
          <normaloff>:/Icons/Icons/RedCancelIcon_Finished.png</normaloff>:/Icons/Icons/RedCancelIcon_Finished.png</iconset>
        </property>
        <property name="iconSize">
@@ -284,19 +239,6 @@ border: 0;</string>
      </property>
     </widget>
    </item>
-   <item row="5" column="1">
-    <widget class="QLabel" name="qty_label">
-     <property name="font">
-      <font>
-       <family>Cronus Round</family>
-       <pointsize>19</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>Quantity</string>
-     </property>
-    </widget>
-   </item>
    <item row="1" column="2">
     <widget class="QLabel" name="exp_label">
      <property name="font">
@@ -313,11 +255,31 @@ border: 0;</string>
      </property>
     </widget>
    </item>
+   <item row="5" column="1" colspan="2">
+    <widget class="QLabel" name="qty_label">
+     <property name="font">
+      <font>
+       <family>Cronus Round</family>
+       <pointsize>19</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Quantity</string>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>TouchButton</class>
+   <extends>QPushButton</extends>
+   <header>Widgets/touchButton.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
-  <include location="QDarkStylesheet/style.qrc"/>
-  <include location="Resource_BY.qrc"/>
+  <include location="../QDarkStylesheet/style.qrc"/>
+  <include location="../Resource_BY.qrc"/>
  </resources>
  <connections/>
 </ui>

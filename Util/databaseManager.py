@@ -4,23 +4,24 @@ from psycopg2.extras import DictCursor
 import psycopg2.extras
 import os
 import pickle
+from datetime import datetime
 
 class DatabaseManager:
     def __init__(self, database, username, password, host, port):
         try:
             self.connection = psycopg2.connect(database=database, user=username, password=password, host=host, port=port)
         except:
-            raise Exception("Cannot Connect to Database")
+            raise Exception('Cannot Connect to Database')
 
         self.cursor = self.connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
     def GetCachedUPCItem(self, barcode):
-        self.cursor.execute("SELECT item,qty FROM cached_upcs WHERE upc = %s", (barcode,))
+        self.cursor.execute("SELECT item,pkg_qty FROM cached_upcs WHERE upc = %s", (barcode,))
 
-        return self.cursor.fetchall()
+        return self.cursor.fetchone()
 
     def GetItemFromInventory(self, id):
-        self.cursor.execute("SELECT qty,avg_qty,avg_shelf_time,last_buy_date FROM inventory WHERE item = %s", (id,))
+        self.cursor.execute("SELECT qty,avg_shelf_time,last_buy_date FROM inventory WHERE item = %s", (id,))
 
         return self.cursor.fetchone()
 
@@ -30,33 +31,45 @@ class DatabaseManager:
             # TODO Change to logger since print wont be seen in production
             return -1
 
+        if not 'category' in item:
+            item['category'] = 1
+
         if not 'qty' in item:
             item['qty'] = 0
 
-        if not 'avgQty' in item:
-            item['avgQty'] = 0
-
-        if not 'category' in item:
-            item['category'] = 1
+        if not 'pkgQty' in item:
+            item['pkgQty'] = 0
 
         if not 'favoritesIndex' in item:
             item['favoritesIndex'] = None
 
-        self.cursor.execute("INSERT INTO inventory (name, qty, avg_qty, category, favorites_index) VALUES "
+        if not 'expirationDate' in item:
+            item['expirationDate'] = None
+        elif item['expirationDate'] is '':
+            item['expirationDate'] = None
+
+        self.cursor.execute("INSERT INTO inventory (name, qty, category, favorites_index, expiration) VALUES "
                             "(%s, %s, %s, %s, %s) RETURNING item",
-                            (item["name"], item["qty"], item["avgQty"], item['category'], item['favoritesIndex']))
+                            (item['name'], item['qty'] * item['pkgQty'], item['category'], item['favoritesIndex'],
+                             item['expirationDate']))
         id = self.cursor.fetchone()[0]
         self.connection.commit()
 
         return id
 
-    def AddUPCToCachedUPCs(self, barcode, id, qty):
-        self.cursor.execute("INSERT INTO cached_upcs (upc, item, qty) VALUES (%s, %s, %s)", (barcode, id, qty))
+    def AddUPCToCachedUPCs(self, barcode, id, pkgQty):
+        self.cursor.execute("INSERT INTO cached_upcs (upc, item, pkg_qty) VALUES (%s, %s, %s)", (barcode, id, pkgQty))
         self.connection.commit()
 
-    def UpdateItemInDatabase(self, cachedItem):
+    def UpdateItemInDatabase(self, cachedItem, expirationDate, quantity):
         inventoryItem = self.GetItemFromInventory(cachedItem[0])
-        self.cursor.execute("UPDATE inventory SET qty = %s WHERE item = %s", (cachedItem[1] + inventoryItem[0], cachedItem[0]))
+        if expirationDate is '':
+            expirationDate = None
+            
+        self.cursor.execute("UPDATE inventory SET qty = %s, last_buy_date = %s, expiration = %s WHERE item = %s",
+                                ((quantity * cachedItem[1]) + inventoryItem[0], str(datetime.now()),
+                                expirationDate, cachedItem[0]))
+
         self.connection.commit()
 
     def DecrementQuantityForItem(self, item, qty=1):

@@ -8,6 +8,7 @@ from Windows.settingsWindow import *
 from Util.scanner import *
 from Util.enums import *
 from Util.databaseManager import *
+from BarcodeAPI.barcodeManager import *
 from Util import constants
 from datetime import *
 import logging
@@ -27,6 +28,7 @@ class CentralWindow(QMainWindow):
 
         self.dbManager = DatabaseManager(constants.dbDatabase, constants.dbUsername, constants.dbPassword,
                                     constants.dbHost, constants.dbPort)
+        self.barcodeManager = BarcodeManager(self.dbManager, self.config)
 
         # Initialize central widget, horizontal layout and stacked which which fills the entire QMainWindow
         self.centralwidget = QWidget(self)
@@ -38,7 +40,7 @@ class CentralWindow(QMainWindow):
         self.setCentralWidget(self.centralwidget)
 
         # Add main window to list of stacked widgets
-        self.mainWindow = MainWindow(self, self.config, self.dbManager, self.stackedWidget)
+        self.mainWindow = MainWindow(self, self.config, self.dbManager, self.barcodeManager, self.stackedWidget)
         self.stackedWidget.addWidget(self.mainWindow)
 
         # Add favorite window to list of stacked widgets
@@ -159,6 +161,12 @@ class CentralWindow(QMainWindow):
     def primaryScanner_barcodeReceived(self, barcode):
         print("Primary barcode scanner got: %s" % barcode)
         # TODO Send the barcode scanner information to be processed
+        checkedIn = True
+        if checkedIn:
+            self.barcodeManager.AddItemToInventory(barcode)
+        else:
+            i = 4  # random code, remove this
+            # pass barcode to barcode manager for check out
 
     @pyqtSlot(str)
     def secondaryScanner_barcodeReceived(self, barcode):

@@ -23,6 +23,9 @@ scannerPollInterval = 5
 # Whether the menu will be shown as full screen or not
 fullscreen = False
 
+# number of years after current year for expiration date
+maxExpirationYear = 25
+
 # Database information to connect to PostgreSQL server.
 dbDatabase = "smartshop"
 dbUsername = "jacob"

@@ -3,11 +3,12 @@ from PyQt5.QtWidgets import *
 
 from Windows import mainWindow_ui
 from Util import constants
+from Windows.NewItemDetails import NewItemDetails
 from Windows.favoriteWindow import *
 from Windows.centralWindow import *
-from Windows.ExpirationBox import *
 from Util.scanner import *
 from Util.enums import *
+from BarcodeAPI.barcodeManager import BarcodeManager
 
 
 
@@ -15,7 +16,7 @@ from Windows.virtualKeyboard import *
 from Util.SqlTableModel import *
 
 class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
-    def __init__(self, centralWindow, config, dbManager, parent=None):
+    def __init__(self, centralWindow, config, dbManager, barcodeManager, parent=None):
         super(MainWindow, self).__init__(parent)
         self.setupUi(self)
 
@@ -68,6 +69,8 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
         floatingPB2Y = 390  # self.height() - floatingPB1Height - 1
         self.floatingPB2.setGeometry(floatingPB2X, floatingPB2Y, floatingPB2Width, floatingPB2Height)
         self.floatingPB2.raise_()
+
+        self.barcodeManager = barcodeManager
 
     def temp2(self, str):
         if str:
@@ -135,7 +138,7 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
     def primaryScanner_barcodeReceived(self, barcode):
         print("Main: Primary barcode scanner got: %s" % barcode)
         # TODO Send the barcode scanner information to be processed
-        
+
     @pyqtSlot(str)
     def secondaryScanner_barcodeReceived(self, barcode):
         print("Main: Secondary barcode scanner got: %s" % barcode)
