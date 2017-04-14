@@ -34,18 +34,22 @@ class BarcodeManager:
 
     def AddItemToDatabase(self, barcode):
         data = self.GetJsonFrom3rdParty(barcode)
+        item = {}
         if data['status']['code'] == '200':
-            expirationDate, quantity = self.DisplayExpirationBox()
-            item = self.ParseJsonObject(data, expirationDate, quantity)
-            id = self.dbManager.AddItemToInventory(item)
-            self.dbManager.AddUPCToCachedUPCs(barcode, id, item["qty"])
-        else:
-            self.newItemDetails.exec()
-            item = {}
+            product = data['product']['attributes']['product']
+            self.newItemDetails.itemName_textBox.setText(product[:max(20, len(product))])
+            category = data['product']['attributes']['category_text']
+            # TODO: Add constant dictionary of categories, check if returned category is in dictionary.
+            # If it is, set combobox selected item to the key int,
+            # if not, add category to dictionary with next key and add to combobox at index then select it.
+
+        if self.newItemDetails.exec():
             item['name'] = self.newItemDetails.itemName_textBox
-            item['category'] = self.newItemDetails.category_combo.currentText()
+            item['category'] = self.newItemDetails.category_combo.currentIndex()
             item['qty'] = int(self.newItemDetails.itemQty_combo.currentText())
             item['pkgQty'] = int(self.newItemDetails.pkgQty_combo.currentText())
+            if self.newItemDetails.favorites_check.isChecked():
+                item['favoritesIndex'] = self.dbManager.GetFavoritesCount() + 1
             expirationDate = ''
             month = self.newItemDetails.month_combo.currentText()
             day = self.newItemDetails.day_combo.currentText()
@@ -59,15 +63,6 @@ class BarcodeManager:
             item['expirationDate'] = expirationDate
             id = self.dbManager.AddItemToInventory(item)
             self.dbManager.AddUPCToCachedUPCs(barcode, id, item['pkgQty'])
-
-    def ParseJsonObject(self, data, expirationDate, quantity):
-        item = {}
-        item['name'] = data['product']['attributes']['product']
-        item['qty'] = quantity
-        item['avgQty'] = quantity
-        item['expirationDate'] = expirationDate
-
-        return item
 
     def RemoveFromInventory(self, barcode, qty=1):
         self.dbManager.DecrementQuantityForItem(barcode, qty)

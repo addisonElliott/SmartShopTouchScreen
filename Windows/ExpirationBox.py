@@ -23,10 +23,10 @@ class ExpirationBox(QDialog, ExpirationBox_ui.Ui_ExpirationBox):
 
         for d in range(1, 13):
             self.month_combo.addItem(str(d))
-        #self.month_combo.setCurrentIndex(datetime.now().month - 1)
+        self.month_combo.setCurrentIndex(datetime.now().month - 1)
         for d in range(1, 32):
             self.day_combo.addItem(str(d))
-        #self.day_combo.setCurrentIndex(datetime.now().day - 1)
+        self.day_combo.setCurrentIndex(datetime.now().day - 1)
         year = datetime.now().year
         for y in range(year, year + constants.maxExpirationYear + 1):
             self.year_combo.addItem(str(y))
