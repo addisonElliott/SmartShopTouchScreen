@@ -2,6 +2,7 @@ import queue
 import select
 import socket
 import sys
+import struct
 
 
 class TcpServer:
@@ -87,6 +88,10 @@ class TcpServer:
                 self.IPs[clientSocket] = clientIP
                 print("New connection accepted %s" % (str(clientIP)))
             else:
+                data = sock.recv(2)
+
+                print(struct.unpack(">H", data))
+
                 # Otherwise, one of the clients sent data to the server to be processed
                 data = sock.recv(self.recvBlockSize)
                 if data:
