@@ -3,7 +3,19 @@ import select
 import socket
 import sys
 import struct
+import json
 
+class SocketData():
+    __slots__ = ['writeQueue', 'readBufLen', 'readBuf', 'IP']
+    def __init__(self, writeQueue = None, readBufLen = -1, readBuf = None, IP = None):
+        # writeQueue - A queue of data to be sent when a chance is available
+        # readBufLen - Length of the packet size
+        # readBuf - Contains the data read from the socket.
+        # IP - IP of the socket
+        self.writeQueue = writeQueue
+        self.readBufLen = readBufLen
+        self.readBuf = readBuf
+        self.IP = IP
 
 class TcpServer:
     def __init__(self, host=None, port=None, readCallback=None, maxConnections=10, recvBlockSize=4096, connectNow = True):
@@ -32,11 +44,8 @@ class TcpServer:
         self.readers = []
         self.writers = []
 
-        # Initialize queues and IPs, a dict containing entries for each client socket that represents the following:
-        # queues - A queue of data to be sent when a chance is available
-        # IPs - IP of the client socket
-        self.queues = {}
-        self.IPs = {}
+        # Initialize socket data dictionary which contains information for each socket connected
+        self.socketData = {}
 
         print('Successfully initialized the TcpServer')
         if host and port and connectNow:
@@ -66,7 +75,7 @@ class TcpServer:
             raise ValueError("Invalid socket to send data to, IP: %s" % (IP))
 
         # Append the message to the socket's queue and put it in the writers list if not already present
-        self.queues[sock_].put(message)
+        self.socketData[sock_].writeQueue.put(message)
         if sock_ not in self.writers:
             self.writers.append(sock_)
 
@@ -80,26 +89,35 @@ class TcpServer:
             print("Sockets to be read")
             if sock is self.socket:
                 # If the socket available for reading is the server socket, then a new connection is available,
-                # accept the new connection, set it to nonblocking and add to appropiate lists
+                # accept the new connection, set it to nonblocking
+                # Add its socket data to the socketData list
                 clientSocket, clientIP = self.socket.accept()
                 clientSocket.setblocking(0)
                 self.readers.append(clientSocket)
-                self.queues[clientSocket] = queue.Queue()
-                self.IPs[clientSocket] = clientIP
+                self.socketData[clientSocket] = SocketData(queue.Queue(), -1, b'', clientIP)
                 print("New connection accepted %s" % (str(clientIP)))
             else:
-                data = sock.recv(2)
-
-                print(struct.unpack(">H", data))
-
                 # Otherwise, one of the clients sent data to the server to be processed
                 data = sock.recv(self.recvBlockSize)
+                print(data)
                 if data:
-                    # If the received data is valid (basically, length > 0), then call callback and let it handle it
+                    socketData = self.socketData[sock]
+                    socketData.readBuf += data
 
-                    if self.readCallback:
-                        self.readCallback(self.IPs[sock], self.queues[sock], data)
-                    print("Valid data read %d: %s" % (len(data), data))
+                    if socketData.readBufLen == -1 and len(socketData.readBuf) >= 2:
+                        socketData.readBufLen = struct.unpack(">H", socketData.readBuf[:2])[0]
+                        socketData.readBuf = socketData.readBuf[2:]
+                        #print ('New data: %s, size: %i' % (socketData.readBuf.decode(encoding='UTF-8'), socketData.readBufLen))
+
+                    if socketData.readBufLen != -1 and len(socketData.readBuf) >= socketData.readBufLen:
+                        packet = socketData.readBuf[:socketData.readBufLen].decode(encoding='UTF-8')
+                        jsonData = json.loads(packet)
+                        print('New data2: %s at size %i: %s %i' % (packet, socketData.readBufLen, str(jsonData), jsonData['EID']))
+                        socketData.readBuf = socketData.readBuf[socketData.readBufLen:]
+                        socketData.readBufLen = -1
+
+                        if self.readCallback:
+                            self.readCallback(self.socketData[sock], jsonData)
                 else:
                     # We received zero bytes, so we should close the stream. Stop writing to it.
                     if sock in self.writers:
@@ -110,16 +128,15 @@ class TcpServer:
                     # Close the connection.
                     sock.close()
 
-                    # Destroy is queue
-                    del self.queues[sock]
-                    del self.IPs[sock]
+                    # Get rid of the socket data
+                    del self.socketData[sock]
                     print("Socket connection closed!")
 
         # Loop through each available socket for writing
         for sock in write:
             try:
                 # Get the next chunk of data in the queue, but don't wait.
-                data = self.queues[sock].get_nowait()
+                data = self.socketData[sock].writeQueue.get_nowait()
             except queue.Empty:
                 # The queue is empty -> nothing needs to be written, remove it from writers list
                 self.writers.remove(sock)
@@ -139,81 +156,6 @@ class TcpServer:
             # Close the connection.
             sock.close()
 
-            # Destroy its queue and IP information
-            del self.queues[sock]
-            del self.IPs[sock]
+            # Destroy the socket data
+            del self.socketData[sock]
             print("Error occurred. Closing socket")
-    #
-    # def run(self):
-    #     # Start listening
-    #     self._socket.listen(self._max_connections)
-    #     # Create a list of readers (sockets that will be read from) and a list
-    #     # of writers (sockets that will be written to).
-    #     readers = [self._socket]
-    #     writers = []
-    #     # Create a dictionary of queue.Queues for data to be sent.
-    #     # This dictionary maps sockets to queue.Queue objects
-    #     queues = dict()
-    #     # Create a similar dictionary that stores IP addresses.
-    #     # This dictionary maps sockets to IP addresses
-    #     IPs = dict()
-    #     # Now, the main loop.
-    #     while readers:
-    #         # Block until a socket is ready for processing.
-    #         read, write, err = select.select(readers, writers, readers)
-    #         # Deal with sockets that need to be read from.
-    #         for sock in read:
-    #             if sock is self._socket:
-    #                 # We have a viable connection!
-    #                 client_socket, client_ip = self._socket.accept()
-    #                 # Make it a non-blocking connection.
-    #                 client_socket.setblocking(0)
-    #                 # Add it to our readers.
-    #                 readers.append(client_socket)
-    #                 # Make a queue for it.
-    #                 queues[client_socket] = queue.Queue()
-    #                 # Store its IP address.
-    #                 IPs[client_socket] = client_ip
-    #             else:
-    #                 # Someone sent us something! Let's receive it.
-    #                 data = sock.recv(self.recv_bytes)
-    #                 if data:
-    #                     # Call the callback
-    #                     self.callback(IPs[sock], queues[sock], data)
-    #                     # Put the client socket in writers so we can write to it
-    #                     # later.
-    #                     if sock not in writers:
-    #                         writers.append(sock)
-    #                 else:
-    #                     # We received zero bytes, so we should close the stream
-    #                     # Stop writing to it.
-    #                     if sock in writers:
-    #                         writers.remove(sock)
-    #                     # Stop reading from it.
-    #                     readers.remove(sock)
-    #                     # Close the connection.
-    #                     sock.close()
-    #                     # Destroy is queue
-    #                     del queues[sock]
-    #         # Deal with sockets that need to be written to.
-    #         for sock in write:
-    #             try:
-    #                 # Get the next chunk of data in the queue, but don't wait.
-    #                 data = queues[sock].get_nowait()
-    #             except queue.Empty:
-    #                 # The queue is empty -> nothing needs to be written.
-    #                 writers.remove(sock)
-    #             else:
-    #                 # The queue wasn't empty; we did, in fact, get something.
-    #                 # So send it.
-    #                 sock.send(data)
-    #         # Deal with erroring sockets.
-    #         for sock in err:
-    #             # Remove the socket from every list.
-    #             readers.remove(sock)
-    #             if sock in writers:
-    #                 writers.remove(sock)
-    #             # Close the connection.
-    #             sock.close()
-    #             # Destroy its queue.
-    #             del queues[sock]

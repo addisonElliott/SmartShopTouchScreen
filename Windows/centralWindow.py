@@ -31,6 +31,7 @@ class CentralWindow(QMainWindow):
                                          constants.dbHost, constants.dbPort)
 
         self.tcpServer = TcpServer("0.0.0.0", 5050)
+        self.tcpServer.readCallback = self.tcpServer_packet
 
         # Initialize central widget, horizontal layout and stacked which which fills the entire QMainWindow
         self.centralwidget = QWidget(self)
@@ -161,6 +162,9 @@ class CentralWindow(QMainWindow):
         self.secondaryScanner.poll()
 
         self.tcpServer.run()
+
+    def tcpServer_packet(self, socketData, data):
+        print('Here we go: %s %s' % (str(socketData), str(data)))
 
     @pyqtSlot(str)
     def primaryScanner_barcodeReceived(self, barcode):
