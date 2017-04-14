@@ -9,7 +9,7 @@ from datetime import datetime
 
 
 class NewItemDetails(QDialog, NewItemDetails_ui.Ui_NewItemDetails):
-    def __init__(self, config, parent=None):
+    def __init__(self, config, categories, parent=None):
         super(NewItemDetails, self).__init__(parent)
         self.setupUi(self)
 
@@ -26,18 +26,17 @@ class NewItemDetails(QDialog, NewItemDetails_ui.Ui_NewItemDetails):
 
         for d in range(1, 13):
             self.month_combo.addItem(str(d))
-        self.month_combo.setCurrentIndex(datetime.now().month)
         for d in range(1, 32):
             self.day_combo.addItem(str(d))
-        self.day_combo.setCurrentIndex(datetime.now().day)
         year = datetime.now().year
         for y in range(year, year + constants.maxExpirationYear + 1):
             self.year_combo.addItem(str(y))
-        self.year_combo.setCurrentIndex(1)
         for q in range(1, 51):
             self.pkgQty_combo.addItem(str(q))
         for q in range(1, 51):
             self.itemQty_combo.addItem(str(q))
+        for category in categories:
+            self.category_combo.addItem(category['name'])
 
     @pyqtSlot(bool, bool)
     def on_accept_button_clicked(self, checked, longPressed):

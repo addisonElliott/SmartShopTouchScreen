@@ -9,7 +9,8 @@ class BarcodeManager:
     def __init__(self, dbManager, config):
         self.dbManager = dbManager
         self.expBox = ExpirationBox(config)
-        self.newItemDetails = NewItemDetails(config)
+        categories = self.dbManager.GetCategories('ASC')
+        self.newItemDetails = NewItemDetails(config, categories)
 
     def AddItemToInventory(self, barcode):
         cachedItem = self.dbManager.GetCachedUPCItem(barcode)
@@ -39,9 +40,19 @@ class BarcodeManager:
             product = data['product']['attributes']['product']
             self.newItemDetails.itemName_textBox.setText(product[:max(20, len(product))])
             category = data['product']['attributes']['category_text']
-            # TODO: Add constant dictionary of categories, check if returned category is in dictionary.
-            # If it is, set combobox selected item to the key int,
-            # if not, add category to dictionary with next key and add to combobox at index then select it.
+            isFound = False
+            for index in range(0, self.newItemDetails.category_combo.count() - 1):
+                cat_lower = category.lower()
+                item_lower = self.newItemDetails.category_combo.itemText(index).lower()
+                if cat_lower == item_lower:
+                    isFound = True
+                    self.newItemDetails.category_combo.setCurrentIndex(index)
+                    break
+
+            if not isFound:
+                self.newItemDetails.category_combo.addItem(category)
+                self.newItemDetails.category_combo.setCurrentIndex(self.newItemDetails.category_combo.count() - 1)
+                self.dbManager.AddCategory(category, self.newItemDetails.category_combo.count())
 
         if self.newItemDetails.exec():
             item['name'] = self.newItemDetails.itemName_textBox.text()

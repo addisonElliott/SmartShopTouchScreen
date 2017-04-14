@@ -45,6 +45,8 @@ class DatabaseManager:
 
         if not 'expirationDate' in item:
             item['expirationDate'] = None
+        elif item['expirationDate'] is '':
+            item['expirationDate'] = None
 
         self.cursor.execute("INSERT INTO inventory (name, qty, category, favorites_index, expiration) VALUES "
                             "(%s, %s, %s, %s, %s) RETURNING item",
@@ -61,13 +63,12 @@ class DatabaseManager:
 
     def UpdateItemInDatabase(self, cachedItem, expirationDate, quantity):
         inventoryItem = self.GetItemFromInventory(cachedItem[0])
-        if expirationDate != '':
-            self.cursor.execute("UPDATE inventory SET qty = %s, last_buy_date = %s, expiration = %s WHERE item = %s",
+        if expirationDate is '':
+            expirationDate = None
+            
+        self.cursor.execute("UPDATE inventory SET qty = %s, last_buy_date = %s, expiration = %s WHERE item = %s",
                                 ((quantity * cachedItem[1]) + inventoryItem[0], str(datetime.now()),
                                 expirationDate, cachedItem[0]))
-        else:
-            self.cursor.execute("UPDATE inventory SET qty = %s, last_buy_date = %s WHERE item = %s",
-                                ((quantity * cachedItem[1]) + inventoryItem[0], str(datetime.now()), cachedItem[0]))
 
         self.connection.commit()
 
