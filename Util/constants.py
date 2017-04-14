@@ -1,6 +1,7 @@
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
+from datetime import *
 
 # This file contains all the constants that will not be regularly changed upon runtime
 # It is benficial to developers who want to fine-tune or tweak some parameters to optimize some aspect of the code
@@ -34,6 +35,10 @@ dbPort = "5432"
 
 # Maximum length that a category name can be
 maxCategoryNameLength = 20
+
+# The time of day where the usage rate will be calculated on a day by day basis
+# Order is hour, minutes, and seconds. They should be normalized between their normal values (e.g. hour between 1 and 23)
+usageRateTime = time(hour=0, minute=10, second=0)
 
 # Log filename, where information will be stored
 logFilename = 'log.txt'

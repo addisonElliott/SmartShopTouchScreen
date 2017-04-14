@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="Icons">
+    <file>Icons/ShoppingCart2_Finished.png</file>
+    <file>Icons/PrintIcon_Finished.png</file>
     <file>Icons/Swap_Finished.png</file>
     <file>Icons/Algorithm_Finished.png</file>
     <file>Icons/Wifi_Finished.png</file>

@@ -136,3 +136,4 @@ ENV/
 .ropeproject
 
 log.txt
+usageRate.pickle
