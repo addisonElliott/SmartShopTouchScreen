@@ -166,6 +166,8 @@ class Ui_NewItemDetails(object):
         font.setPointSize(16)
         self.category_combo.setFont(font)
         self.category_combo.setObjectName("category_combo")
+        self.category_combo.addItem("")
+        self.category_combo.setItemText(0, "")
         self.pkgQty_label = QtWidgets.QLabel(self.groupBox_main)
         self.pkgQty_label.setGeometry(QtCore.QRect(240, 130, 171, 31))
         font = QtGui.QFont()

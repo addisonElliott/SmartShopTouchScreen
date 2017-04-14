@@ -21,7 +21,7 @@ class DatabaseManager:
         return self.cursor.fetchone()
 
     def GetItemFromInventory(self, id):
-        self.cursor.execute("SELECT qty,avg_qty,avg_shelf_time,last_buy_date FROM inventory WHERE item = %s", (id,))
+        self.cursor.execute("SELECT qty,avg_shelf_time,last_buy_date FROM inventory WHERE item = %s", (id,))
 
         return self.cursor.fetchone()
 
@@ -46,9 +46,9 @@ class DatabaseManager:
         if not 'expirationDate' in item:
             item['expirationDate'] = None
 
-        self.cursor.execute("INSERT INTO inventory (name, qty, pkg_qty, category, favorites_index, expiration) VALUES "
-                            "(%s, %s, %s, %s, %s, %s) RETURNING item",
-                            (item['name'], item['qty'], item['pkgQty'], item['category'], item['favoritesIndex'],
+        self.cursor.execute("INSERT INTO inventory (name, qty, category, favorites_index, expiration) VALUES "
+                            "(%s, %s, %s, %s, %s) RETURNING item",
+                            (item['name'], item['qty'] * item['pkgQty'], item['category'], item['favoritesIndex'],
                              item['expirationDate']))
         id = self.cursor.fetchone()[0]
         self.connection.commit()

@@ -44,7 +44,7 @@ class BarcodeManager:
             # if not, add category to dictionary with next key and add to combobox at index then select it.
 
         if self.newItemDetails.exec():
-            item['name'] = self.newItemDetails.itemName_textBox
+            item['name'] = self.newItemDetails.itemName_textBox.text()
             item['category'] = self.newItemDetails.category_combo.currentIndex()
             item['qty'] = int(self.newItemDetails.itemQty_combo.currentText())
             item['pkgQty'] = int(self.newItemDetails.pkgQty_combo.currentText())

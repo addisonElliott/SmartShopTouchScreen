@@ -264,7 +264,7 @@ border: 0;</string>
       </font>
      </property>
      <property name="text">
-      <string>Quantity Per Package</string>
+      <string>Quantity</string>
      </property>
     </widget>
    </item>

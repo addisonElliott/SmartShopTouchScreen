@@ -148,7 +148,7 @@ class Ui_ExpirationBox(object):
         self.year_label.setText(_translate("ExpirationBox", "Year"))
         self.cancel_label.setText(_translate("ExpirationBox", "Scan to cancel"))
         self.exp_label.setText(_translate("ExpirationBox", "Expiration Date"))
-        self.qty_label.setText(_translate("ExpirationBox", "Quantity Per Package"))
+        self.qty_label.setText(_translate("ExpirationBox", "Quantity"))
 
 from Widgets.touchButton import TouchButton
 import Resource_BY_rc

@@ -407,6 +407,11 @@ border: 0;</string>
         <pointsize>16</pointsize>
        </font>
       </property>
+      <item>
+       <property name="text">
+        <string/>
+       </property>
+      </item>
      </widget>
      <widget class="QLabel" name="pkgQty_label">
       <property name="geometry">
