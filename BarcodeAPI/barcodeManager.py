@@ -39,20 +39,21 @@ class BarcodeManager:
         if data['status']['code'] == '200':
             product = data['product']['attributes']['product']
             self.newItemDetails.itemName_textBox.setText(product[:max(20, len(product))])
-            category = data['product']['attributes']['category_text']
             isFound = False
-            for index in range(0, self.newItemDetails.category_combo.count() - 1):
+            if 'category_text' in data['product']['attributes']:
+                category = data['product']['attributes']['category_text']
                 cat_lower = category.lower()
-                item_lower = self.newItemDetails.category_combo.itemText(index).lower()
-                if cat_lower == item_lower:
-                    isFound = True
-                    self.newItemDetails.category_combo.setCurrentIndex(index)
-                    break
+                for index in range(0, self.newItemDetails.category_combo.count() - 1):
+                    item_lower = self.newItemDetails.category_combo.itemText(index).lower()
+                    if cat_lower == item_lower:
+                        isFound = True
+                        self.newItemDetails.category_combo.setCurrentIndex(index)
+                        break
 
-            if not isFound:
-                self.newItemDetails.category_combo.addItem(category)
-                self.newItemDetails.category_combo.setCurrentIndex(self.newItemDetails.category_combo.count() - 1)
-                self.dbManager.AddCategory(category, self.newItemDetails.category_combo.count())
+                if not isFound:
+                    self.newItemDetails.category_combo.addItem(category)
+                    self.newItemDetails.category_combo.setCurrentIndex(self.newItemDetails.category_combo.count() - 1)
+                    self.dbManager.AddCategory(category, self.newItemDetails.category_combo.count())
 
         if self.newItemDetails.exec():
             item['name'] = self.newItemDetails.itemName_textBox.text()
