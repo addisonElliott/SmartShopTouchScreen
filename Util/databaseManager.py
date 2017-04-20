@@ -21,7 +21,7 @@ class DatabaseManager:
         return self.cursor.fetchone()
 
     def GetItemFromInventory(self, id):
-        self.cursor.execute("SELECT qty,avg_shelf_time,last_buy_date FROM inventory WHERE item = %s", (id,))
+        self.cursor.execute("SELECT qty,avg_shelf_time,last_buy_date,name FROM inventory WHERE item = %s", (id,))
 
         return self.cursor.fetchone()
 
@@ -72,10 +72,14 @@ class DatabaseManager:
 
         self.connection.commit()
 
-    def DecrementQuantityForItem(self, item, qty=1):
-        inventoryItem = self.GetItemFromInventory(item[0])
-        self.cursor.execute("UPDATE inventory SET qty = %s WHERE item = %s", (inventoryItem[0] - qty, item[0]))
-        self.connection.commit()
+    def DecrementQuantityForItem(self, id, itemQty, decQty=1):
+        newQty = itemQty - decQty
+        if newQty == 0:
+            self.cursor.execute("UPDATE inventory SET qty = %s, expiration = %s WHERE item = %s", (newQty, None, id))
+            self.connection.commit()
+        elif newQty > 0:
+            self.cursor.execute("UPDATE inventory SET qty = %s WHERE item = %s", (newQty, id))
+            self.connection.commit()
 
     def AddCategory(self, name, order_index = -1):
         if order_index == -1:
