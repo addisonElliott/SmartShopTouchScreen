@@ -79,6 +79,9 @@
        <property name="text">
         <string>Required Items</string>
        </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
       </widget>
      </item>
      <item row="0" column="7" rowspan="5">
@@ -329,6 +332,9 @@ border: 0;</string>
        <property name="text">
         <string>Recommended Items</string>
        </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
       </widget>
      </item>
      <item row="0" column="3" rowspan="5">
@@ -467,6 +473,9 @@ border: 0;</string>
          <pointsize>19</pointsize>
         </font>
        </property>
+       <property name="horizontalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOff</enum>
+       </property>
        <property name="editTriggers">
         <set>QAbstractItemView::NoEditTriggers</set>
        </property>
@@ -491,6 +500,12 @@ border: 0;</string>
        <property name="selectionBehavior">
         <enum>QAbstractItemView::SelectRows</enum>
        </property>
+       <property name="verticalScrollMode">
+        <enum>QAbstractItemView::ScrollPerPixel</enum>
+       </property>
+       <property name="horizontalScrollMode">
+        <enum>QAbstractItemView::ScrollPerPixel</enum>
+       </property>
        <property name="showGrid">
         <bool>false</bool>
        </property>
@@ -509,6 +524,12 @@ border: 0;</string>
          <pointsize>19</pointsize>
         </font>
        </property>
+       <property name="verticalScrollBarPolicy">
+        <enum>Qt::ScrollBarAsNeeded</enum>
+       </property>
+       <property name="horizontalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOff</enum>
+       </property>
        <property name="editTriggers">
         <set>QAbstractItemView::NoEditTriggers</set>
        </property>
@@ -523,6 +544,12 @@ border: 0;</string>
        </property>
        <property name="selectionMode">
         <enum>QAbstractItemView::MultiSelection</enum>
+       </property>
+       <property name="verticalScrollMode">
+        <enum>QAbstractItemView::ScrollPerPixel</enum>
+       </property>
+       <property name="horizontalScrollMode">
+        <enum>QAbstractItemView::ScrollPerPixel</enum>
        </property>
        <property name="sortingEnabled">
         <bool>true</bool>
