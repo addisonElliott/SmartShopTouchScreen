@@ -29,8 +29,6 @@ class CentralWindow(QMainWindow):
         self.dbManager = DatabaseManager(constants.dbDatabase, constants.dbUsername, constants.dbPassword,
                                     constants.dbHost, constants.dbPort)
 
-        #self.dbManager.updatePurchaseHistory(4, datetime.now().date(), 24)
-
         self.barcodeManager = BarcodeManager(self.dbManager, self.config)
 
         # Initialize central widget, horizontal layout and stacked which which fills the entire QMainWindow

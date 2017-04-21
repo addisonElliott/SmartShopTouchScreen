@@ -55,6 +55,8 @@ class DatabaseManager:
         id = self.cursor.fetchone()[0]
         self.connection.commit()
 
+        self.updatePurchaseHistory(id, datetime.now().date(), item['qty'] * item['pkgQty'])
+
         return id
 
     def AddUPCToCachedUPCs(self, barcode, id, pkgQty):
@@ -67,10 +69,11 @@ class DatabaseManager:
             expirationDate = None
             
         self.cursor.execute("UPDATE inventory SET qty = %s, last_buy_date = %s, expiration = %s WHERE item = %s",
-                                ((quantity * cachedItem[1]) + inventoryItem[0], str(datetime.now()),
-                                expirationDate, cachedItem[0]))
+                                ((quantity * cachedItem['pkg_qty']) + inventoryItem[0], str(datetime.now()),
+                                expirationDate, cachedItem['item']))
 
         self.connection.commit()
+        self.updatePurchaseHistory(cachedItem['item'], datetime.now().date(), quantity * cachedItem['pkg_qty'])
 
     def updatePurchaseHistory(self, item, date, qty):
         self.cursor.execute("DO $do$ BEGIN UPDATE purchase_history SET qty = qty + %(qty)s WHERE item = %(item)s AND "

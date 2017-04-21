@@ -38,7 +38,7 @@ class BarcodeManager:
         item = {}
         if data['status']['code'] == '200' and 'attributes' in data['product'] and 'product' in data['product']['attributes']:
             product = data['product']['attributes']['product']
-            self.newItemDetails.itemName_textBox.setText(product[:max(20, len(product))])
+            self.newItemDetails.itemName_textBox.setText(product[:min(20, len(product))])
             isFound = False
             if 'category_text' in data['product']['attributes']:
                 category = data['product']['attributes']['category_text']
