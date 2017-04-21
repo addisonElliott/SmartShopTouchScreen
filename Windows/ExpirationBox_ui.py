@@ -34,8 +34,8 @@ class Ui_ExpirationBox(object):
         font = QtGui.QFont()
         font.setFamily("Segoe UI")
         font.setPointSize(16)
-        font.setBold(True)
-        font.setWeight(75)
+        font.setBold(False)
+        font.setWeight(50)
         self.day_combo.setFont(font)
         self.day_combo.setObjectName("day_combo")
         self.day_combo.addItem("")
@@ -53,9 +53,9 @@ class Ui_ExpirationBox(object):
         font = QtGui.QFont()
         font.setFamily("Segoe UI")
         font.setPointSize(16)
-        font.setBold(True)
+        font.setBold(False)
         font.setItalic(False)
-        font.setWeight(75)
+        font.setWeight(50)
         self.month_combo.setFont(font)
         self.month_combo.setStyleSheet("QDialog\n"
 "{\n"

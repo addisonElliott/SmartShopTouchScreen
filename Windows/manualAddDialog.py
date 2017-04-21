@@ -22,7 +22,11 @@ class ManualAddDialog(QDialog, manualAddDialog_ui.Ui_ManualAddDialog):
         self.setWindowFlags(Qt.Dialog | Qt.FramelessWindowHint)
 
         scroller.setupScrolling(self.categoryComboBox.view())
+        # Set the combobox view to scroll per pixel so the kinetic scrolling via touchscreen isnt ridiculously fast
         self.categoryComboBox.view().setVerticalScrollMode(QAbstractItemView.ScrollPerPixel)
+        # Disabling mouse tracking means that when you first use touchscreen to scroll through items, then it wont
+        # select that item
+        self.categoryComboBox.view().setMouseTracking(False)
 
         self.updateCategories()
         self.categoryComboBox.setCurrentIndex(currentCategory)

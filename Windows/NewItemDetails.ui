@@ -234,7 +234,7 @@ QGroupBox::title
         <property name="font">
          <font>
           <family>Segoe UI</family>
-          <pointsize>15</pointsize>
+          <pointsize>16</pointsize>
          </font>
         </property>
         <item>
@@ -249,7 +249,7 @@ QGroupBox::title
         <property name="font">
          <font>
           <family>Segoe UI</family>
-          <pointsize>15</pointsize>
+          <pointsize>16</pointsize>
          </font>
         </property>
         <item>
@@ -264,7 +264,7 @@ QGroupBox::title
         <property name="font">
          <font>
           <family>Segoe UI</family>
-          <pointsize>15</pointsize>
+          <pointsize>16</pointsize>
          </font>
         </property>
         <item>
@@ -298,7 +298,7 @@ QGroupBox::title
         <property name="font">
          <font>
           <family>Segoe UI</family>
-          <pointsize>15</pointsize>
+          <pointsize>16</pointsize>
          </font>
         </property>
         <property name="text">
@@ -406,7 +406,7 @@ QGroupBox::title
         <property name="font">
          <font>
           <family>Segoe UI</family>
-          <pointsize>15</pointsize>
+          <pointsize>16</pointsize>
          </font>
         </property>
        </widget>
@@ -429,7 +429,7 @@ QGroupBox::title
         <property name="font">
          <font>
           <family>Segoe UI</family>
-          <pointsize>15</pointsize>
+          <pointsize>16</pointsize>
          </font>
         </property>
        </widget>
@@ -454,7 +454,7 @@ QGroupBox::title
         <property name="font">
          <font>
           <family>Segoe UI</family>
-          <pointsize>15</pointsize>
+          <pointsize>16</pointsize>
          </font>
         </property>
        </widget>
