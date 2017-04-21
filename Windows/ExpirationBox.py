@@ -49,13 +49,29 @@ class ExpirationBox(QDialog, ExpirationBox_ui.Ui_ExpirationBox):
         for q in range(1, 51):
             self.qty_combo.addItem(str(q))
 
+        self.callbackFunction = None
+        self.callbackParam = None
+
+    @pyqtSlot()
+    def showEvent(self, event):
         # Setup timer to regularly poll for new barcodes from scanners
         self.scannerPoll = QTimer()
         self.scannerPoll.timeout.connect(self.scannerPoll_ticked)
         self.scannerPoll.start(constants.scannerPollInterval)
 
+        # Disconnect the function within centralWindow to handle barcode scanning and setup our own custom functions
         self.centralWindow.primaryScanner.barcodeReceived.connect(self.primaryScanner_barcodeReceived)
         self.centralWindow.secondaryScanner.barcodeReceived.connect(self.secondaryScanner_barcodeReceived)
+        self.centralWindow.primaryScanner.barcodeReceived.disconnect(self.centralWindow.primaryScanner_barcodeReceived)
+        self.centralWindow.secondaryScanner.barcodeReceived.disconnect(self.centralWindow.secondaryScanner_barcodeReceived)
+
+    @pyqtSlot()
+    def hideEvent(self, event):
+        # Reconnect the function within centralWindow to handle barcode scanning and disconnect our custom functions
+        self.centralWindow.primaryScanner.barcodeReceived.disconnect(self.primaryScanner_barcodeReceived)
+        self.centralWindow.secondaryScanner.barcodeReceived.disconnect(self.secondaryScanner_barcodeReceived)
+        self.centralWindow.primaryScanner.barcodeReceived.connect(self.centralWindow.primaryScanner_barcodeReceived)
+        self.centralWindow.secondaryScanner.barcodeReceived.connect(self.centralWindow.secondaryScanner_barcodeReceived)
 
     @pyqtSlot()
     def scannerPoll_ticked(self):
@@ -66,11 +82,19 @@ class ExpirationBox(QDialog, ExpirationBox_ui.Ui_ExpirationBox):
     def primaryScanner_barcodeReceived(self, barcode):
         print("Primary barcode scan2342ner got: %s, %s" % (barcode, str(datetime.now())))
         self.close()
+        #self.centralWindow.primaryScanner_barcodeReceived(barcode)
+
+        self.callbackFunction = self.centralWindow.primaryScanner_barcodeReceived
+        self.callbackParam = barcode
 
     @pyqtSlot(str)
     def secondaryScanner_barcodeReceived(self, barcode):
         print("Secondary barc423423ode scanner got: %s" % barcode)
         self.close()
+        #self.centralWindow.secondaryScanner_barcodeReceived(barcode)
+
+        self.callbackFunction = self.centralWindow.secondaryScanner_barcodeReceived
+        self.callbackParam = barcode
 
     @pyqtSlot(bool, bool)
     def on_accept_button_clicked(self, checked, longPressed):

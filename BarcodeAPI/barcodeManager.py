@@ -17,8 +17,12 @@ class BarcodeManager:
         cachedItem = self.dbManager.GetCachedUPCItem(barcode)
 
         if cachedItem is not None:
-            expirationDate, quantity = self.DisplayExpirationBox(self.dbManager.getItemName(cachedItem['item']))
+            expirationDate, quantity, callbackFunction, callbackParam = \
+                            self.DisplayExpirationBox(self.dbManager.getItemName(cachedItem['item']))
             self.dbManager.UpdateItemInDatabase(cachedItem, expirationDate, quantity)
+
+            if callbackFunction and callbackParam:
+                callbackFunction(callbackParam)
         else:
             self.AddItemToDatabase(barcode)
 
@@ -100,6 +104,8 @@ class BarcodeManager:
         expirationBoxDialog = ExpirationBox(self.config, self.centralWindow, name, self.centralWindow)
         expirationDate = ''
         quantity = 1
+        callbackFunction = None
+        callbackParam = None
         if expirationBoxDialog.exec():
             month = expirationBoxDialog.month_combo.currentText()
             day = expirationBoxDialog.day_combo.currentText()
@@ -109,5 +115,8 @@ class BarcodeManager:
                 expirationDate = str(datetime(month=int(month), day=int(day), year=int(year)).date())
 
             quantity = int(expirationBoxDialog.qty_combo.currentText())
+        else:
+            callbackFunction = expirationBoxDialog.callbackFunction
+            callbackParam = expirationBoxDialog.callbackParam
 
-        return expirationDate, quantity
+        return expirationDate, quantity, callbackFunction, callbackParam
