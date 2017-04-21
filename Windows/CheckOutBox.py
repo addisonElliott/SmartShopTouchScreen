@@ -3,6 +3,7 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from Util import scroller
+from Util import constants
 
 class CheckOutBox(QDialog, CheckOutBox_ui.Ui_CheckOutBox):
     def __init__(self, config, parent=None):
@@ -17,6 +18,11 @@ class CheckOutBox(QDialog, CheckOutBox_ui.Ui_CheckOutBox):
 
         for q in range(1, 51):
             self.qty_combo.addItem(str(q))
+
+    @pyqtSlot()
+    def showEvent(self, event):
+        self.item_textBox.setText('')
+        self.qty_combo.setCurrentIndex(0)
 
     @pyqtSlot(bool, bool)
     def on_accept_button_clicked(self, checked, longPressed):
