@@ -34,6 +34,15 @@ class ExpirationBox(QDialog, ExpirationBox_ui.Ui_ExpirationBox):
         for q in range(1, 51):
             self.qty_combo.addItem(str(q))
 
+    @pyqtSlot()
+    def showEvent(self, event):
+        # On show, set the current tab to favorite's, clear selections for each tab and set sort back to default
+        self.categoryTabWidget.setCurrentIndex(0)
+        self.favoritesTableView.selectionModel().clearSelection()
+        for id, category in self.tabDict.items():
+            category.listView.selectionModel().clearSelection()
+            category.listView.sortByColumn(0, Qt.AscendingOrder)
+
     @pyqtSlot(bool, bool)
     def on_accept_button_clicked(self, checked, longPressed):
         self.accept()

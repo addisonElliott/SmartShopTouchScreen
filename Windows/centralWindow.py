@@ -170,9 +170,4 @@ class CentralWindow(QMainWindow):
     @pyqtSlot(str)
     def secondaryScanner_barcodeReceived(self, barcode):
         print("Secondary barcode scanner got: %s" % barcode)
-        # TODO Send the barcode scanner information to be processed
-        checkedIn = not self.mainWindow.checkInOutBtn.isChecked()
-        if checkedIn:
-            self.barcodeManager.AddItemToInventory(barcode)
-        else:
-            self.barcodeManager.RemoveFromInventory(barcode)
+        self.barcodeManager.RemoveFromInventory(barcode)
