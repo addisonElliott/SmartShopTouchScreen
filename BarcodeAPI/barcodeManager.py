@@ -1,8 +1,8 @@
 import urllib.request  # For internet operations
 import json  # To internet JSON data format
-from Util.databaseManager import DatabaseManager
 from Windows.ExpirationBox import *
-from Windows.NewItemDetails import NewItemDetails
+from Windows.NewItemDetails import *
+from Windows.CheckOutBox import *
 
 
 class BarcodeManager:
@@ -11,6 +11,7 @@ class BarcodeManager:
         self.expBox = ExpirationBox(config)
         categories = self.dbManager.GetCategories('ASC')
         self.newItemDetails = NewItemDetails(config, categories)
+        self.checkOutBox = CheckOutBox(config)
 
     def AddItemToInventory(self, barcode):
         cachedItem = self.dbManager.GetCachedUPCItem(barcode)
@@ -34,6 +35,7 @@ class BarcodeManager:
         return data
 
     def AddItemToDatabase(self, barcode):
+        self.newItemDetails.ResetToDefault()
         data = self.GetJsonFrom3rdParty(barcode)
         item = {}
         if data['status']['code'] == '200' and 'attributes' in data['product'] and 'product' in data['product']['attributes']:
@@ -76,10 +78,22 @@ class BarcodeManager:
             id = self.dbManager.AddItemToInventory(item)
             self.dbManager.AddUPCToCachedUPCs(barcode, id, item['pkgQty'])
 
-    def RemoveFromInventory(self, barcode, qty=1):
-        self.dbManager.DecrementQuantityForItem(barcode, qty)
+    def RemoveFromInventory(self, barcode):
+        self.checkOutBox.ResetToDefault()
+        id = self.dbManager.GetCachedUPCItem(barcode)[0]
+        item = self.dbManager.GetItemFromInventory(id)
+        self.checkOutBox.qty_combo.setCurrentIndex(0)
+        self.checkOutBox.item_textBox.setEnabled(True)
+        itemName = (item[3][:20] + '..') if len(item[3]) > 20 else item[3]
+        self.checkOutBox.item_textBox.setText('')
+        self.checkOutBox.item_textBox.setText(itemName)
+        self.checkOutBox.item_textBox.setDisabled(True)
+        if self.checkOutBox.exec():
+            decQty = self.checkOutBox.qty_combo.currentText()
+            self.dbManager.DecrementQuantityForItem(id, item[0], int(decQty))
 
     def DisplayExpirationBox(self):
+        self.expBox.ResetToDefault()
         expirationDate = ''
         quantity = 1
         if self.expBox.exec():
