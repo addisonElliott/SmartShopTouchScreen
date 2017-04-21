@@ -38,8 +38,7 @@ class NewItemDetails(QDialog, NewItemDetails_ui.Ui_NewItemDetails):
         for category in categories:
             self.category_combo.addItem(category['name'])
 
-    @pyqtSlot()
-    def showEvent(self, event):
+    def ResetToDefault(self):
         self.itemName_textBox.setText('')
         self.category_combo.setCurrentIndex(0)
         self.itemQty_combo.setCurrentIndex(0)

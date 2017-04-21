@@ -31,8 +31,7 @@ class ExpirationBox(QDialog, ExpirationBox_ui.Ui_ExpirationBox):
         for q in range(1, 51):
             self.qty_combo.addItem(str(q))
 
-    @pyqtSlot()
-    def showEvent(self, event):
+    def ResetToDefault(self):
         self.month_combo.setCurrentIndex(datetime.now().month)
         self.day_combo.setCurrentIndex(datetime.now().day)
         self.year_combo.setCurrentIndex(1)

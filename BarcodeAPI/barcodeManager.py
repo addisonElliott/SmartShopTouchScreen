@@ -35,6 +35,7 @@ class BarcodeManager:
         return data
 
     def AddItemToDatabase(self, barcode):
+        self.newItemDetails.ResetToDefault()
         data = self.GetJsonFrom3rdParty(barcode)
         item = {}
         if data['status']['code'] == '200':
@@ -78,6 +79,7 @@ class BarcodeManager:
             self.dbManager.AddUPCToCachedUPCs(barcode, id, item['pkgQty'])
 
     def RemoveFromInventory(self, barcode):
+        self.checkOutBox.ResetToDefault()
         id = self.dbManager.GetCachedUPCItem(barcode)[0]
         item = self.dbManager.GetItemFromInventory(id)
         self.checkOutBox.qty_combo.setCurrentIndex(0)
@@ -91,6 +93,7 @@ class BarcodeManager:
             self.dbManager.DecrementQuantityForItem(id, item[0], int(decQty))
 
     def DisplayExpirationBox(self):
+        self.expBox.ResetToDefault()
         expirationDate = ''
         quantity = 1
         if self.expBox.exec():
