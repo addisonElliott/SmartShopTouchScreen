@@ -11,11 +11,16 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_ExpirationBox(object):
     def setupUi(self, ExpirationBox):
         ExpirationBox.setObjectName("ExpirationBox")
-        ExpirationBox.resize(396, 318)
+        ExpirationBox.resize(396, 343)
         font = QtGui.QFont()
         font.setPointSize(19)
         ExpirationBox.setFont(font)
+        ExpirationBox.setStyleSheet("QDialog\n"
+"{\n"
+"    border: 1px solid #76797C;\n"
+"}")
         self.gridLayout = QtWidgets.QGridLayout(ExpirationBox)
+        self.gridLayout.setContentsMargins(5, 5, 5, 5)
         self.gridLayout.setObjectName("gridLayout")
         self.day_label = QtWidgets.QLabel(ExpirationBox)
         font = QtGui.QFont()
@@ -50,6 +55,10 @@ class Ui_ExpirationBox(object):
         font.setItalic(False)
         font.setWeight(75)
         self.month_combo.setFont(font)
+        self.month_combo.setStyleSheet("QDialog\n"
+"{\n"
+"    border: 1px solid #76797C;\n"
+"}")
         self.month_combo.setObjectName("month_combo")
         self.month_combo.addItem("")
         self.month_combo.setItemText(0, "")
@@ -88,27 +97,27 @@ class Ui_ExpirationBox(object):
         spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_1.addItem(spacerItem1)
         self.accept_button = TouchButton(ExpirationBox)
-        self.accept_button.setMinimumSize(QtCore.QSize(45, 45))
-        self.accept_button.setMaximumSize(QtCore.QSize(45, 45))
-        self.accept_button.setStyleSheet("background-color: #31363B;\n"
+        self.accept_button.setMinimumSize(QtCore.QSize(48, 48))
+        self.accept_button.setMaximumSize(QtCore.QSize(48, 48))
+        self.accept_button.setStyleSheet("background-color: transparent;\n"
 "border: 0;")
         self.accept_button.setText("")
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/Icons/Icons/GreenCheckIcon_Finished.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.accept_button.setIcon(icon)
-        self.accept_button.setIconSize(QtCore.QSize(40, 40))
+        self.accept_button.setIconSize(QtCore.QSize(48, 48))
         self.accept_button.setObjectName("accept_button")
         self.horizontalLayout_1.addWidget(self.accept_button)
         self.cancel_button = TouchButton(ExpirationBox)
-        self.cancel_button.setMinimumSize(QtCore.QSize(45, 45))
-        self.cancel_button.setMaximumSize(QtCore.QSize(45, 45))
-        self.cancel_button.setStyleSheet("background-color: #31363B;\n"
+        self.cancel_button.setMinimumSize(QtCore.QSize(48, 48))
+        self.cancel_button.setMaximumSize(QtCore.QSize(48, 48))
+        self.cancel_button.setStyleSheet("background-color: transparent;\n"
 "border: 0;")
         self.cancel_button.setText("")
         icon1 = QtGui.QIcon()
         icon1.addPixmap(QtGui.QPixmap(":/Icons/Icons/RedCancelIcon_Finished.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.cancel_button.setIcon(icon1)
-        self.cancel_button.setIconSize(QtCore.QSize(40, 40))
+        self.cancel_button.setIconSize(QtCore.QSize(48, 48))
         self.cancel_button.setObjectName("cancel_button")
         self.horizontalLayout_1.addWidget(self.cancel_button)
         self.gridLayout.addLayout(self.horizontalLayout_1, 13, 1, 1, 3)

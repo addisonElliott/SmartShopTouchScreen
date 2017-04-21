@@ -43,20 +43,20 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
         self.gridLayout_3.removeWidget(self.floatingPB1)
         self.floatingPB1.hide()
         self.floatingPB1.setEnabled(False)
-        floatingPB1Width = 70#48 * 2 + 40
-        floatingPB1Height = 70#48 + 12
-        floatingPB1X = 280#(self.width() - floatingPB1Width) / 2
-        floatingPB1Y = 390# self.height() - floatingPB1Height - 1
+        floatingPB1Width = 70
+        floatingPB1Height = 70
+        floatingPB1X = 280
+        floatingPB1Y = 390
         self.floatingPB1.setGeometry(floatingPB1X, floatingPB1Y, floatingPB1Width, floatingPB1Height)
         self.floatingPB1.raise_()
 
         self.gridLayout_3.removeWidget(self.floatingPB2)
         self.floatingPB2.setEnabled(False)
         self.floatingPB2.hide()
-        floatingPB2Width = 70  # 48 * 2 + 40
-        floatingPB2Height = 70  # 48 + 12
-        floatingPB2X = 630  # (self.width() - floatingPB1Width) / 2
-        floatingPB2Y = 390  # self.height() - floatingPB1Height - 1
+        floatingPB2Width = 70
+        floatingPB2Height = 70
+        floatingPB2X = 630
+        floatingPB2Y = 390
         self.floatingPB2.setGeometry(floatingPB2X, floatingPB2Y, floatingPB2Width, floatingPB2Height)
         self.floatingPB2.raise_()
 
@@ -90,23 +90,23 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
     @pyqtSlot()
     def showEvent(self, event):
         # Update the two shopping lists in case any changes were made on a different menu
-        self.recItemsModel.select()
         self.reqItemsModel.select()
+        self.recItemsModel.select()
 
         # Reset the sorting for each of the shopping lists
-        self.recItemsWidget.sortByColumn(0, Qt.AscendingOrder)
         self.reqItemsWidget.sortByColumn(0, Qt.AscendingOrder)
+        self.recItemsWidget.sortByColumn(0, Qt.AscendingOrder)
 
         # Set size of the recommended items columns
         # Do this on showEvent because additional data could be added to the quantity column and require the contents
         # to be resized
-        self.recItemsWidget.horizontalHeader().setStretchLastSection(False)
-        self.recItemsWidget.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
-        self.recItemsWidget.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
-
         self.reqItemsWidget.horizontalHeader().setStretchLastSection(False)
         self.reqItemsWidget.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
         self.reqItemsWidget.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
+
+        self.recItemsWidget.horizontalHeader().setStretchLastSection(False)
+        self.recItemsWidget.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
+        self.recItemsWidget.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
 
     @pyqtSlot()
     def hideEvent(self, event):

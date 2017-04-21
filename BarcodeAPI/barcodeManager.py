@@ -6,13 +6,17 @@ from Windows.NewItemDetails import NewItemDetails
 
 
 class BarcodeManager:
-    def __init__(self, dbManager, config):
+    def __init__(self, dbManager, config, centralWindow):
         self.dbManager = dbManager
-        self.expBox = ExpirationBox(config)
+        self.config = config
+        self.centralWindow = centralWindow
+        self.expBox = ExpirationBox(self.config)
         categories = self.dbManager.GetCategories('ASC')
-        self.newItemDetails = NewItemDetails(config, categories)
+        self.newItemDetails = NewItemDetails(self.config, categories)
 
     def AddItemToInventory(self, barcode):
+        # Strip whitespace from barcode
+        barcode = barcode.strip()
         cachedItem = self.dbManager.GetCachedUPCItem(barcode)
 
         if cachedItem is not None:

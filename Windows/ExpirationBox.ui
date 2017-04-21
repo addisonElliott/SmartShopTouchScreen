@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>396</width>
-    <height>318</height>
+    <height>343</height>
    </rect>
   </property>
   <property name="font">
@@ -18,7 +18,25 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QDialog
+{
+	border: 1px solid #76797C;
+}</string>
+  </property>
   <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>5</number>
+   </property>
+   <property name="topMargin">
+    <number>5</number>
+   </property>
+   <property name="rightMargin">
+    <number>5</number>
+   </property>
+   <property name="bottomMargin">
+    <number>5</number>
+   </property>
    <item row="2" column="2">
     <widget class="QLabel" name="day_label">
      <property name="font">
@@ -72,6 +90,12 @@
        <italic>false</italic>
        <bold>true</bold>
       </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QDialog
+{
+	border: 1px solid #76797C;
+}</string>
      </property>
      <item>
       <property name="text">
@@ -162,18 +186,18 @@
       <widget class="TouchButton" name="accept_button">
        <property name="minimumSize">
         <size>
-         <width>45</width>
-         <height>45</height>
+         <width>48</width>
+         <height>48</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>45</width>
-         <height>45</height>
+         <width>48</width>
+         <height>48</height>
         </size>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color: #31363B;
+        <string notr="true">background-color: transparent;
 border: 0;</string>
        </property>
        <property name="text">
@@ -185,8 +209,8 @@ border: 0;</string>
        </property>
        <property name="iconSize">
         <size>
-         <width>40</width>
-         <height>40</height>
+         <width>48</width>
+         <height>48</height>
         </size>
        </property>
       </widget>
@@ -195,18 +219,18 @@ border: 0;</string>
       <widget class="TouchButton" name="cancel_button">
        <property name="minimumSize">
         <size>
-         <width>45</width>
-         <height>45</height>
+         <width>48</width>
+         <height>48</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>45</width>
-         <height>45</height>
+         <width>48</width>
+         <height>48</height>
         </size>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color: #31363B;
+        <string notr="true">background-color: transparent;
 border: 0;</string>
        </property>
        <property name="text">
@@ -218,8 +242,8 @@ border: 0;</string>
        </property>
        <property name="iconSize">
         <size>
-         <width>40</width>
-         <height>40</height>
+         <width>48</width>
+         <height>48</height>
         </size>
        </property>
       </widget>

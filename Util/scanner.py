@@ -173,4 +173,4 @@ elif sys.platform.startswith("win32"):
                                                Qt.WindowSystemMenuHint | Qt.WindowTitleHint | Qt.WindowCloseButtonHint)
 
             if ok and barcode:
-                self.barcodeReceived.emit(barcode)
+                self.barcodeReceived.emit(barcode.strip())
