@@ -38,7 +38,7 @@ class BarcodeManager:
         self.newItemDetails.ResetToDefault()
         data = self.GetJsonFrom3rdParty(barcode)
         item = {}
-        if data['status']['code'] == '200':
+        if data['status']['code'] == '200' and 'attributes' in data['product'] and 'product' in data['product']['attributes']:
             product = data['product']['attributes']['product']
             self.newItemDetails.itemName_textBox.setText(product[:max(20, len(product))])
             isFound = False
