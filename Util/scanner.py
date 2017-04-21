@@ -53,6 +53,7 @@ if sys.platform.startswith("linux"):
 
             # Setup the device by calling setPort with the desired port number
             self.usbPortNumber = None
+            self.device = None
             self.setPort(usbPortNumber)
 
             # Set the current string buffer to none
@@ -73,6 +74,10 @@ if sys.platform.startswith("linux"):
                 return
 
             if constants.barcodeScannerDeviceEnable:
+                # If this scanner already has a device, ungrab it since were done with it
+                if self.device:
+                    self.device.ungrab()
+
                 # This regex expression identifies a device on a specified USB port number
                 # I am not entirely sure if this is Raspbian specific, Linux specific or what,
                 # but it works in this case
@@ -90,6 +95,9 @@ if sys.platform.startswith("linux"):
                 # If unable to find the device at port number, raise error
                 if self.device is None:
                     raise SmartShopException("Unable to find input device located at port %i" % usbPortNumber)
+
+                # Grab current device so that no one else can receive input events from it
+                self.device.grab()
 
                 # Get the current state of the LED buttons; update self.state with the values that are on
                 ledStates = self.device.leds()
