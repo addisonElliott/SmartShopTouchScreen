@@ -22,6 +22,11 @@ class DatabaseManager:
 
         return self.cursor.fetchone()
 
+    def getItemName(self, item):
+        self.cursor.execute("SELECT name FROM inventory WHERE item = %s", (item,))
+
+        return self.cursor.fetchone()[0]
+
     def GetItemFromInventory(self, id):
         self.cursor.execute("SELECT qty,avg_shelf_time,last_buy_date FROM inventory WHERE item = %s", (id,))
 

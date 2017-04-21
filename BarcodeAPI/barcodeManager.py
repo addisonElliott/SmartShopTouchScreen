@@ -17,7 +17,7 @@ class BarcodeManager:
         cachedItem = self.dbManager.GetCachedUPCItem(barcode)
 
         if cachedItem is not None:
-            expirationDate, quantity = self.DisplayExpirationBox()
+            expirationDate, quantity = self.DisplayExpirationBox(self.dbManager.getItemName(cachedItem['item']))
             self.dbManager.UpdateItemInDatabase(cachedItem, expirationDate, quantity)
         else:
             self.AddItemToDatabase(barcode)
@@ -96,8 +96,8 @@ class BarcodeManager:
     def RemoveFromInventory(self, barcode, qty=1):
         self.dbManager.DecrementQuantityForItem(barcode, qty)
 
-    def DisplayExpirationBox(self):
-        expirationBoxDialog = ExpirationBox(self.config, self.centralWindow)
+    def DisplayExpirationBox(self, name):
+        expirationBoxDialog = ExpirationBox(self.config, self.centralWindow, name, self.centralWindow)
         expirationDate = ''
         quantity = 1
         if expirationBoxDialog.exec():

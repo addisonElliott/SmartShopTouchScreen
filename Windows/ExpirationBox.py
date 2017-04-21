@@ -8,12 +8,15 @@ from Util import scroller
 from datetime import datetime
 
 class ExpirationBox(QDialog, ExpirationBox_ui.Ui_ExpirationBox):
-    def __init__(self, config, centralWindow, parent=None):
+    def __init__(self, config, centralWindow, name, parent=None):
         super(ExpirationBox, self).__init__(parent)
         self.setupUi(self)
 
         self.config = config
         self.centralWindow = centralWindow
+
+        if name:
+            self.itemNameLabel.setText(name)
 
         # Remove title bar
         self.setWindowFlags(Qt.Dialog | Qt.FramelessWindowHint)
@@ -51,10 +54,23 @@ class ExpirationBox(QDialog, ExpirationBox_ui.Ui_ExpirationBox):
         self.scannerPoll.timeout.connect(self.scannerPoll_ticked)
         self.scannerPoll.start(constants.scannerPollInterval)
 
+        self.centralWindow.primaryScanner.barcodeReceived.connect(self.primaryScanner_barcodeReceived)
+        self.centralWindow.secondaryScanner.barcodeReceived.connect(self.secondaryScanner_barcodeReceived)
+
     @pyqtSlot()
     def scannerPoll_ticked(self):
         self.centralWindow.primaryScanner.poll()
         self.centralWindow.secondaryScanner.poll()
+
+    @pyqtSlot(str)
+    def primaryScanner_barcodeReceived(self, barcode):
+        print("Primary barcode scan2342ner got: %s, %s" % (barcode, str(datetime.now())))
+        self.close()
+
+    @pyqtSlot(str)
+    def secondaryScanner_barcodeReceived(self, barcode):
+        print("Secondary barc423423ode scanner got: %s" % barcode)
+        self.close()
 
     @pyqtSlot(bool, bool)
     def on_accept_button_clicked(self, checked, longPressed):

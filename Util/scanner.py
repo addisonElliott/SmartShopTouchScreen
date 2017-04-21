@@ -129,9 +129,11 @@ if sys.platform.startswith("linux"):
                                 elif keyEvent.keystate is events.KeyEvent.key_up: self.state[keyEvent.scancode] = 0
                             elif keyEvent.keystate is events.KeyEvent.key_down or keyEvent.keystate is events.KeyEvent.key_hold:
                                 if keyEvent.scancode is KEY_ENTER:
-                                    #print("Current str: %s" % self.curStr)
-                                    self.barcodeReceived.emit(self.curStr)
+                                    # Clear the curStr variable because recursion may occur where a barcode scan happens
+                                    # inside the barcodeReceived signal
+                                    emitStr = self.curStr
                                     self.curStr = ""
+                                    self.barcodeReceived.emit(emitStr)
                                 elif keyEvent.scancode in keycodeToASCII:
                                     shift = (self.modifiers[KEY_LEFTSHIFT] or self.modifiers[KEY_RIGHTSHIFT])
                                     self.curStr += keycodeToASCII[keyEvent.scancode][shift]

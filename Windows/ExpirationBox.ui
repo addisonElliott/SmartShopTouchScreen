@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>396</width>
-    <height>322</height>
+    <width>506</width>
+    <height>364</height>
    </rect>
   </property>
   <property name="font">
@@ -37,7 +37,7 @@
    <property name="bottomMargin">
     <number>5</number>
    </property>
-   <item row="2" column="2">
+   <item row="3" column="2">
     <widget class="QLabel" name="day_label">
      <property name="font">
       <font>
@@ -53,7 +53,7 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="2">
+   <item row="4" column="2">
     <widget class="QComboBox" name="day_combo">
      <property name="font">
       <font>
@@ -70,7 +70,7 @@
      </item>
     </widget>
    </item>
-   <item row="2" column="1">
+   <item row="3" column="1">
     <widget class="QLabel" name="month_label">
      <property name="font">
       <font>
@@ -86,7 +86,7 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="1">
+   <item row="4" column="1">
     <widget class="QComboBox" name="month_combo">
      <property name="font">
       <font>
@@ -110,7 +110,7 @@
      </item>
     </widget>
    </item>
-   <item row="3" column="3">
+   <item row="4" column="3">
     <widget class="QComboBox" name="year_combo">
      <property name="font">
       <font>
@@ -128,23 +128,7 @@
      </item>
     </widget>
    </item>
-   <item row="2" column="3">
-    <widget class="QLabel" name="year_label">
-     <property name="font">
-      <font>
-       <family>Segoe UI</family>
-       <pointsize>15</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>Year</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="12" column="1">
+   <item row="13" column="1">
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -160,7 +144,36 @@
      </property>
     </spacer>
    </item>
-   <item row="13" column="1" colspan="3">
+   <item row="3" column="3">
+    <widget class="QLabel" name="year_label">
+     <property name="font">
+      <font>
+       <family>Segoe UI</family>
+       <pointsize>15</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Year</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="1" colspan="2">
+    <widget class="QLabel" name="qty_label">
+     <property name="font">
+      <font>
+       <family>Segoe UI</family>
+       <pointsize>15</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Quantity</string>
+     </property>
+    </widget>
+   </item>
+   <item row="14" column="1" colspan="3">
     <layout class="QHBoxLayout" name="horizontalLayout_1">
      <property name="spacing">
       <number>15</number>
@@ -262,7 +275,46 @@ border: 0;</string>
      </item>
     </layout>
    </item>
-   <item row="1" column="2">
+   <item row="7" column="1" colspan="3">
+    <widget class="QComboBox" name="qty_combo">
+     <property name="font">
+      <font>
+       <family>Segoe UI</family>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <italic>false</italic>
+       <bold>false</bold>
+      </font>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QLabel" name="label">
+     <property name="font">
+      <font>
+       <family>Segoe UI</family>
+       <pointsize>15</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Item Name:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="2" colspan="2">
+    <widget class="QLabel" name="itemNameLabel">
+     <property name="font">
+      <font>
+       <family>Segoe UI</family>
+       <pointsize>15</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Label</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1" colspan="3" alignment="Qt::AlignHCenter">
     <widget class="QLabel" name="exp_label">
      <property name="font">
       <font>
@@ -275,32 +327,6 @@ border: 0;</string>
      </property>
      <property name="margin">
       <number>0</number>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="1" colspan="2">
-    <widget class="QLabel" name="qty_label">
-     <property name="font">
-      <font>
-       <family>Segoe UI</family>
-       <pointsize>15</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>Quantity</string>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="1" colspan="3">
-    <widget class="QComboBox" name="qty_combo">
-     <property name="font">
-      <font>
-       <family>Segoe UI</family>
-       <pointsize>16</pointsize>
-       <weight>50</weight>
-       <italic>false</italic>
-       <bold>false</bold>
-      </font>
      </property>
     </widget>
    </item>
