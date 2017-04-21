@@ -32,6 +32,7 @@ class CentralWindow(QMainWindow):
 
         self.tcpServer = TcpServer("0.0.0.0", 5050)
         self.tcpServer.readCallback = self.tcpServer_packet
+        self.tcpClientData = {}
 
         # Initialize central widget, horizontal layout and stacked which which fills the entire QMainWindow
         self.centralwidget = QWidget(self)
@@ -164,6 +165,13 @@ class CentralWindow(QMainWindow):
         self.tcpServer.run()
 
     def tcpServer_packet(self, socketData, data):
+        if data['id'] == "init":
+            self.tcpClientData[socketData.IP].UUID = data['UUID']
+            # Check UUID for if it is remembered or not, if so send one packet
+            # Otherwise, send askforpin packet and note what the correct pin should be
+            pass
+        else:
+            print("Unknown packet: %s" % (str(data)))
         print('Here we go: %s %s' % (str(socketData), str(data)))
 
     @pyqtSlot(str)
