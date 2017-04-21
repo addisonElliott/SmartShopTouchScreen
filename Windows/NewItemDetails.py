@@ -14,8 +14,9 @@ class NewItemDetails(QDialog, NewItemDetails_ui.Ui_NewItemDetails):
         self.setupUi(self)
 
         self.config = config
+
         # Remove title bar
-        self.setWindowFlags(Qt.FramelessWindowHint)
+        self.setWindowFlags(Qt.Dialog | Qt.FramelessWindowHint)
 
         scroller.setupScrolling(self.category_combo.view())
         scroller.setupScrolling(self.itemQty_combo.view())

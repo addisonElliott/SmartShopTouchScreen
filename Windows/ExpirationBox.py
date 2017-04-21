@@ -13,8 +13,9 @@ class ExpirationBox(QDialog, ExpirationBox_ui.Ui_ExpirationBox):
         self.setupUi(self)
 
         self.config = config
+
         # Remove title bar
-        self.setWindowFlags(Qt.FramelessWindowHint)
+        self.setWindowFlags(Qt.Dialog | Qt.FramelessWindowHint)
 
         scroller.setupScrolling(self.month_combo.view())
         scroller.setupScrolling(self.day_combo.view())
