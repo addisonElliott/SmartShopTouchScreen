@@ -72,6 +72,14 @@ class DatabaseManager:
 
         self.connection.commit()
 
+    def updatePurchaseHistory(self, item, date, qty):
+        self.cursor.execute("DO $do$ BEGIN UPDATE purchase_history SET qty = qty + %(qty)s WHERE item = %(item)s AND "
+                            "date = %(date)s; IF NOT FOUND THEN INSERT INTO purchase_history (item, date, qty) VALUES "
+                            "(%(item)s, %(date)s, %(qty)s); END IF; END $do$", {'item': item, 'date': str(date),
+                                                                                'qty': qty})
+        self.connection.commit()
+
+
     def DecrementQuantityForItem(self, item, qty=1):
         inventoryItem = self.GetItemFromInventory(item[0])
         self.cursor.execute("UPDATE inventory SET qty = %s WHERE item = %s", (inventoryItem[0] - qty, item[0]))
