@@ -43,6 +43,9 @@ class PurchaseHistoryWindow(QWidget, purchaseHistoryWindow_ui.Ui_PurchaseHistory
 
     @pyqtSlot()
     def showEvent(self, event):
+        # Update the model in case any data has changed and reset sorting back by date
+        self.model.select()
+        self.historyView.sortByColumn(1, Qt.DescendingOrder)
         pass
 
     @pyqtSlot()

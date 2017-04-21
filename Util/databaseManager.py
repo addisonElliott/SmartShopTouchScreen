@@ -55,6 +55,7 @@ class DatabaseManager:
         id = self.cursor.fetchone()[0]
         self.connection.commit()
 
+        # Update the purchase history with item bought today
         self.updatePurchaseHistory(id, datetime.now().date(), item['qty'] * item['pkgQty'])
 
         return id
@@ -73,6 +74,8 @@ class DatabaseManager:
                                 expirationDate, cachedItem['item']))
 
         self.connection.commit()
+
+        # Update the purchase history with item bought today
         self.updatePurchaseHistory(cachedItem['item'], datetime.now().date(), quantity * cachedItem['pkg_qty'])
 
     def updatePurchaseHistory(self, item, date, qty):
