@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>545</width>
-    <height>485</height>
+    <width>555</width>
+    <height>406</height>
    </rect>
   </property>
   <property name="font">
@@ -24,7 +24,7 @@
 	border: 1px solid #76797C;
 }</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0,0" columnstretch="0,0,0,0" columnminimumwidth="0,0,0,0">
+  <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0" columnstretch="0,0,0,0">
    <property name="leftMargin">
     <number>5</number>
    </property>
@@ -37,13 +37,127 @@
    <property name="bottomMargin">
     <number>5</number>
    </property>
+   <property name="verticalSpacing">
+    <number>3</number>
+   </property>
    <item row="2" column="1" colspan="3">
+    <layout class="QHBoxLayout" name="horizontalLayout_1">
+     <property name="spacing">
+      <number>15</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="TouchButton" name="accept_button">
+       <property name="minimumSize">
+        <size>
+         <width>48</width>
+         <height>48</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>48</width>
+         <height>48</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: transparent;
+border: 0;</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../Resource_BY.qrc">
+         <normaloff>:/Icons/Icons/GreenCheckIcon_Finished.png</normaloff>:/Icons/Icons/GreenCheckIcon_Finished.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>48</width>
+         <height>48</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="TouchButton" name="cancel_button">
+       <property name="minimumSize">
+        <size>
+         <width>48</width>
+         <height>48</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>48</width>
+         <height>48</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: transparent;
+border: 0;</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../Resource_BY.qrc">
+         <normaloff>:/Icons/Icons/RedCancelIcon_Finished.png</normaloff>:/Icons/Icons/RedCancelIcon_Finished.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>48</width>
+         <height>48</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="1" column="1" colspan="3">
     <widget class="QGroupBox" name="groupBox_optional">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="font">
       <font>
        <family>Cronus Round</family>
        <pointsize>19</pointsize>
       </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QGroupBox
+{
+	margin-top: 25px;
+}
+
+QGroupBox::title
+{
+	padding-top: 0px;
+	margin-top: 0px;
+	margin-bottom: 5px;
+	/*padding-top: -30px;*/
+	subcontrol-origin: margin;
+     subcontrol-position: top center; /* position at the top center */
+}</string>
      </property>
      <property name="title">
       <string>Optional Details</string>
@@ -56,7 +170,7 @@
        <number>5</number>
       </property>
       <property name="topMargin">
-       <number>22</number>
+       <number>5</number>
       </property>
       <property name="rightMargin">
        <number>5</number>
@@ -195,19 +309,39 @@
      </layout>
     </widget>
    </item>
-   <item row="1" column="1" colspan="3">
+   <item row="0" column="1" colspan="3">
     <widget class="QGroupBox" name="groupBox_main">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="font">
       <font>
        <family>Cronus Round</family>
        <pointsize>19</pointsize>
       </font>
      </property>
+     <property name="styleSheet">
+      <string notr="true">QGroupBox
+{
+	margin-top: 25px;
+}
+
+QGroupBox::title
+{
+	padding-top: 0px;
+	margin-top: 0px;
+	subcontrol-origin: margin;
+     subcontrol-position: top center; /* position at the top center */
+}</string>
+     </property>
      <property name="title">
       <string>New Item Details</string>
      </property>
      <property name="alignment">
-      <set>Qt::AlignHCenter|Qt::AlignTop</set>
+      <set>Qt::AlignCenter</set>
      </property>
      <property name="flat">
       <bool>true</bool>
@@ -220,7 +354,7 @@
        <number>5</number>
       </property>
       <property name="topMargin">
-       <number>30</number>
+       <number>10</number>
       </property>
       <property name="rightMargin">
        <number>5</number>
@@ -327,95 +461,6 @@
       </item>
      </layout>
     </widget>
-   </item>
-   <item row="3" column="1" colspan="3">
-    <layout class="QHBoxLayout" name="horizontalLayout_1">
-     <property name="spacing">
-      <number>15</number>
-     </property>
-     <property name="topMargin">
-      <number>0</number>
-     </property>
-     <item>
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="TouchButton" name="accept_button">
-       <property name="minimumSize">
-        <size>
-         <width>48</width>
-         <height>48</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>48</width>
-         <height>48</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: transparent;
-border: 0;</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="../Resource_BY.qrc">
-         <normaloff>:/Icons/Icons/GreenCheckIcon_Finished.png</normaloff>:/Icons/Icons/GreenCheckIcon_Finished.png</iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>48</width>
-         <height>48</height>
-        </size>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="TouchButton" name="cancel_button">
-       <property name="minimumSize">
-        <size>
-         <width>48</width>
-         <height>48</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>48</width>
-         <height>48</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: transparent;
-border: 0;</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="../Resource_BY.qrc">
-         <normaloff>:/Icons/Icons/RedCancelIcon_Finished.png</normaloff>:/Icons/Icons/RedCancelIcon_Finished.png</iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>48</width>
-         <height>48</height>
-        </size>
-       </property>
-      </widget>
-     </item>
-    </layout>
    </item>
   </layout>
   <zorder>groupBox_main</zorder>

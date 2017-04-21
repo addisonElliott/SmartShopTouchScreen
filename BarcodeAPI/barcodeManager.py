@@ -10,9 +10,9 @@ class BarcodeManager:
         self.dbManager = dbManager
         self.config = config
         self.centralWindow = centralWindow
-        self.expBox = ExpirationBox(self.config)
+        self.expBox = ExpirationBox(self.config, self.centralWindow)
         categories = self.dbManager.GetCategories('ASC')
-        self.newItemDetails = NewItemDetails(self.config, categories)
+        self.newItemDetails = NewItemDetails(self.config, categories, self.centralWindow)
 
     def AddItemToInventory(self, barcode):
         # Strip whitespace from barcode

@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_NewItemDetails(object):
     def setupUi(self, NewItemDetails):
         NewItemDetails.setObjectName("NewItemDetails")
-        NewItemDetails.resize(545, 485)
+        NewItemDetails.resize(555, 406)
         font = QtGui.QFont()
         font.setPointSize(19)
         NewItemDetails.setFont(font)
@@ -21,16 +21,67 @@ class Ui_NewItemDetails(object):
 "}")
         self.gridLayout = QtWidgets.QGridLayout(NewItemDetails)
         self.gridLayout.setContentsMargins(5, 5, 5, 5)
+        self.gridLayout.setVerticalSpacing(3)
         self.gridLayout.setObjectName("gridLayout")
+        self.horizontalLayout_1 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_1.setContentsMargins(-1, 0, -1, -1)
+        self.horizontalLayout_1.setSpacing(15)
+        self.horizontalLayout_1.setObjectName("horizontalLayout_1")
+        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_1.addItem(spacerItem)
+        self.accept_button = TouchButton(NewItemDetails)
+        self.accept_button.setMinimumSize(QtCore.QSize(48, 48))
+        self.accept_button.setMaximumSize(QtCore.QSize(48, 48))
+        self.accept_button.setStyleSheet("background-color: transparent;\n"
+"border: 0;")
+        self.accept_button.setText("")
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(":/Icons/Icons/GreenCheckIcon_Finished.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.accept_button.setIcon(icon)
+        self.accept_button.setIconSize(QtCore.QSize(48, 48))
+        self.accept_button.setObjectName("accept_button")
+        self.horizontalLayout_1.addWidget(self.accept_button)
+        self.cancel_button = TouchButton(NewItemDetails)
+        self.cancel_button.setMinimumSize(QtCore.QSize(48, 48))
+        self.cancel_button.setMaximumSize(QtCore.QSize(48, 48))
+        self.cancel_button.setStyleSheet("background-color: transparent;\n"
+"border: 0;")
+        self.cancel_button.setText("")
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap(":/Icons/Icons/RedCancelIcon_Finished.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.cancel_button.setIcon(icon1)
+        self.cancel_button.setIconSize(QtCore.QSize(48, 48))
+        self.cancel_button.setObjectName("cancel_button")
+        self.horizontalLayout_1.addWidget(self.cancel_button)
+        self.gridLayout.addLayout(self.horizontalLayout_1, 2, 1, 1, 3)
         self.groupBox_optional = QtWidgets.QGroupBox(NewItemDetails)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Maximum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.groupBox_optional.sizePolicy().hasHeightForWidth())
+        self.groupBox_optional.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setFamily("Cronus Round")
         font.setPointSize(19)
         self.groupBox_optional.setFont(font)
+        self.groupBox_optional.setStyleSheet("QGroupBox\n"
+"{\n"
+"    margin-top: 25px;\n"
+"}\n"
+"\n"
+"QGroupBox::title\n"
+"{\n"
+"    padding-top: 0px;\n"
+"    margin-top: 0px;\n"
+"    margin-bottom: 5px;\n"
+"    /*padding-top: -30px;*/\n"
+"    subcontrol-origin: margin;\n"
+"     subcontrol-position: top center; /* position at the top center */\n"
+"}")
         self.groupBox_optional.setAlignment(QtCore.Qt.AlignCenter)
         self.groupBox_optional.setObjectName("groupBox_optional")
         self.gridLayout_3 = QtWidgets.QGridLayout(self.groupBox_optional)
-        self.gridLayout_3.setContentsMargins(5, 22, 5, 5)
+        self.gridLayout_3.setContentsMargins(5, 5, 5, 5)
         self.gridLayout_3.setObjectName("gridLayout_3")
         self.monthlabel = QtWidgets.QLabel(self.groupBox_optional)
         font = QtGui.QFont()
@@ -100,18 +151,35 @@ class Ui_NewItemDetails(object):
         self.favorites_check.setFont(font)
         self.favorites_check.setObjectName("favorites_check")
         self.gridLayout_3.addWidget(self.favorites_check, 2, 0, 1, 5, QtCore.Qt.AlignHCenter)
-        self.gridLayout.addWidget(self.groupBox_optional, 2, 1, 1, 3)
+        self.gridLayout.addWidget(self.groupBox_optional, 1, 1, 1, 3)
         self.groupBox_main = QtWidgets.QGroupBox(NewItemDetails)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Maximum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.groupBox_main.sizePolicy().hasHeightForWidth())
+        self.groupBox_main.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setFamily("Cronus Round")
         font.setPointSize(19)
         self.groupBox_main.setFont(font)
-        self.groupBox_main.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignTop)
+        self.groupBox_main.setStyleSheet("QGroupBox\n"
+"{\n"
+"    margin-top: 25px;\n"
+"}\n"
+"\n"
+"QGroupBox::title\n"
+"{\n"
+"    padding-top: 0px;\n"
+"    margin-top: 0px;\n"
+"    subcontrol-origin: margin;\n"
+"     subcontrol-position: top center; /* position at the top center */\n"
+"}")
+        self.groupBox_main.setAlignment(QtCore.Qt.AlignCenter)
         self.groupBox_main.setFlat(True)
         self.groupBox_main.setCheckable(False)
         self.groupBox_main.setObjectName("groupBox_main")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.groupBox_main)
-        self.gridLayout_2.setContentsMargins(5, 30, 5, 5)
+        self.gridLayout_2.setContentsMargins(5, 10, 5, 5)
         self.gridLayout_2.setObjectName("gridLayout_2")
         self.itemName_label = QtWidgets.QLabel(self.groupBox_main)
         font = QtGui.QFont()
@@ -172,38 +240,7 @@ class Ui_NewItemDetails(object):
         self.category_combo.setFont(font)
         self.category_combo.setObjectName("category_combo")
         self.gridLayout_2.addWidget(self.category_combo, 1, 3, 1, 3)
-        self.gridLayout.addWidget(self.groupBox_main, 1, 1, 1, 3)
-        self.horizontalLayout_1 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_1.setContentsMargins(-1, 0, -1, -1)
-        self.horizontalLayout_1.setSpacing(15)
-        self.horizontalLayout_1.setObjectName("horizontalLayout_1")
-        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_1.addItem(spacerItem)
-        self.accept_button = TouchButton(NewItemDetails)
-        self.accept_button.setMinimumSize(QtCore.QSize(48, 48))
-        self.accept_button.setMaximumSize(QtCore.QSize(48, 48))
-        self.accept_button.setStyleSheet("background-color: transparent;\n"
-"border: 0;")
-        self.accept_button.setText("")
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/Icons/Icons/GreenCheckIcon_Finished.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.accept_button.setIcon(icon)
-        self.accept_button.setIconSize(QtCore.QSize(48, 48))
-        self.accept_button.setObjectName("accept_button")
-        self.horizontalLayout_1.addWidget(self.accept_button)
-        self.cancel_button = TouchButton(NewItemDetails)
-        self.cancel_button.setMinimumSize(QtCore.QSize(48, 48))
-        self.cancel_button.setMaximumSize(QtCore.QSize(48, 48))
-        self.cancel_button.setStyleSheet("background-color: transparent;\n"
-"border: 0;")
-        self.cancel_button.setText("")
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(":/Icons/Icons/RedCancelIcon_Finished.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.cancel_button.setIcon(icon1)
-        self.cancel_button.setIconSize(QtCore.QSize(48, 48))
-        self.cancel_button.setObjectName("cancel_button")
-        self.horizontalLayout_1.addWidget(self.cancel_button)
-        self.gridLayout.addLayout(self.horizontalLayout_1, 3, 1, 1, 3)
+        self.gridLayout.addWidget(self.groupBox_main, 0, 1, 1, 3)
         self.groupBox_main.raise_()
         self.groupBox_optional.raise_()
 
