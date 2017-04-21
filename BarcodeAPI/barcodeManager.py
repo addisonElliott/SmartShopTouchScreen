@@ -10,7 +10,6 @@ class BarcodeManager:
         self.dbManager = dbManager
         self.config = config
         self.centralWindow = centralWindow
-        self.expBox = ExpirationBox(self.config, self.centralWindow)
         categories = self.dbManager.GetCategories('ASC')
         self.newItemDetails = NewItemDetails(self.config, categories, self.centralWindow)
 
@@ -71,9 +70,7 @@ class BarcodeManager:
             day = self.newItemDetails.day_combo.currentText()
             year = self.newItemDetails.year_combo.currentText()
 
-            if month != '' and \
-               day != '' and \
-               year != '':
+            if month and day and year:
                 expirationDate = str(datetime(month=int(month), day=int(day), year=int(year)).date())
 
             item['expirationDate'] = expirationDate
@@ -84,18 +81,17 @@ class BarcodeManager:
         self.dbManager.DecrementQuantityForItem(barcode, qty)
 
     def DisplayExpirationBox(self):
+        expirationBoxDialog = ExpirationBox(self.config, self.centralWindow)
         expirationDate = ''
         quantity = 1
-        if self.expBox.exec():
-            month = self.expBox.month_combo.currentText()
-            day = self.expBox.day_combo.currentText()
-            year = self.expBox.year_combo.currentText()
+        if expirationBoxDialog.exec():
+            month = expirationBoxDialog.month_combo.currentText()
+            day = expirationBoxDialog.day_combo.currentText()
+            year = expirationBoxDialog.year_combo.currentText()
 
-            if month != '' and \
-               day != '' and \
-               year != '':
+            if month and day and year:
                 expirationDate = str(datetime(month=int(month), day=int(day), year=int(year)).date())
 
-            quantity = int(self.expBox.qty_combo.currentText())
+            quantity = int(expirationBoxDialog.qty_combo.currentText())
 
         return expirationDate, quantity

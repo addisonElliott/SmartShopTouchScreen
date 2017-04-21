@@ -113,11 +113,6 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
         pass
 
     @pyqtSlot(bool, bool)
-    def on_checkInOutBtn_clicked(self, checked, longPressed):
-        print('Button hit: checked: %r longPress: %r' % (checked, longPressed))
-        print('yesss')
-
-    @pyqtSlot(bool, bool)
     def on_ManualAddButton_clicked(self, checked, longPressed):
         self.parent().setCurrentIndex(WindowType.Favorites)
 
@@ -129,30 +124,9 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
     def on_SettingsButton_clicked(self, checked, longPressed):
         self.parent().setCurrentIndex(WindowType.Settings)
 
-    @pyqtSlot(bool, bool)
-    def on_checkInOutBtn_clicked(self, checked, longPressed):
-        print('Button hit: checked: %r longPress: %r' % (checked, longPressed))
-        print('yesss')
-
-    @pyqtSlot()
-    def scannerPoll_ticked(self):
-        self.primaryScanner.poll()
-        self.secondaryScanner.poll()
-
-    @pyqtSlot(str)
-    def primaryScanner_barcodeReceived(self, barcode):
-        print("Main: Primary barcode scanner got: %s" % barcode)
-        # TODO Send the barcode scanner information to be processed
-
-    @pyqtSlot(str)
-    def secondaryScanner_barcodeReceived(self, barcode):
-        print("Main: Secondary barcode scanner got: %s" % barcode)
-        # TODO Send the barcode scanner information to be processed.
-
     @pyqtSlot()
     def selectItem(self):
         hasSelection = self.sender().hasSelection()
-        print('has selection %r' % (hasSelection))
         if self.sender() is self.reqItemsWidget.selectionModel():
             self.floatingPB1.setEnabled(hasSelection)
             self.floatingPB1.setVisible(hasSelection)
