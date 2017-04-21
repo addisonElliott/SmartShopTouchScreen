@@ -8,7 +8,7 @@ from datetime import *
 
 # Enables/Disables the barcode scanner device. If enabled, this will actually search for the barcode scanners on the USB
 # ports and try to connect with them. Only disable this for developer mode where the barcode scanners will not be used
-barcodeScannerDeviceEnable = False
+barcodeScannerDeviceEnable = True
 
 # Enables/Disables shortcuts for the barcode scanner. If enabled, this will allow the user to press Ctrl+1 and Ctrl+2
 # which enables an input dialog box to input the barcode to be sent.
@@ -18,7 +18,7 @@ barcodeScannerShortcut = True
 windowGeometry = QRect(0, 0, 800, 480)
 
 # Interval for polling barcode scanners in milliseconds
-scannerPollInterval = 5
+scannerPollInterval = 1
 
 # Whether the menu will be shown as full screen or not
 fullscreen = False
