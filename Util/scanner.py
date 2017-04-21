@@ -119,7 +119,6 @@ if sys.platform.startswith("linux"):
                     for event in deviceEvents:
                         # Only accept keyboard events
                         if event.type is EV_KEY:
-                            print("Keyboard event: %s" % (str(datetime.now())))
                             keyEvent = util.categorize(event)
 
                             if keyEvent.scancode in self.modifiers:
@@ -131,14 +130,13 @@ if sys.platform.startswith("linux"):
                             elif keyEvent.keystate is events.KeyEvent.key_down or keyEvent.keystate is events.KeyEvent.key_hold:
                                 if keyEvent.scancode is KEY_ENTER:
                                     #print("Current str: %s" % self.curStr)
-                                    print("Emit stuff: %s" % (str(datetime.now())))
                                     self.barcodeReceived.emit(self.curStr)
                                     self.curStr = ""
                                 elif keyEvent.scancode in keycodeToASCII:
                                     shift = (self.modifiers[KEY_LEFTSHIFT] or self.modifiers[KEY_RIGHTSHIFT])
                                     self.curStr += keycodeToASCII[keyEvent.scancode][shift]
                                 elif keyEvent.scancode in numpadcodeToASCII and self.state[KEY_NUMLOCK]:
-                                    str = numpadcodeToASCII[keyEvent.scancode]
+                                    string = numpadcodeToASCII[keyEvent.scancode]
             except BlockingIOError:
                 # If no events are available, this is thrown
                 # No actual error, move on
