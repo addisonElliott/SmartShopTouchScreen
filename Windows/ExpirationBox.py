@@ -80,18 +80,16 @@ class ExpirationBox(QDialog, ExpirationBox_ui.Ui_ExpirationBox):
 
     @pyqtSlot(str)
     def primaryScanner_barcodeReceived(self, barcode):
-        print("Primary barcode scan2342ner got: %s, %s" % (barcode, str(datetime.now())))
+        # Close this dialog box, indicate to parent what the callback function and parameter should be
         self.close()
-        #self.centralWindow.primaryScanner_barcodeReceived(barcode)
 
         self.callbackFunction = self.centralWindow.primaryScanner_barcodeReceived
         self.callbackParam = barcode
 
     @pyqtSlot(str)
     def secondaryScanner_barcodeReceived(self, barcode):
-        print("Secondary barc423423ode scanner got: %s" % barcode)
+        # Close this dialog box, indicate to parent what the callback function and parameter should be
         self.close()
-        #self.centralWindow.secondaryScanner_barcodeReceived(barcode)
 
         self.callbackFunction = self.centralWindow.secondaryScanner_barcodeReceived
         self.callbackParam = barcode
