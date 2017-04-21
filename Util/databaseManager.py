@@ -74,12 +74,13 @@ class DatabaseManager:
 
     def DecrementQuantityForItem(self, id, itemQty, decQty=1):
         newQty = itemQty - decQty
-        if newQty == 0:
-            self.cursor.execute("UPDATE inventory SET qty = %s, expiration = %s WHERE item = %s", (newQty, None, id))
+        if newQty <= 0:
+            self.cursor.execute("UPDATE inventory SET qty = %s, expiration = %s WHERE item = %s", (0, None, id))
             self.connection.commit()
         elif newQty > 0:
             self.cursor.execute("UPDATE inventory SET qty = %s WHERE item = %s", (newQty, id))
             self.connection.commit()
+
 
     def AddCategory(self, name, order_index = -1):
         if order_index == -1:
