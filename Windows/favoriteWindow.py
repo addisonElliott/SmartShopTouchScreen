@@ -123,6 +123,7 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
     def showEvent(self, event):
         # On show, set the current tab to favorite's, clear selections for each tab and set sort back to default
         self.categoryTabWidget.setCurrentIndex(0)
+        self.favoritesTabModel.select()
         self.favoritesTableView.selectionModel().clearSelection()
 
         # Create an empty tabDict which will contain a dictionary for each tab in the window

@@ -5,6 +5,8 @@ import psycopg2.extras
 import os
 import pickle
 from datetime import datetime
+from Util.exception import *
+
 
 class DatabaseManager:
     def __init__(self, database, username, password, host, port):
@@ -43,15 +45,14 @@ class DatabaseManager:
         if not 'favoritesIndex' in item:
             item['favoritesIndex'] = None
 
-        if not 'expirationDate' in item:
-            item['expirationDate'] = None
-        elif item['expirationDate'] is '':
+        if not 'expirationDate' in item or not item['expirationDate']:
             item['expirationDate'] = None
 
         self.cursor.execute("INSERT INTO inventory (name, qty, category, favorites_index, expiration) VALUES "
                             "(%s, %s, %s, %s, %s) RETURNING item",
                             (item['name'], item['qty'] * item['pkgQty'], item['category'], item['favoritesIndex'],
                              item['expirationDate']))
+
         id = self.cursor.fetchone()[0]
         self.connection.commit()
 
@@ -59,6 +60,7 @@ class DatabaseManager:
         self.updatePurchaseHistory(id, datetime.now().date(), item['qty'] * item['pkgQty'])
 
         return id
+        return 1
 
     def AddUPCToCachedUPCs(self, barcode, id, pkgQty):
         self.cursor.execute("INSERT INTO cached_upcs (upc, item, pkg_qty) VALUES (%s, %s, %s)", (barcode, id, pkgQty))
@@ -85,7 +87,6 @@ class DatabaseManager:
                                                                                 'qty': qty})
         self.connection.commit()
 
-
     def DecrementQuantityForItem(self, item, qty=1):
         inventoryItem = self.GetItemFromInventory(item[0])
         self.cursor.execute("UPDATE inventory SET qty = %s WHERE item = %s", (inventoryItem[0] - qty, item[0]))
@@ -93,7 +94,7 @@ class DatabaseManager:
 
     def AddCategory(self, name, order_index = -1):
         if order_index == -1:
-            self.cursor.execute("SELECT COUNT(*) FROM category")
+            self.cursor.execute("SELECT MAX(order_index) FROM category")
             numRows = self.cursor.fetchone()[0]
             order_index = numRows + 1
 

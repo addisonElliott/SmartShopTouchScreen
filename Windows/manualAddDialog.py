@@ -10,6 +10,8 @@ from Util import constants
 
 
 class ManualAddDialog(QDialog, manualAddDialog_ui.Ui_ManualAddDialog):
+    newCategoryText = 'newCategory'
+
     def __init__(self, config, dbManager, categories, currentCategory = 0, parent=None):
         super(ManualAddDialog, self).__init__(parent)
         self.setupUi(self)
@@ -35,27 +37,29 @@ class ManualAddDialog(QDialog, manualAddDialog_ui.Ui_ManualAddDialog):
         self.categoryComboBox.clear()
 
         for category in self.categories:
-            self.categoryComboBox.addItem(category['name'])
-        self.categoryComboBox.addItem('<New Category>')
+            self.categoryComboBox.addItem(category['name'], category['id'])
+        self.categoryComboBox.addItem('<New Category>', self.newCategoryText)
 
     @pyqtSlot(int)
     def on_categoryComboBox_currentIndexChanged(self, index):
-        # If the selected index is the last in the list AND the text says <New Category>, then open dialog box to create
-        # a new category
-        if index == self.categoryComboBox.count() - 1 and self.categoryComboBox.itemText(index) == '<New Category>':
-            self.virtualKb = VirtualKeyboard(self)
-            self.virtualKb.lineEdit.setMaxLength(constants.maxCategoryNameLength)
+        # If the user data is equal to the new category text identifier, then this is the New Category option selected
+        if self.categoryComboBox.currentData() == self.newCategoryText:
+            virtualKb = VirtualKeyboard(self)
+            virtualKb.lineEdit.setMaxLength(constants.maxCategoryNameLength)
 
             # If the user successfully closes the keyboard, then add the category
-            if self.virtualKb.exec() == QDialog.Accepted:
-                self.dbManager.AddCategory(self.virtualKb.text)
+            if virtualKb.exec() == QDialog.Accepted:
+                categoryID = self.dbManager.AddCategory(virtualKb.text)
 
                 # Query db for categories since a new one was added, update combobox since new category added
                 self.categories = self.dbManager.GetCategories(True)
                 self.updateCategories()
 
-            # Set current index to be the added category
-            self.categoryComboBox.setCurrentIndex(self.categoryComboBox.count() - 2)
+                # Find the index with the user data for the new categoryID, then set the currentIndex to that
+                self.categoryComboBox.setCurrentIndex(self.categoryComboBox.findData(categoryID))
+            else:
+                # Set current index to be the added category
+                self.categoryComboBox.setCurrentIndex(self.categoryComboBox.count() - 2)
 
     @pyqtSlot(bool, bool)
     def on_confirmBtn_clicked(self, checked, longPressed):

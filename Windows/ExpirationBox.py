@@ -8,11 +8,12 @@ from Util import scroller
 from datetime import datetime
 
 class ExpirationBox(QDialog, ExpirationBox_ui.Ui_ExpirationBox):
-    def __init__(self, config, parent=None):
+    def __init__(self, config, centralWindow, parent=None):
         super(ExpirationBox, self).__init__(parent)
         self.setupUi(self)
 
         self.config = config
+        self.centralWindow = centralWindow
 
         # Remove title bar
         self.setWindowFlags(Qt.Dialog | Qt.FramelessWindowHint)
@@ -44,6 +45,16 @@ class ExpirationBox(QDialog, ExpirationBox_ui.Ui_ExpirationBox):
         self.qty_combo.view().setMouseTracking(False)
         for q in range(1, 51):
             self.qty_combo.addItem(str(q))
+
+        # Setup timer to regularly poll for new barcodes from scanners
+        self.scannerPoll = QTimer()
+        self.scannerPoll.timeout.connect(self.scannerPoll_ticked)
+        self.scannerPoll.start(constants.scannerPollInterval)
+
+    @pyqtSlot()
+    def scannerPoll_ticked(self):
+        self.centralWindow.primaryScanner.poll()
+        self.centralWindow.secondaryScanner.poll()
 
     @pyqtSlot(bool, bool)
     def on_accept_button_clicked(self, checked, longPressed):

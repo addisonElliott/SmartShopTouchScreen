@@ -10,8 +10,6 @@ class BarcodeManager:
         self.dbManager = dbManager
         self.config = config
         self.centralWindow = centralWindow
-        categories = self.dbManager.GetCategories('ASC')
-        self.newItemDetails = NewItemDetails(self.config, categories, self.centralWindow)
 
     def AddItemToInventory(self, barcode):
         # Strip whitespace from barcode
@@ -37,38 +35,56 @@ class BarcodeManager:
         return data
 
     def AddItemToDatabase(self, barcode):
+        categories = self.dbManager.GetCategories(True)
+        newItemDetailsDialog = NewItemDetails(self.dbManager, self.config, categories, self.centralWindow)
+
         data = self.GetJsonFrom3rdParty(barcode)
         item = {}
         if data['status']['code'] == '200' and 'attributes' in data['product'] and 'product' in data['product']['attributes']:
             product = data['product']['attributes']['product']
-            self.newItemDetails.itemName_textBox.setText(product[:min(20, len(product))])
-            isFound = False
+            newItemDetailsDialog.itemName_textBox.setText(product[:min(constants.maxItemNameLength, len(product))])
             if 'category_text' in data['product']['attributes']:
+                isFound = False
                 category = data['product']['attributes']['category_text']
-                cat_lower = category.lower()
-                for index in range(0, self.newItemDetails.category_combo.count() - 1):
-                    item_lower = self.newItemDetails.category_combo.itemText(index).lower()
-                    if cat_lower == item_lower:
-                        isFound = True
-                        self.newItemDetails.category_combo.setCurrentIndex(index)
-                        break
 
-                if not isFound:
-                    self.newItemDetails.category_combo.addItem(category)
-                    self.newItemDetails.category_combo.setCurrentIndex(self.newItemDetails.category_combo.count() - 1)
-                    self.dbManager.AddCategory(category, self.newItemDetails.category_combo.count())
+                # Search for a category name that is the same as category
+                index = newItemDetailsDialog.category_combo.findText(category.lower(), Qt.MatchFixedString)
+                if index != -1:
+                    newItemDetailsDialog.category_combo.setCurrentIndex(index)
+                else:
+                    # If the category was not found, then add it to the combo box with an asterisk meaning it is not
+                    # in the database yet. The category will only be added if that user selects that as their category
+                    newItemDetailsDialog.pending_category = category
+                    newItemDetailsDialog.updateCategories()
+                    newItemDetailsDialog.category_combo.setCurrentIndex(newItemDetailsDialog.category_combo.findData(newItemDetailsDialog.pendingCategoryText))
 
-        if self.newItemDetails.exec():
-            item['name'] = self.newItemDetails.itemName_textBox.text()
-            item['category'] = self.newItemDetails.category_combo.currentIndex()
-            item['qty'] = int(self.newItemDetails.itemQty_combo.currentText())
-            item['pkgQty'] = int(self.newItemDetails.pkgQty_combo.currentText())
-            if self.newItemDetails.favorites_check.isChecked():
-                item['favoritesIndex'] = self.dbManager.GetFavoritesCount() + 1
+                    #newItemDetailsDialog.category_combo.addItem(category)
+                    #newItemDetailsDialog.category_combo.setCurrentIndex(newItemDetailsDialog.category_combo.count() - 1)
+                    #self.dbManager.AddCategory(category, newItemDetailsDialog.category_combo.count())
+
+        if newItemDetailsDialog.exec():
+            item['name'] = newItemDetailsDialog.itemName_textBox.text()
+            item['category'] = newItemDetailsDialog.category_combo.currentData()
+            # The user selected the pending item and thus we now add it to the database
+            if item['category'] == newItemDetailsDialog.pendingCategoryText:
+                newCategory = newItemDetailsDialog.category_combo.currentText()[2:] # Remove * from beginning
+                self.dbManager.AddCategory(newCategory)
+
+            item['qty'] = int(newItemDetailsDialog.itemQty_combo.currentText())
+            item['pkgQty'] = int(newItemDetailsDialog.pkgQty_combo.currentText())
+
+            if newItemDetailsDialog.favorites_check.isChecked():
+                index = self.dbManager.GetFavoritesCount()
+                if index is None:  # If the values are all NULL, set to 0
+                    index = 0
+
+                index += 1  # Increment index by 1
+                item['favoritesIndex'] = index
+
             expirationDate = ''
-            month = self.newItemDetails.month_combo.currentText()
-            day = self.newItemDetails.day_combo.currentText()
-            year = self.newItemDetails.year_combo.currentText()
+            month = newItemDetailsDialog.month_combo.currentText()
+            day = newItemDetailsDialog.day_combo.currentText()
+            year = newItemDetailsDialog.year_combo.currentText()
 
             if month and day and year:
                 expirationDate = str(datetime(month=int(month), day=int(day), year=int(year)).date())
