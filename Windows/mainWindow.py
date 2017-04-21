@@ -23,6 +23,7 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
         self.centralWindow = centralWindow
         self.config = config
         self.dbManager = dbManager
+        self.barcodeManager = barcodeManager
 
         self.reqItemsModel = SqlTableModel(self.dbManager.connection, 'inventory', 'name', Qt.AscendingOrder,
                                          'list_flags = 1',None, ('item', 'name', 'qty'), (1, 2), ('Name', 'Qty'))
@@ -30,7 +31,7 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
                                            'list_flags = 2', None, ('item', 'name', 'qty'), (1, 2), ('Name', 'Qty'))
 
         self.reqItemsWidget.setModel(self.reqItemsModel)
-        self.recItemsWidget.setModel(self.reqItemsModel)
+        self.recItemsWidget.setModel(self.recItemsModel)
         self.reqItemsWidget.selectionModel().selectionChanged.connect(self.selectItem)
         self.recItemsWidget.selectionModel().selectionChanged.connect(self.selectItem)
 
@@ -38,17 +39,7 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
         self.tempShortcut = QShortcut(Qt.Key_1, self)
         self.tempShortcut.activated.connect(self.temp)
 
-        # Set size of the recommended items columns
-        self.recItemsWidget.horizontalHeader().setStretchLastSection(False)
-        self.recItemsWidget.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
-        self.recItemsWidget.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
-
-        self.reqItemsWidget.horizontalHeader().setStretchLastSection(False)
-        self.reqItemsWidget.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
-        self.reqItemsWidget.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
-
-        #Configure floating buttons
-
+        # Configure floating buttons
         self.gridLayout_3.removeWidget(self.floatingPB1)
         self.floatingPB1.hide()
         self.floatingPB1.setEnabled(False)
@@ -59,7 +50,6 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
         self.floatingPB1.setGeometry(floatingPB1X, floatingPB1Y, floatingPB1Width, floatingPB1Height)
         self.floatingPB1.raise_()
 
-
         self.gridLayout_3.removeWidget(self.floatingPB2)
         self.floatingPB2.setEnabled(False)
         self.floatingPB2.hide()
@@ -69,8 +59,6 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
         floatingPB2Y = 390  # self.height() - floatingPB1Height - 1
         self.floatingPB2.setGeometry(floatingPB2X, floatingPB2Y, floatingPB2Width, floatingPB2Height)
         self.floatingPB2.raise_()
-
-        self.barcodeManager = barcodeManager
 
     def temp2(self, str):
         if str:
@@ -101,7 +89,24 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
 
     @pyqtSlot()
     def showEvent(self, event):
-        pass
+        # Update the two shopping lists in case any changes were made on a different menu
+        self.recItemsModel.select()
+        self.reqItemsModel.select()
+
+        # Reset the sorting for each of the shopping lists
+        self.recItemsWidget.sortByColumn(0, Qt.AscendingOrder)
+        self.reqItemsWidget.sortByColumn(0, Qt.AscendingOrder)
+
+        # Set size of the recommended items columns
+        # Do this on showEvent because additional data could be added to the quantity column and require the contents
+        # to be resized
+        self.recItemsWidget.horizontalHeader().setStretchLastSection(False)
+        self.recItemsWidget.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
+        self.recItemsWidget.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
+
+        self.reqItemsWidget.horizontalHeader().setStretchLastSection(False)
+        self.reqItemsWidget.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
+        self.reqItemsWidget.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
 
     @pyqtSlot()
     def hideEvent(self, event):
