@@ -45,7 +45,7 @@ class CentralWindow(QMainWindow):
         self.stackedWidget.addWidget(self.mainWindow)
 
         # Add favorite window to list of stacked widgets
-        self.favoriteWindow = FavoriteWindow(self, self.config, self.dbManager, self.stackedWidget)
+        self.favoriteWindow = FavoriteWindow(self, self.config, self.dbManager, self.barcodeManager, self.stackedWidget)
         self.stackedWidget.addWidget(self.favoriteWindow)
 
         # Add purchase history window to list of stacked widgets

@@ -22,13 +22,14 @@ class CategoryTab():
         self.listModel = listModel
 
 class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
-    def __init__(self, centralWindow, config, dbManager, parent=None):
+    def __init__(self, centralWindow, config, dbManager, barcodeManager, parent=None):
         super(FavoriteWindow, self).__init__(parent)
         self.setupUi(self)
 
         self.centralWindow = centralWindow
         self.config = config
         self.dbManager = dbManager
+        self.barcodeManager = barcodeManager
 
         self.favoritesTabModel = SqlTileTableModel(self.dbManager.connection, 'inventory', 'favorites_index',
                                                     Qt.AscendingOrder, 'favorites_index IS NOT NULL', (1,),
@@ -176,13 +177,26 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
             records = tabCategory.listModel.getSelectedRecords(self.currentSelectionModel.selectedIndexes())
 
         if longPressed:
-            # Open up the Expiration Dialog for each item, query information
-            # DeSelect all items currently selected
-            i = 4
+            # Only take the first record and do this to it
+            record = records[0]
+            expirationDate, quantity, callbackFunction, callbackParam = \
+                            self.barcodeManager.DisplayExpirationBox(record['name'])
+            cachedItem = {'item': record['item'], 'pkg_qty': 1}
+
+            self.dbManager.UpdateItemInDatabase(cachedItem, expirationDate, quantity)
+
+            if callbackFunction and callbackParam:
+                callbackFunction(callbackParam)
+
+            selectionModel.clearSelection()
         else:
-            # Add one to each of the items selected
-            # DeSelect all items currently selected
-            i = 5
+            # Update each record that is currently selected
+            for record in records:
+                # Do not give a new expiration date and update the quantity by one
+                cachedItem = {'item': record['item'], 'pkg_qty': 1}
+                self.dbManager.UpdateItemInDatabase(cachedItem, None, 1)
+
+            selectionModel.clearSelection()
 
     @pyqtSlot(bool, bool)
     def on_removeBtn_clicked(self, checked, longPressed):

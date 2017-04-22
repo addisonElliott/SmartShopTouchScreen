@@ -87,10 +87,20 @@ class DatabaseManager:
         inventoryItem = self.GetItemFromInventory(cachedItem['item'])
         if expirationDate is '':
             expirationDate = None
-            
-        self.cursor.execute("UPDATE inventory SET qty = %s, last_buy_date = %s, expiration = %s WHERE item = %s",
-                                ((quantity * cachedItem['pkg_qty']) + inventoryItem['qty'], str(datetime.now()),
-                                expirationDate, cachedItem['item']))
+
+        # Update the item in inventory. Only update the expiration date if the date given is more recent than the existing
+        # one
+        self.cursor.execute("UPDATE inventory SET qty = %(qty)s, last_buy_date = %(buy_date)s, expiration = "
+                            "CASE "
+                            "WHEN expiration IS NULL THEN DATE(%(expiration_date)s) "
+                            "WHEN DATE(%(expiration_date)s) IS NULL THEN expiration "
+                            "WHEN expiration <= DATE(%(expiration_date)s) THEN expiration "
+                            "WHEN expiration > DATE(%(expiration_date)s) THEN DATE(%(expiration_date)s) "
+                            "END "
+                            "WHERE item = %(item)s",
+                            {'qty': ((quantity * cachedItem['pkg_qty']) + inventoryItem['qty']),
+                             'buy_date': str(datetime.now()), 'item': cachedItem['item'],
+                             'expiration_date': expirationDate})
 
         self.connection.commit()
 
