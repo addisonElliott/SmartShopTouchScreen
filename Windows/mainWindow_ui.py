@@ -32,7 +32,7 @@ class Ui_MainWindow(object):
         self.gridLayout.setSpacing(0)
         self.gridLayout.setObjectName("gridLayout")
         self.gridLayout_3 = QtWidgets.QGridLayout()
-        self.gridLayout_3.setContentsMargins(12, -1, 6, 6)
+        self.gridLayout_3.setContentsMargins(7, -1, 6, 6)
         self.gridLayout_3.setObjectName("gridLayout_3")
         self.label_3 = QtWidgets.QLabel(MainWindow)
         font = QtGui.QFont()
@@ -187,6 +187,12 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setPointSize(19)
         self.recItemsWidget.setFont(font)
+        self.recItemsWidget.setStyleSheet("QTableView\n"
+"{\n"
+"    border: 1px solid #76797C;\n"
+"}")
+        self.recItemsWidget.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.recItemsWidget.setFrameShadow(QtWidgets.QFrame.Plain)
         self.recItemsWidget.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.recItemsWidget.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
         self.recItemsWidget.setDragEnabled(True)
@@ -207,6 +213,12 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setPointSize(19)
         self.reqItemsWidget.setFont(font)
+        self.reqItemsWidget.setStyleSheet("QTableView\n"
+"{\n"
+"    border: 1px solid #76797C;\n"
+"}")
+        self.reqItemsWidget.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.reqItemsWidget.setFrameShadow(QtWidgets.QFrame.Plain)
         self.reqItemsWidget.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
         self.reqItemsWidget.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.reqItemsWidget.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
