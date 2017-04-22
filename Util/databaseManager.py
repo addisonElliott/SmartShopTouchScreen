@@ -178,3 +178,28 @@ class DatabaseManager:
         self.cursor.execute("UPDATE inventory SET list_flags = 3 WHERE item = %s", (id,))
 
         self.connection.commit()
+
+    def updateRecommendedItems(self, expirationDateThreshold, avgShelfTimeThreshold):
+        # Set list flag to 2 (recommended item) for all items that meet these criteria:
+        #   - List flags equals 0 meaning it is not a required item, recommended item, or ignored item.
+        #   - Expiration date is within X days of today where X is the threshold set in settings
+        #   OR
+        #   - [Average shelf time and last buy date are not null. If they are, then that means this next calculation cant
+        #   - be done.
+        #   AND
+        #   - Last buy date plus average shelf time is the expected time when the item will be required again. If this
+        #   - is within X days of todays date, then select it. X being threshold set in settings
+        if expirationDateThreshold:
+            self.cursor.execute("UPDATE inventory SET list_flags = 2 WHERE item IN "
+                                "(SELECT item FROM inventory WHERE list_flags = 0 AND "
+                                "(expiration <= DATE(CURRENT_DATE + %s)))",
+                                (expirationDateThreshold,))
+
+        if avgShelfTimeThreshold:
+            self.cursor.execute("UPDATE inventory SET list_flags = 2 WHERE item IN "
+                                "(SELECT item FROM inventory WHERE list_flags = 0 AND "
+                                "(avg_shelf_time IS NOT NULL AND last_buy_date IS NOT NULL AND "
+                                "(last_buy_date + avg_shelf_time) <= DATE(CURRENT_DATE + %s)))",
+                                (avgShelfTimeThreshold, ))
+
+        self.connection.commit()

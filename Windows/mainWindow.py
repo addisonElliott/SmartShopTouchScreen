@@ -65,9 +65,11 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
         self.recItemsTableView.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
         self.recItemsTableView.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
 
+        self.centralWindow.updateRecommendedItemsTimer.timeout.connect(self.updateRecommendedItemsTimer_ticked)
+
     @pyqtSlot()
     def hideEvent(self, event):
-        pass
+        self.centralWindow.updateRecommendedItemsTimer.timeout.disconnect(self.updateRecommendedItemsTimer_ticked)
 
     @pyqtSlot(bool, bool)
     def on_ManualAddButton_clicked(self, checked, longPressed):
@@ -80,6 +82,11 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
     @pyqtSlot(bool, bool)
     def on_SettingsButton_clicked(self, checked, longPressed):
         self.parent().setCurrentIndex(WindowType.Settings)
+
+    @pyqtSlot()
+    def updateRecommendedItemsTimer_ticked(self):
+        # When the recommended items are updated, refresh the database to show any changes
+        self.recItemsModel.select()
 
     @pyqtSlot(bool, bool)
     def on_reqItemsRemoveBtn_clicked(self, checked, longPressed):
