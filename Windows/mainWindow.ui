@@ -367,7 +367,7 @@ border: 0;</string>
       </spacer>
      </item>
      <item row="2" column="0">
-      <widget class="QPushButton" name="floatingPB1">
+      <widget class="TouchButton" name="reqItemsRemoveBtn">
        <property name="styleSheet">
         <string notr="true">background-color: transparent;
 border: 0;</string>
@@ -446,7 +446,7 @@ border: 0;</string>
       </widget>
      </item>
      <item row="3" column="0">
-      <widget class="QPushButton" name="floatingPB2">
+      <widget class="TouchButton" name="recItemsRemoveBtn">
        <property name="styleSheet">
         <string notr="true">background-color: transparent;
 border: 0;</string>
@@ -467,7 +467,7 @@ border: 0;</string>
       </widget>
      </item>
      <item row="4" column="1">
-      <widget class="QTableView" name="recItemsWidget">
+      <widget class="QTableView" name="recItemsTableView">
        <property name="font">
         <font>
          <pointsize>19</pointsize>
@@ -530,7 +530,7 @@ border: 0;</string>
       </widget>
      </item>
      <item row="4" column="0">
-      <widget class="QTableView" name="reqItemsWidget">
+      <widget class="QTableView" name="reqItemsTableView">
        <property name="font">
         <font>
          <pointsize>19</pointsize>
@@ -568,6 +568,9 @@ border: 0;</string>
        </property>
        <property name="selectionMode">
         <enum>QAbstractItemView::MultiSelection</enum>
+       </property>
+       <property name="selectionBehavior">
+        <enum>QAbstractItemView::SelectRows</enum>
        </property>
        <property name="verticalScrollMode">
         <enum>QAbstractItemView::ScrollPerPixel</enum>

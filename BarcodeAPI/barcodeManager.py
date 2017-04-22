@@ -8,7 +8,6 @@ from Windows.CheckOutBox import *
 class BarcodeManager:
     def __init__(self, dbManager, config, centralWindow):
         self.dbManager = dbManager
-        self.checkOutBox = CheckOutBox(config)
 
         self.config = config
         self.centralWindow = centralWindow
@@ -44,7 +43,6 @@ class BarcodeManager:
         categories = self.dbManager.GetCategories(True)
         newItemDetailsDialog = NewItemDetails(self.dbManager, self.config, categories, self.centralWindow)
 
-        newItemDetailsDialog.ResetToDefault()
         data = self.GetJsonFrom3rdParty(barcode)
         item = {}
         if data['status']['code'] == '200' and 'attributes' in data['product'] and 'product' in data['product']['attributes']:
@@ -117,22 +115,37 @@ class BarcodeManager:
             self.dbManager.AddUPCToCachedUPCs(barcode, id, item['pkgQty'])
 
     def RemoveFromInventory(self, barcode):
-        self.checkOutBox.ResetToDefault()
-        id = self.dbManager.GetCachedUPCItem(barcode)[0]
-        item = self.dbManager.GetItemFromInventory(id)
-        self.checkOutBox.qty_combo.setCurrentIndex(0)
-        self.checkOutBox.item_textBox.setEnabled(True)
-        itemName = (item[3][:20] + '..') if len(item[3]) > 20 else item[3]
-        self.checkOutBox.item_textBox.setText('')
-        self.checkOutBox.item_textBox.setText(itemName)
-        self.checkOutBox.item_textBox.setDisabled(True)
-        if self.checkOutBox.exec():
-            decQty = self.checkOutBox.qty_combo.currentText()
-            self.dbManager.DecrementQuantityForItem(id, item[0], int(decQty))
+        cachedItem = self.dbManager.GetCachedUPCItem(barcode)
+        if not cachedItem:
+            logger.warning("Unable to scan item %s out: It is not present in cached UPC database", barcode)
+            return
+
+        returnResult, quantity, callbackFunction, callbackParam = \
+            self.displayCheckOutBox(self.dbManager.getItemName(cachedItem['item']))
+
+        # Only decrement the item if the user clicked accept
+        if returnResult:
+            self.dbManager.DecrementQuantityForItem(cachedItem['item'], quantity * cachedItem['pkg_qty'])
+
+        if callbackFunction and callbackParam:
+            callbackFunction(callbackParam)
+
+    def displayCheckOutBox(self, name):
+        checkOutBox = CheckOutBox(self.config, self.centralWindow, self.centralWindow)
+
+        checkOutBox.qty_combo.setCurrentIndex(0)
+        checkOutBox.item_textBox.setText(name)
+
+        # Parameters to return
+        returnResult = checkOutBox.exec()
+        quantity = int(checkOutBox.qty_combo.currentText())
+        callbackFunction = checkOutBox.callbackFunction
+        callbackParam = checkOutBox.callbackParam
+
+        return returnResult, quantity, callbackFunction, callbackParam
 
     def DisplayExpirationBox(self, name):
         expirationBoxDialog = ExpirationBox(self.config, self.centralWindow, name, self.centralWindow)
-        expirationBoxDialog.ResetToDefault()
         expirationDate = ''
         quantity = 1
         callbackFunction = None
@@ -146,7 +159,7 @@ class BarcodeManager:
                 expirationDate = str(datetime(month=int(month), day=int(day), year=int(year)).date())
 
             quantity = int(expirationBoxDialog.qty_combo.currentText())
-        else:
+
             callbackFunction = expirationBoxDialog.callbackFunction
             callbackParam = expirationBoxDialog.callbackParam
 

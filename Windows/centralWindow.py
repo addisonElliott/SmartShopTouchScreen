@@ -45,7 +45,7 @@ class CentralWindow(QMainWindow):
         self.stackedWidget.addWidget(self.mainWindow)
 
         # Add favorite window to list of stacked widgets
-        self.favoriteWindow = FavoriteWindow(self, self.config, self.dbManager, self.stackedWidget)
+        self.favoriteWindow = FavoriteWindow(self, self.config, self.dbManager, self.barcodeManager, self.stackedWidget)
         self.stackedWidget.addWidget(self.favoriteWindow)
 
         # Add purchase history window to list of stacked widgets
@@ -97,6 +97,11 @@ class CentralWindow(QMainWindow):
         self.usageRateUpdateTimer.timeout.connect(self.usageRateUpdateTimer_ticked)
         self.usageRateUpdateTimer.start(timeUntilDate.total_seconds() * 1000.0)
         self.updateUsageRates()
+
+        # Setup timer to update inventory and check for new recommended items
+        self.updateRecommendedItemsTimer = QTimer()
+        self.updateRecommendedItemsTimer.timeout.connect(self.updateRecommendedItemsTimer_ticked)
+        self.updateRecommendedItemsTimer.start(constants.updateRecommendedItemsInterval)
 
     def updateUsageRates(self):
         if os.path.exists('usageRate.pickle'):
@@ -157,6 +162,14 @@ class CentralWindow(QMainWindow):
     def scannerPoll_ticked(self):
         self.primaryScanner.poll()
         self.secondaryScanner.poll()
+
+    @pyqtSlot()
+    def updateRecommendedItemsTimer_ticked(self):
+        # Update the recommended items. Retrieve the thresholds for expiration date and average shelf time. If they are
+        # not enabled, then set to None
+        self.dbManager.updateRecommendedItems( \
+            self.config['Algorithm']['expDateThreshold'] if self.config['Algorithm']['enableExpDate'] else None, \
+            self.config['Algorithm']['shelfTimeThreshold'] if self.config['Algorithm']['enableShelfTime'] else None)
 
     @pyqtSlot(str)
     def primaryScanner_barcodeReceived(self, barcode):

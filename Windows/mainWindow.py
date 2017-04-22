@@ -9,10 +9,6 @@ from Windows.centralWindow import *
 from Util.scanner import *
 from Util.enums import *
 from BarcodeAPI.barcodeManager import BarcodeManager
-
-
-
-from Windows.virtualKeyboard import *
 from Util.SqlTableModel import *
 
 class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
@@ -30,62 +26,23 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
         self.recItemsModel = SqlTableModel(self.dbManager.connection, 'inventory', 'name', Qt.AscendingOrder,
                                            'list_flags = 2', None, ('item', 'name', 'qty'), (1, 2), ('Name', 'Qty'))
 
-        self.reqItemsWidget.setModel(self.reqItemsModel)
-        self.recItemsWidget.setModel(self.recItemsModel)
-        self.reqItemsWidget.selectionModel().selectionChanged.connect(self.selectItem)
-        self.recItemsWidget.selectionModel().selectionChanged.connect(self.selectItem)
-
-        # Temporary to test Auto-Complete Virtual Keyboard
-        self.tempShortcut = QShortcut(Qt.Key_1, self)
-        self.tempShortcut.activated.connect(self.temp)
+        self.reqItemsTableView.setModel(self.reqItemsModel)
+        self.recItemsTableView.setModel(self.recItemsModel)
+        self.reqItemsTableView.selectionModel().selectionChanged.connect(self.selectItem)
+        self.recItemsTableView.selectionModel().selectionChanged.connect(self.selectItem)
 
         # Configure floating buttons
-        self.gridLayout_3.removeWidget(self.floatingPB1)
-        self.floatingPB1.hide()
-        self.floatingPB1.setEnabled(False)
-        floatingPB1Width = 70
-        floatingPB1Height = 70
-        floatingPB1X = 280
-        floatingPB1Y = 390
-        self.floatingPB1.setGeometry(floatingPB1X, floatingPB1Y, floatingPB1Width, floatingPB1Height)
-        self.floatingPB1.raise_()
+        self.gridLayout_3.removeWidget(self.reqItemsRemoveBtn)
+        self.reqItemsRemoveBtn.hide()
+        self.reqItemsRemoveBtn.setEnabled(False)
+        self.reqItemsRemoveBtn.setGeometry(constants.removeReqShoppingItemBtnGeometry)
+        self.reqItemsRemoveBtn.raise_()
 
-        self.gridLayout_3.removeWidget(self.floatingPB2)
-        self.floatingPB2.setEnabled(False)
-        self.floatingPB2.hide()
-        floatingPB2Width = 70
-        floatingPB2Height = 70
-        floatingPB2X = 630
-        floatingPB2Y = 390
-        self.floatingPB2.setGeometry(floatingPB2X, floatingPB2Y, floatingPB2Width, floatingPB2Height)
-        self.floatingPB2.raise_()
-
-    def temp2(self, str):
-        if str:
-            prefixMatch = str + '%'
-            anyMatch = '%' + prefixMatch
-            self.testModel.filterArgs = (prefixMatch, prefixMatch, anyMatch, anyMatch)
-            self.testModel.hideItems = False
-        else:
-            self.testModel.hideItems = True
-        self.testModel.select()
-
-    @pyqtSlot()
-    def temp(self):
-        # TODO Remove this function and the one above temp2 when auto complete virtual keyboard is integrated correctly
-        # TODO Also DONT FORGET TO REMOVE VIRTUAL KEYBOARD IMPORT
-        self.testModel = SqlTableModel(self.dbManager.connection, columnSortName='rank', columnSortOrder=Qt.DescendingOrder,
-                                       customQuery='SELECT item, name, CASE\n'
-                                        'WHEN name LIKE %s THEN 3\n'
-                                        'WHEN name ILIKE %s THEN 2\n'
-                                        'WHEN name LIKE %s THEN 1\n'
-                                        'ELSE 0 END AS rank FROM inventory\n'
-                                        'WHERE name ILIKE %s', filterArgs=('%', '%%', '%', '%%'),
-                                       displayColumnMapping=(1,), limitCount = 10, hideItems=True)
-
-        self.test = VirtualKeyboard(self, None, self.testModel)
-        self.test.updateSuggestions.connect(self.temp2)
-        self.test.exec()
+        self.gridLayout_3.removeWidget(self.recItemsRemoveBtn)
+        self.recItemsRemoveBtn.hide()
+        self.recItemsRemoveBtn.setEnabled(False)
+        self.recItemsRemoveBtn.setGeometry(constants.removeRecShoppingItemBtnGeometry)
+        self.recItemsRemoveBtn.raise_()
 
     @pyqtSlot()
     def showEvent(self, event):
@@ -94,23 +51,25 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
         self.recItemsModel.select()
 
         # Reset the sorting for each of the shopping lists
-        self.reqItemsWidget.sortByColumn(0, Qt.AscendingOrder)
-        self.recItemsWidget.sortByColumn(0, Qt.AscendingOrder)
+        self.reqItemsTableView.sortByColumn(0, Qt.AscendingOrder)
+        self.recItemsTableView.sortByColumn(0, Qt.AscendingOrder)
 
         # Set size of the recommended items columns
         # Do this on showEvent because additional data could be added to the quantity column and require the contents
         # to be resized
-        self.reqItemsWidget.horizontalHeader().setStretchLastSection(False)
-        self.reqItemsWidget.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
-        self.reqItemsWidget.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
+        self.reqItemsTableView.horizontalHeader().setStretchLastSection(False)
+        self.reqItemsTableView.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
+        self.reqItemsTableView.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
 
-        self.recItemsWidget.horizontalHeader().setStretchLastSection(False)
-        self.recItemsWidget.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
-        self.recItemsWidget.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
+        self.recItemsTableView.horizontalHeader().setStretchLastSection(False)
+        self.recItemsTableView.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
+        self.recItemsTableView.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
+
+        self.centralWindow.updateRecommendedItemsTimer.timeout.connect(self.updateRecommendedItemsTimer_ticked)
 
     @pyqtSlot()
     def hideEvent(self, event):
-        pass
+        self.centralWindow.updateRecommendedItemsTimer.timeout.disconnect(self.updateRecommendedItemsTimer_ticked)
 
     @pyqtSlot(bool, bool)
     def on_ManualAddButton_clicked(self, checked, longPressed):
@@ -125,11 +84,38 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
         self.parent().setCurrentIndex(WindowType.Settings)
 
     @pyqtSlot()
+    def updateRecommendedItemsTimer_ticked(self):
+        # When the recommended items are updated, refresh the database to show any changes
+        self.recItemsModel.select()
+
+    @pyqtSlot(bool, bool)
+    def on_reqItemsRemoveBtn_clicked(self, checked, longPressed):
+        records = self.reqItemsModel.getSelectedRecords(self.reqItemsTableView.selectionModel().selectedIndexes())
+
+        for record in records:
+            self.dbManager.removeItemFromRequiredList(record['item'])
+
+        self.reqItemsModel.select()
+        self.reqItemsRemoveBtn.setEnabled(False)
+        self.reqItemsRemoveBtn.setVisible(False)
+
+    @pyqtSlot(bool, bool)
+    def on_recItemsRemoveBtn_clicked(self, checked, longPressed):
+        records = self.recItemsModel.getSelectedRecords(self.recItemsTableView.selectionModel().selectedIndexes())
+
+        for record in records:
+            self.dbManager.removeItemFromRecommendedList(record['item'])
+
+        self.recItemsModel.select()
+        self.recItemsRemoveBtn.setEnabled(False)
+        self.recItemsRemoveBtn.setVisible(False)
+
+    @pyqtSlot()
     def selectItem(self):
         hasSelection = self.sender().hasSelection()
-        if self.sender() is self.reqItemsWidget.selectionModel():
-            self.floatingPB1.setEnabled(hasSelection)
-            self.floatingPB1.setVisible(hasSelection)
+        if self.sender() is self.reqItemsTableView.selectionModel():
+            self.reqItemsRemoveBtn.setEnabled(hasSelection)
+            self.reqItemsRemoveBtn.setVisible(hasSelection)
         else:
-            self.floatingPB2.setEnabled(hasSelection)
-            self.floatingPB2.setVisible(hasSelection)
+            self.recItemsRemoveBtn.setEnabled(hasSelection)
+            self.recItemsRemoveBtn.setVisible(hasSelection)

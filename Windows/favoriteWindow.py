@@ -22,13 +22,14 @@ class CategoryTab():
         self.listModel = listModel
 
 class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
-    def __init__(self, centralWindow, config, dbManager, parent=None):
+    def __init__(self, centralWindow, config, dbManager, barcodeManager, parent=None):
         super(FavoriteWindow, self).__init__(parent)
         self.setupUi(self)
 
         self.centralWindow = centralWindow
         self.config = config
         self.dbManager = dbManager
+        self.barcodeManager = barcodeManager
 
         self.favoritesTabModel = SqlTileTableModel(self.dbManager.connection, 'inventory', 'favorites_index',
                                                     Qt.AscendingOrder, 'favorites_index IS NOT NULL', (1,),
@@ -164,7 +165,6 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
 
         # Handle favorite's tab versus category list
         if index == 0:
-            selectionModel = self.favoritesTableView.selectionModel()
             records = self.favoritesTabModel.getSelectedRecords(self.currentSelectionModel.selectedIndexes())
         else:
             # Get category ID by looking up index in categories variable
@@ -172,17 +172,29 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
 
             # Get selection model based on category ID
             tabCategory = self.tabDict[categoryID]
-            selectionModel = tabCategory.listView.selectionModel()
             records = tabCategory.listModel.getSelectedRecords(self.currentSelectionModel.selectedIndexes())
 
         if longPressed:
-            # Open up the Expiration Dialog for each item, query information
-            # DeSelect all items currently selected
-            i = 4
+            # Only take the first record and do this to it
+            record = records[0]
+            expirationDate, quantity, callbackFunction, callbackParam = \
+                            self.barcodeManager.DisplayExpirationBox(record['name'])
+            cachedItem = {'item': record['item'], 'pkg_qty': 1}
+
+            self.dbManager.UpdateItemInDatabase(cachedItem, expirationDate, quantity)
+
+            if callbackFunction and callbackParam:
+                callbackFunction(callbackParam)
+
+            self.currentSelectionModel.clearSelection()
         else:
-            # Add one to each of the items selected
-            # DeSelect all items currently selected
-            i = 5
+            # Update each record that is currently selected
+            for record in records:
+                # Do not give a new expiration date and update the quantity by one
+                cachedItem = {'item': record['item'], 'pkg_qty': 1}
+                self.dbManager.UpdateItemInDatabase(cachedItem, None, 1)
+
+            self.currentSelectionModel.clearSelection()
 
     @pyqtSlot(bool, bool)
     def on_removeBtn_clicked(self, checked, longPressed):
@@ -190,7 +202,6 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
 
         # Handle favorite's tab versus category list
         if index == 0:
-            selectionModel = self.favoritesTableView.selectionModel()
             records = self.favoritesTabModel.getSelectedRecords(self.currentSelectionModel.selectedIndexes())
         else:
             # Get category ID by looking up index in categories variable
@@ -198,17 +209,28 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
 
             # Get selection model based on category ID
             tabCategory = self.tabDict[categoryID]
-            selectionModel = tabCategory.listView.selectionModel()
             records = tabCategory.listModel.getSelectedRecords(self.currentSelectionModel.selectedIndexes())
 
         if longPressed:
-            i = 4
-            # Bring up a box for each one that asks how many to remove
-            # DeSelect all items currently selected
+            # Only take the first record and do this to it
+            record = records[0]
+            returnResult, quantity, callbackFunction, callbackParam = \
+                self.barcodeManager.displayCheckOutBox(record['name'])
+
+            # Only decrement the item if the user clicked accept
+            if returnResult:
+                self.dbManager.DecrementQuantityForItem(record['item'], quantity)
+
+            if callbackFunction and callbackParam:
+                callbackFunction(callbackParam)
+
+            self.currentSelectionModel.clearSelection()
         else:
-            # Subtract one from each of the items selected
-            # DeSelect all items currently selected
-            i = 5
+            # Update each record that is currently selected
+            for record in records:
+                self.dbManager.DecrementQuantityForItem(record['item'], 1)
+
+            self.currentSelectionModel.clearSelection()
 
     @pyqtSlot(bool, bool)
     def on_listAddBtn_clicked(self, checked, longPressed):
@@ -250,3 +272,22 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
             for category in self.categories:
                 if not category['id'] in self.tabDict:
                     self.addTab(category['id'], category['name'])
+
+    @pyqtSlot(bool, bool)
+    def on_shoppingListAddBtn_clicked(self, checked, longPressed):
+        index = self.categoryTabWidget.currentIndex()
+
+        # Handle favorite's tab versus category list
+        if index == 0:
+            records = self.favoritesTabModel.getSelectedRecords(self.currentSelectionModel.selectedIndexes())
+        else:
+            # Get category ID by looking up index in categories variable
+            categoryID = self.categories[index - 1]['id']
+
+            # Get selection model based on category ID
+            tabCategory = self.tabDict[categoryID]
+            records = tabCategory.listModel.getSelectedRecords(self.currentSelectionModel.selectedIndexes())
+
+        itemList = tuple(record['item'] for record in records)
+        self.dbManager.setRequiredItems(itemList)
+        self.currentSelectionModel.clearSelection()

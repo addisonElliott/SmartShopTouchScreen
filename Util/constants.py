@@ -20,6 +20,9 @@ windowGeometry = QRect(0, 0, 800, 480)
 # Interval for polling barcode scanners in milliseconds
 scannerPollInterval = 5
 
+# Interval for updating recommended items in milliseconds
+updateRecommendedItemsInterval = 5000
+
 # Whether the menu will be shown as full screen or not
 fullscreen = False
 
@@ -38,6 +41,10 @@ maxCategoryNameLength = 20
 
 # Maximum length that an item name can be
 maxItemNameLength = 20
+
+# Floating Push Buttons on Main Page to Remove Items from Shopping Lists
+removeReqShoppingItemBtnGeometry = QRect(280, 390, 58 + 12, 58 + 12)
+removeRecShoppingItemBtnGeometry = QRect(634, 390, 58 + 12, 58 + 12)
 
 # The time of day where the usage rate will be calculated on a day by day basis
 # Order is hour, minutes, and seconds. They should be normalized between their normal values (e.g. hour between 1 and 23)
