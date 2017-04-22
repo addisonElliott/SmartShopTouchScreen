@@ -67,9 +67,15 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
 
         self.centralWindow.updateRecommendedItemsTimer.timeout.connect(self.updateRecommendedItemsTimer_ticked)
 
+        self.centralWindow.primaryScanner_barcodeReceivedSignal.connect(self.primaryScanner_barcodeReceived)
+        self.centralWindow.secondaryScanner_barcodeReceivedSignal.connect(self.secondaryScanner_barcodeReceived)
+
     @pyqtSlot()
     def hideEvent(self, event):
         self.centralWindow.updateRecommendedItemsTimer.timeout.disconnect(self.updateRecommendedItemsTimer_ticked)
+
+        self.centralWindow.primaryScanner_barcodeReceivedSignal.disconnect(self.primaryScanner_barcodeReceived)
+        self.centralWindow.secondaryScanner_barcodeReceivedSignal.disconnect(self.secondaryScanner_barcodeReceived)
 
     @pyqtSlot(bool, bool)
     def on_ManualAddButton_clicked(self, checked, longPressed):
@@ -119,3 +125,11 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
         else:
             self.recItemsRemoveBtn.setEnabled(hasSelection)
             self.recItemsRemoveBtn.setVisible(hasSelection)
+
+    @pyqtSlot(str)
+    def primaryScanner_barcodeReceived(self, barcode):
+        pass
+
+    @pyqtSlot(str)
+    def secondaryScanner_barcodeReceived(self, barcode):
+        pass

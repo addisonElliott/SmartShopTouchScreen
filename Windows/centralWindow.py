@@ -20,6 +20,10 @@ from Widgets.touchSpinBox import *
 logger = logging.getLogger(__name__)
 
 class CentralWindow(QMainWindow):
+    # Signal is emitted once a barcode has been scanned and received
+    primaryScanner_barcodeReceivedSignal = pyqtSignal(str)
+    secondaryScanner_barcodeReceivedSignal = pyqtSignal(str)
+
     def __init__(self, config, parent=None):
         super(CentralWindow, self).__init__(parent)
 
@@ -180,7 +184,11 @@ class CentralWindow(QMainWindow):
         else:
             self.barcodeManager.RemoveFromInventory(barcode)
 
+        self.primaryScanner_barcodeReceivedSignal.emit(barcode)
+
     @pyqtSlot(str)
     def secondaryScanner_barcodeReceived(self, barcode):
         print("Secondary barcode scanner got: %s" % barcode)
         self.barcodeManager.RemoveFromInventory(barcode)
+
+        self.secondaryScanner_barcodeReceivedSignal.emit(barcode)

@@ -47,9 +47,13 @@ class PurchaseHistoryWindow(QWidget, purchaseHistoryWindow_ui.Ui_PurchaseHistory
         self.model.select()
         self.historyView.sortByColumn(1, Qt.DescendingOrder)
 
+        self.centralWindow.primaryScanner_barcodeReceivedSignal.connect(self.primaryScanner_barcodeReceived)
+        self.centralWindow.secondaryScanner_barcodeReceivedSignal.connect(self.secondaryScanner_barcodeReceived)
+
     @pyqtSlot()
     def hideEvent(self, event):
-        pass
+        self.centralWindow.primaryScanner_barcodeReceivedSignal.disconnect(self.primaryScanner_barcodeReceived)
+        self.centralWindow.secondaryScanner_barcodeReceivedSignal.disconnect(self.secondaryScanner_barcodeReceived)
 
     @pyqtSlot(bool, bool)
     def on_backBtn_clicked(self, checked, longPressed):
@@ -58,3 +62,11 @@ class PurchaseHistoryWindow(QWidget, purchaseHistoryWindow_ui.Ui_PurchaseHistory
     @pyqtSlot(bool, bool)
     def on_homeBtn_clicked(self, checked, longPressed):
         self.parent().setCurrentIndex(WindowType.Main)
+
+    @pyqtSlot(str)
+    def primaryScanner_barcodeReceived(self, barcode):
+        self.model.select()
+
+    @pyqtSlot(str)
+    def secondaryScanner_barcodeReceived(self, barcode):
+        self.model.select()

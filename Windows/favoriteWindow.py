@@ -148,9 +148,13 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
             category.listView.selectionModel().clearSelection()
             category.listView.sortByColumn(0, Qt.AscendingOrder)
 
+        self.centralWindow.primaryScanner_barcodeReceivedSignal.connect(self.primaryScanner_barcodeReceived)
+        self.centralWindow.secondaryScanner_barcodeReceivedSignal.connect(self.secondaryScanner_barcodeReceived)
+
     @pyqtSlot()
     def hideEvent(self, event):
-        pass
+        self.centralWindow.primaryScanner_barcodeReceivedSignal.disconnect(self.primaryScanner_barcodeReceived)
+        self.centralWindow.secondaryScanner_barcodeReceivedSignal.disconnect(self.secondaryScanner_barcodeReceived)
 
     @pyqtSlot(bool, bool)
     def on_backBtn_clicked(self, checked, longPressed):
@@ -311,5 +315,4 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
 
     @pyqtSlot(str)
     def secondaryScanner_barcodeReceived(self, barcode):
-        print("Secondary barcode scanner got: %s" % barcode)
         self.refreshLists()
