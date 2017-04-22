@@ -190,7 +190,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Scan to cancel</string>
+        <string>Scan to continue</string>
        </property>
       </widget>
      </item>

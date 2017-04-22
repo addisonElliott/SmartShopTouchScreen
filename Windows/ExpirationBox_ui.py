@@ -174,7 +174,7 @@ class Ui_ExpirationBox(object):
         self.month_label.setText(_translate("ExpirationBox", "Month"))
         self.year_label.setText(_translate("ExpirationBox", "Year"))
         self.qty_label.setText(_translate("ExpirationBox", "Quantity"))
-        self.cancel_label.setText(_translate("ExpirationBox", "Scan to cancel"))
+        self.cancel_label.setText(_translate("ExpirationBox", "Scan to continue"))
         self.label.setText(_translate("ExpirationBox", "Item Name:"))
         self.itemNameLabel.setText(_translate("ExpirationBox", "Label"))
         self.exp_label.setText(_translate("ExpirationBox", "Expiration Date"))

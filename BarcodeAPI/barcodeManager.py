@@ -8,7 +8,6 @@ from Windows.CheckOutBox import *
 class BarcodeManager:
     def __init__(self, dbManager, config, centralWindow):
         self.dbManager = dbManager
-        self.checkOutBox = CheckOutBox(config)
 
         self.config = config
         self.centralWindow = centralWindow
@@ -116,18 +115,16 @@ class BarcodeManager:
             self.dbManager.AddUPCToCachedUPCs(barcode, id, item['pkgQty'])
 
     def RemoveFromInventory(self, barcode):
-        self.checkOutBox.ResetToDefault()
-        id = self.dbManager.GetCachedUPCItem(barcode)[0]
-        item = self.dbManager.GetItemFromInventory(id)
-        self.checkOutBox.qty_combo.setCurrentIndex(0)
-        self.checkOutBox.item_textBox.setEnabled(True)
-        itemName = (item[3][:20] + '..') if len(item[3]) > 20 else item[3]
-        self.checkOutBox.item_textBox.setText('')
-        self.checkOutBox.item_textBox.setText(itemName)
-        self.checkOutBox.item_textBox.setDisabled(True)
-        if self.checkOutBox.exec():
-            decQty = self.checkOutBox.qty_combo.currentText()
-            self.dbManager.DecrementQuantityForItem(id, item[0], int(decQty))
+        checkOutBox = CheckOutBox(self.config, self.centralWindow, self.centralWindow)
+
+        cachedUPC = self.dbManager.GetCachedUPCItem(barcode)
+        item = self.dbManager.GetItemFromInventory(cachedUPC['item'])
+
+        checkOutBox.qty_combo.setCurrentIndex(0)
+        checkOutBox.item_textBox.setText(item['name'])
+        if checkOutBox.exec():
+            decQty = checkOutBox.qty_combo.currentText()
+            self.dbManager.DecrementQuantityForItem(cachedUPC['item'], int(decQty) * cachedUPC['pkg_qty'])
 
     def DisplayExpirationBox(self, name):
         expirationBoxDialog = ExpirationBox(self.config, self.centralWindow, name, self.centralWindow)

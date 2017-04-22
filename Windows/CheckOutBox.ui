@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>380</width>
-    <height>243</height>
+    <height>249</height>
    </rect>
   </property>
   <property name="font">
@@ -18,7 +18,25 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QDialog
+{
+	border: 1px solid #76797C;
+}</string>
+  </property>
   <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>5</number>
+   </property>
+   <property name="topMargin">
+    <number>5</number>
+   </property>
+   <property name="rightMargin">
+    <number>5</number>
+   </property>
+   <property name="bottomMargin">
+    <number>5</number>
+   </property>
    <item row="10" column="1">
     <widget class="QLabel" name="item_label">
      <property name="font">
@@ -53,6 +71,9 @@
    </item>
    <item row="19" column="1" colspan="4">
     <layout class="QHBoxLayout" name="horizontalLayout_1">
+     <property name="spacing">
+      <number>15</number>
+     </property>
      <property name="topMargin">
       <number>0</number>
      </property>
@@ -60,8 +81,8 @@
       <widget class="QLabel" name="cancel_label">
        <property name="font">
         <font>
-         <family>Cronus Round</family>
-         <pointsize>19</pointsize>
+         <family>Segoe UI</family>
+         <pointsize>15</pointsize>
         </font>
        </property>
        <property name="text">
@@ -86,18 +107,18 @@
       <widget class="TouchButton" name="accept_button">
        <property name="minimumSize">
         <size>
-         <width>45</width>
-         <height>45</height>
+         <width>48</width>
+         <height>48</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>45</width>
-         <height>45</height>
+         <width>48</width>
+         <height>48</height>
         </size>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color: #31363B;
+        <string notr="true">background-color: transparent;
 border: 0;</string>
        </property>
        <property name="text">
@@ -109,8 +130,8 @@ border: 0;</string>
        </property>
        <property name="iconSize">
         <size>
-         <width>40</width>
-         <height>40</height>
+         <width>48</width>
+         <height>48</height>
         </size>
        </property>
       </widget>
@@ -119,18 +140,18 @@ border: 0;</string>
       <widget class="TouchButton" name="cancel_button">
        <property name="minimumSize">
         <size>
-         <width>45</width>
-         <height>45</height>
+         <width>48</width>
+         <height>48</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>45</width>
-         <height>45</height>
+         <width>48</width>
+         <height>48</height>
         </size>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color: #31363B;
+        <string notr="true">background-color: transparent;
 border: 0;</string>
        </property>
        <property name="text">
@@ -142,8 +163,8 @@ border: 0;</string>
        </property>
        <property name="iconSize">
         <size>
-         <width>40</width>
-         <height>40</height>
+         <width>48</width>
+         <height>48</height>
         </size>
        </property>
       </widget>
@@ -180,14 +201,30 @@ border: 0;</string>
     </widget>
    </item>
    <item row="10" column="2">
-    <widget class="QLineEdit" name="item_textBox"/>
+    <widget class="QLineEdit" name="item_textBox">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="font">
+      <font>
+       <family>Segoe UI</family>
+       <pointsize>15</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="maxLength">
+      <number>20</number>
+     </property>
+    </widget>
    </item>
    <item row="11" column="2" alignment="Qt::AlignLeft">
     <widget class="QComboBox" name="qty_combo">
      <property name="font">
       <font>
        <family>Segoe UI</family>
-       <pointsize>16</pointsize>
+       <pointsize>15</pointsize>
        <weight>50</weight>
        <italic>false</italic>
        <bold>false</bold>
