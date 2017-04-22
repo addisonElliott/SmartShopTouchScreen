@@ -76,7 +76,7 @@ class BarcodeManager:
             # The user selected the pending item and thus we now add it to the database
             if item['category'] == newItemDetailsDialog.pendingCategoryText:
                 newCategory = newItemDetailsDialog.category_combo.currentText()[2:] # Remove * from beginning
-                self.dbManager.AddCategory(newCategory)
+                item['category'] = self.dbManager.AddCategory(newCategory)
 
             item['qty'] = int(newItemDetailsDialog.itemQty_combo.currentText())
             item['pkgQty'] = int(newItemDetailsDialog.pkgQty_combo.currentText())
