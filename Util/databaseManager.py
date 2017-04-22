@@ -168,3 +168,13 @@ class DatabaseManager:
         psycopg2.extras.execute_batch(self.cursor, "UPDATE inventory SET avg_usage_rate = %s WHERE item = %s", params)
 
         self.connection.commit()
+
+    def removeItemFromRequiredList(self, id):
+        self.cursor.execute("UPDATE inventory SET list_flags = 0 WHERE item = %s", (id,))
+
+        self.connection.commit()
+
+    def removeItemFromRecommendedList(self, id):
+        self.cursor.execute("UPDATE inventory SET list_flags = 3 WHERE item = %s", (id,))
+
+        self.connection.commit()

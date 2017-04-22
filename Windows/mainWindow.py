@@ -26,23 +26,23 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
         self.recItemsModel = SqlTableModel(self.dbManager.connection, 'inventory', 'name', Qt.AscendingOrder,
                                            'list_flags = 2', None, ('item', 'name', 'qty'), (1, 2), ('Name', 'Qty'))
 
-        self.reqItemsWidget.setModel(self.reqItemsModel)
-        self.recItemsWidget.setModel(self.recItemsModel)
-        self.reqItemsWidget.selectionModel().selectionChanged.connect(self.selectItem)
-        self.recItemsWidget.selectionModel().selectionChanged.connect(self.selectItem)
+        self.reqItemsTableView.setModel(self.reqItemsModel)
+        self.recItemsTableView.setModel(self.recItemsModel)
+        self.reqItemsTableView.selectionModel().selectionChanged.connect(self.selectItem)
+        self.recItemsTableView.selectionModel().selectionChanged.connect(self.selectItem)
 
         # Configure floating buttons
-        self.gridLayout_3.removeWidget(self.floatingPB1)
-        self.floatingPB1.hide()
-        self.floatingPB1.setEnabled(False)
-        self.floatingPB1.setGeometry(constants.removeReqShoppingItemBtnGeometry)
-        self.floatingPB1.raise_()
+        self.gridLayout_3.removeWidget(self.reqItemsRemoveBtn)
+        self.reqItemsRemoveBtn.hide()
+        self.reqItemsRemoveBtn.setEnabled(False)
+        self.reqItemsRemoveBtn.setGeometry(constants.removeReqShoppingItemBtnGeometry)
+        self.reqItemsRemoveBtn.raise_()
 
-        self.gridLayout_3.removeWidget(self.floatingPB2)
-        self.floatingPB2.hide()
-        self.floatingPB2.setEnabled(False)
-        self.floatingPB2.setGeometry(constants.removeRecShoppingItemBtnGeometry)
-        self.floatingPB2.raise_()
+        self.gridLayout_3.removeWidget(self.recItemsRemoveBtn)
+        self.recItemsRemoveBtn.hide()
+        self.recItemsRemoveBtn.setEnabled(False)
+        self.recItemsRemoveBtn.setGeometry(constants.removeRecShoppingItemBtnGeometry)
+        self.recItemsRemoveBtn.raise_()
 
     @pyqtSlot()
     def showEvent(self, event):
@@ -51,19 +51,19 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
         self.recItemsModel.select()
 
         # Reset the sorting for each of the shopping lists
-        self.reqItemsWidget.sortByColumn(0, Qt.AscendingOrder)
-        self.recItemsWidget.sortByColumn(0, Qt.AscendingOrder)
+        self.reqItemsTableView.sortByColumn(0, Qt.AscendingOrder)
+        self.recItemsTableView.sortByColumn(0, Qt.AscendingOrder)
 
         # Set size of the recommended items columns
         # Do this on showEvent because additional data could be added to the quantity column and require the contents
         # to be resized
-        self.reqItemsWidget.horizontalHeader().setStretchLastSection(False)
-        self.reqItemsWidget.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
-        self.reqItemsWidget.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
+        self.reqItemsTableView.horizontalHeader().setStretchLastSection(False)
+        self.reqItemsTableView.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
+        self.reqItemsTableView.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
 
-        self.recItemsWidget.horizontalHeader().setStretchLastSection(False)
-        self.recItemsWidget.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
-        self.recItemsWidget.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
+        self.recItemsTableView.horizontalHeader().setStretchLastSection(False)
+        self.recItemsTableView.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
+        self.recItemsTableView.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
 
     @pyqtSlot()
     def hideEvent(self, event):
@@ -81,12 +81,34 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
     def on_SettingsButton_clicked(self, checked, longPressed):
         self.parent().setCurrentIndex(WindowType.Settings)
 
+    @pyqtSlot(bool, bool)
+    def on_reqItemsRemoveBtn_clicked(self, checked, longPressed):
+        records = self.reqItemsModel.getSelectedRecords(self.reqItemsTableView.selectionModel().selectedIndexes())
+
+        for record in records:
+            self.dbManager.removeItemFromRequiredList(record['item'])
+
+        self.reqItemsModel.select()
+        self.reqItemsRemoveBtn.setEnabled(False)
+        self.reqItemsRemoveBtn.setVisible(False)
+
+    @pyqtSlot(bool, bool)
+    def on_recItemsRemoveBtn_clicked(self, checked, longPressed):
+        records = self.recItemsModel.getSelectedRecords(self.recItemsTableView.selectionModel().selectedIndexes())
+
+        for record in records:
+            self.dbManager.removeItemFromRecommendedList(record['item'])
+
+        self.recItemsModel.select()
+        self.recItemsRemoveBtn.setEnabled(False)
+        self.recItemsRemoveBtn.setVisible(False)
+
     @pyqtSlot()
     def selectItem(self):
         hasSelection = self.sender().hasSelection()
-        if self.sender() is self.reqItemsWidget.selectionModel():
-            self.floatingPB1.setEnabled(hasSelection)
-            self.floatingPB1.setVisible(hasSelection)
+        if self.sender() is self.reqItemsTableView.selectionModel():
+            self.reqItemsRemoveBtn.setEnabled(hasSelection)
+            self.reqItemsRemoveBtn.setVisible(hasSelection)
         else:
-            self.floatingPB2.setEnabled(hasSelection)
-            self.floatingPB2.setVisible(hasSelection)
+            self.recItemsRemoveBtn.setEnabled(hasSelection)
+            self.recItemsRemoveBtn.setVisible(hasSelection)
