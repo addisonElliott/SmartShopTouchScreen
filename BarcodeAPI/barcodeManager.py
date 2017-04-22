@@ -115,16 +115,31 @@ class BarcodeManager:
             self.dbManager.AddUPCToCachedUPCs(barcode, id, item['pkgQty'])
 
     def RemoveFromInventory(self, barcode):
+        cachedItem = self.dbManager.GetCachedUPCItem(barcode)
+
+        returnResult, quantity, callbackFunction, callbackParam = \
+            self.displayCheckOutBox(self.dbManager.getItemName(cachedItem['item']))
+
+        # Only decrement the item if the user clicked accept
+        if returnResult:
+            self.dbManager.DecrementQuantityForItem(cachedItem['item'], quantity * cachedItem['pkg_qty'])
+
+        if callbackFunction and callbackParam:
+            callbackFunction(callbackParam)
+
+    def displayCheckOutBox(self, name):
         checkOutBox = CheckOutBox(self.config, self.centralWindow, self.centralWindow)
 
-        cachedUPC = self.dbManager.GetCachedUPCItem(barcode)
-        item = self.dbManager.GetItemFromInventory(cachedUPC['item'])
-
         checkOutBox.qty_combo.setCurrentIndex(0)
-        checkOutBox.item_textBox.setText(item['name'])
-        if checkOutBox.exec():
-            decQty = checkOutBox.qty_combo.currentText()
-            self.dbManager.DecrementQuantityForItem(cachedUPC['item'], int(decQty) * cachedUPC['pkg_qty'])
+        checkOutBox.item_textBox.setText(name)
+
+        # Parameters to return
+        returnResult = checkOutBox.exec()
+        quantity = int(checkOutBox.qty_combo.currentText())
+        callbackFunction = checkOutBox.callbackFunction
+        callbackParam = checkOutBox.callbackParam
+
+        return returnResult, quantity, callbackFunction, callbackParam
 
     def DisplayExpirationBox(self, name):
         expirationBoxDialog = ExpirationBox(self.config, self.centralWindow, name, self.centralWindow)

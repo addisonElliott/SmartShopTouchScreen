@@ -19,9 +19,11 @@ class CheckOutBox(QDialog, CheckOutBox_ui.Ui_CheckOutBox):
         scroller.setupScrolling(self.qty_combo.view())
         self.qty_combo.view().setVerticalScrollMode(QAbstractItemView.ScrollPerPixel)
         self.qty_combo.view().setMouseTracking(False)
-
         for q in range(1, 51):
             self.qty_combo.addItem(str(q))
+
+        self.callbackFunction = None
+        self.callbackParam = None
 
     @pyqtSlot()
     def showEvent(self, event):

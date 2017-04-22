@@ -216,13 +216,25 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
             records = tabCategory.listModel.getSelectedRecords(self.currentSelectionModel.selectedIndexes())
 
         if longPressed:
-            # Bring up a box for each one that asks how many to remove
-            # DeSelect all items currently selected
-            pass
+            # Only take the first record and do this to it
+            record = records[0]
+            returnResult, quantity, callbackFunction, callbackParam = \
+                self.barcodeManager.displayCheckOutBox(record['name'])
+
+            # Only decrement the item if the user clicked accept
+            if returnResult:
+                self.dbManager.DecrementQuantityForItem(record['item'], quantity)
+
+            if callbackFunction and callbackParam:
+                callbackFunction(callbackParam)
+
+            selectionModel.clearSelection()
         else:
-            # Subtract one from each of the items selected
-            # DeSelect all items currently selected
-            pass
+            # Update each record that is currently selected
+            for record in records:
+                self.dbManager.DecrementQuantityForItem(record['item'], 1)
+
+            selectionModel.clearSelection()
 
     @pyqtSlot(bool, bool)
     def on_listAddBtn_clicked(self, checked, longPressed):
