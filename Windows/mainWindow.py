@@ -9,10 +9,6 @@ from Windows.centralWindow import *
 from Util.scanner import *
 from Util.enums import *
 from BarcodeAPI.barcodeManager import BarcodeManager
-
-
-
-from Windows.virtualKeyboard import *
 from Util.SqlTableModel import *
 
 class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
@@ -35,10 +31,6 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
         self.reqItemsWidget.selectionModel().selectionChanged.connect(self.selectItem)
         self.recItemsWidget.selectionModel().selectionChanged.connect(self.selectItem)
 
-        # Temporary to test Auto-Complete Virtual Keyboard
-        self.tempShortcut = QShortcut(Qt.Key_1, self)
-        self.tempShortcut.activated.connect(self.temp)
-
         # Configure floating buttons
         self.gridLayout_3.removeWidget(self.floatingPB1)
         self.floatingPB1.hide()
@@ -59,33 +51,6 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
         floatingPB2Y = 390
         self.floatingPB2.setGeometry(floatingPB2X, floatingPB2Y, floatingPB2Width, floatingPB2Height)
         self.floatingPB2.raise_()
-
-    def temp2(self, str):
-        if str:
-            prefixMatch = str + '%'
-            anyMatch = '%' + prefixMatch
-            self.testModel.filterArgs = (prefixMatch, prefixMatch, anyMatch, anyMatch)
-            self.testModel.hideItems = False
-        else:
-            self.testModel.hideItems = True
-        self.testModel.select()
-
-    @pyqtSlot()
-    def temp(self):
-        # TODO Remove this function and the one above temp2 when auto complete virtual keyboard is integrated correctly
-        # TODO Also DONT FORGET TO REMOVE VIRTUAL KEYBOARD IMPORT
-        self.testModel = SqlTableModel(self.dbManager.connection, columnSortName='rank', columnSortOrder=Qt.DescendingOrder,
-                                       customQuery='SELECT item, name, CASE\n'
-                                        'WHEN name LIKE %s THEN 3\n'
-                                        'WHEN name ILIKE %s THEN 2\n'
-                                        'WHEN name LIKE %s THEN 1\n'
-                                        'ELSE 0 END AS rank FROM inventory\n'
-                                        'WHERE name ILIKE %s', filterArgs=('%', '%%', '%', '%%'),
-                                       displayColumnMapping=(1,), limitCount = 10, hideItems=True)
-
-        self.test = VirtualKeyboard(self, None, self.testModel)
-        self.test.updateSuggestions.connect(self.temp2)
-        self.test.exec()
 
     @pyqtSlot()
     def showEvent(self, event):
