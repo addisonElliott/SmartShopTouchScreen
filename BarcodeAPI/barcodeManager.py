@@ -44,7 +44,6 @@ class BarcodeManager:
         categories = self.dbManager.GetCategories(True)
         newItemDetailsDialog = NewItemDetails(self.dbManager, self.config, categories, self.centralWindow)
 
-        newItemDetailsDialog.ResetToDefault()
         data = self.GetJsonFrom3rdParty(barcode)
         item = {}
         if data['status']['code'] == '200' and 'attributes' in data['product'] and 'product' in data['product']['attributes']:
@@ -132,7 +131,6 @@ class BarcodeManager:
 
     def DisplayExpirationBox(self, name):
         expirationBoxDialog = ExpirationBox(self.config, self.centralWindow, name, self.centralWindow)
-        expirationBoxDialog.ResetToDefault()
         expirationDate = ''
         quantity = 1
         callbackFunction = None
