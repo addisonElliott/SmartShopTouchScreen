@@ -272,3 +272,22 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
             for category in self.categories:
                 if not category['id'] in self.tabDict:
                     self.addTab(category['id'], category['name'])
+
+    @pyqtSlot(bool, bool)
+    def on_shoppingListAddBtn_clicked(self, checked, longPressed):
+        index = self.categoryTabWidget.currentIndex()
+
+        # Handle favorite's tab versus category list
+        if index == 0:
+            records = self.favoritesTabModel.getSelectedRecords(self.currentSelectionModel.selectedIndexes())
+        else:
+            # Get category ID by looking up index in categories variable
+            categoryID = self.categories[index - 1]['id']
+
+            # Get selection model based on category ID
+            tabCategory = self.tabDict[categoryID]
+            records = tabCategory.listModel.getSelectedRecords(self.currentSelectionModel.selectedIndexes())
+
+        itemList = tuple(record['item'] for record in records)
+        self.dbManager.setRequiredItems(itemList)
+        self.currentSelectionModel.clearSelection()

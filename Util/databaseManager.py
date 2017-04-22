@@ -179,6 +179,14 @@ class DatabaseManager:
 
         self.connection.commit()
 
+    def setRequiredItems(self, itemList):
+        if isinstance(itemList, (list, tuple)):
+            self.cursor.execute("UPDATE inventory SET list_flags = 1 WHERE item IN %s", (itemList,))
+        else:
+            self.cursor.execute("UPDATE inventory SET list_flags = 1 WHERE item = %s", (itemList,))
+
+        self.connection.commit()
+
     def updateRecommendedItems(self, expirationDateThreshold, avgShelfTimeThreshold):
         # Set list flag to 2 (recommended item) for all items that meet these criteria:
         #   - List flags equals 0 meaning it is not a required item, recommended item, or ignored item.
