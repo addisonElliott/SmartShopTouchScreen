@@ -116,6 +116,9 @@ class BarcodeManager:
 
     def RemoveFromInventory(self, barcode):
         cachedItem = self.dbManager.GetCachedUPCItem(barcode)
+        if not cachedItem:
+            logger.warning("Unable to scan item %s out: It is not present in cached UPC database", barcode)
+            return
 
         returnResult, quantity, callbackFunction, callbackParam = \
             self.displayCheckOutBox(self.dbManager.getItemName(cachedItem['item']))

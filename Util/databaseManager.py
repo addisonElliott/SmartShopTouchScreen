@@ -20,7 +20,10 @@ class DatabaseManager:
     def GetCachedUPCItem(self, barcode):
         self.cursor.execute("SELECT item,pkg_qty FROM cached_upcs WHERE upc = %s", (barcode,))
 
-        return self.cursor.fetchone()
+        if self.cursor.rowcount <= 0:
+            return None
+        else:
+            return self.cursor.fetchone()
 
     def getItemName(self, item):
         self.cursor.execute("SELECT name FROM inventory WHERE item = %s", (item,))
