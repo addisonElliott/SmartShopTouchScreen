@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import *
 from psycopg2.extensions import AsIs
 import psycopg2
 from psycopg2.extras import DictCursor
-import datetime
+from datetime import datetime, date
 from decimal import Decimal
 import logging
 
@@ -185,9 +185,9 @@ class SqlTableModel(QAbstractTableModel):
         elif isinstance(val, Decimal):
             # make sure to convert special classes (otherwise it is user type in QVariant)
             return str(val)
-        elif isinstance(val, datetime.date):
+        elif isinstance(val, date):
             return str(val)
-        elif isinstance(val, datetime.datetime):
+        elif isinstance(val, datetime):
             return str(val)
         else:
             return val

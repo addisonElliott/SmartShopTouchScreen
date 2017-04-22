@@ -58,8 +58,17 @@ class Ui_ManualAddDialog(object):
         self.horizontalLayout_2.setContentsMargins(-1, 0, -1, -1)
         self.horizontalLayout_2.setSpacing(15)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_2.addItem(spacerItem)
+        self.warningLabel = QtWidgets.QLabel(ManualAddDialog)
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(15)
+        self.warningLabel.setFont(font)
+        self.warningLabel.setStyleSheet("QLabel\n"
+"{\n"
+"    color: red;\n"
+"}")
+        self.warningLabel.setObjectName("warningLabel")
+        self.horizontalLayout_2.addWidget(self.warningLabel, 0, QtCore.Qt.AlignHCenter)
         self.confirmBtn = TouchButton(ManualAddDialog)
         self.confirmBtn.setMinimumSize(QtCore.QSize(48, 48))
         self.confirmBtn.setMaximumSize(QtCore.QSize(48, 48))
@@ -112,6 +121,7 @@ class Ui_ManualAddDialog(object):
         ManualAddDialog.setWindowTitle(_translate("ManualAddDialog", "Dialog"))
         self.label_3.setText(_translate("ManualAddDialog", "Item Name"))
         self.label_2.setText(_translate("ManualAddDialog", "Product Category"))
+        self.warningLabel.setText(_translate("ManualAddDialog", "Item Already Exists!"))
         self.favoritesCheckbox.setText(_translate("ManualAddDialog", "Add Item to Favorites"))
 
 from Widgets.touchButton import TouchButton

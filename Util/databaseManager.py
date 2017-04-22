@@ -5,6 +5,8 @@ import psycopg2.extras
 import os
 import pickle
 from datetime import datetime
+from Util.exception import *
+
 
 class DatabaseManager:
     def __init__(self, database, username, password, host, port):
@@ -20,10 +22,28 @@ class DatabaseManager:
 
         return self.cursor.fetchone()
 
-    def GetItemFromInventory(self, id):
-        self.cursor.execute("SELECT qty,avg_shelf_time,last_buy_date,name FROM inventory WHERE item = %s", (id,))
+    def getItemName(self, item):
+        self.cursor.execute("SELECT name FROM inventory WHERE item = %s", (item,))
 
-        return self.cursor.fetchone()
+        return self.cursor.fetchone()[0]
+
+    def itemExists(self, name):
+        self.cursor.execute("SELECT COUNT(*) FROM inventory WHERE name = %s", (name,))
+
+        return self.cursor.fetchone()[0] != 0
+
+    def GetItemFromInventory(self, id = None, name = None):
+        if id is not None:
+            self.cursor.execute("SELECT * FROM inventory WHERE item = %s", (id,))
+        elif name is not None:
+            self.cursor.execute("SELECT * FROM inventory WHERE name = %s", (name,))
+        else:
+            return None
+
+        if self.cursor.rowcount == 0:
+            return None
+        else:
+            return self.cursor.fetchone()
 
     def AddItemToInventory(self, item):
         if not 'name' in item:
@@ -43,17 +63,19 @@ class DatabaseManager:
         if not 'favoritesIndex' in item:
             item['favoritesIndex'] = None
 
-        if not 'expirationDate' in item:
-            item['expirationDate'] = None
-        elif item['expirationDate'] is '':
+        if not 'expirationDate' in item or not item['expirationDate']:
             item['expirationDate'] = None
 
         self.cursor.execute("INSERT INTO inventory (name, qty, category, favorites_index, expiration) VALUES "
                             "(%s, %s, %s, %s, %s) RETURNING item",
                             (item['name'], item['qty'] * item['pkgQty'], item['category'], item['favoritesIndex'],
                              item['expirationDate']))
+
         id = self.cursor.fetchone()[0]
         self.connection.commit()
+
+        # Update the purchase history with item bought today
+        self.updatePurchaseHistory(id, datetime.now().date(), item['qty'] * item['pkgQty'])
 
         return id
 
@@ -62,14 +84,24 @@ class DatabaseManager:
         self.connection.commit()
 
     def UpdateItemInDatabase(self, cachedItem, expirationDate, quantity):
-        inventoryItem = self.GetItemFromInventory(cachedItem[0])
+        inventoryItem = self.GetItemFromInventory(cachedItem['item'])
         if expirationDate is '':
             expirationDate = None
             
         self.cursor.execute("UPDATE inventory SET qty = %s, last_buy_date = %s, expiration = %s WHERE item = %s",
-                                ((quantity * cachedItem[1]) + inventoryItem[0], str(datetime.now()),
-                                expirationDate, cachedItem[0]))
+                                ((quantity * cachedItem['pkg_qty']) + inventoryItem['qty'], str(datetime.now()),
+                                expirationDate, cachedItem['item']))
 
+        self.connection.commit()
+
+        # Update the purchase history with item bought today
+        self.updatePurchaseHistory(cachedItem['item'], datetime.now().date(), quantity * cachedItem['pkg_qty'])
+
+    def updatePurchaseHistory(self, item, date, qty):
+        self.cursor.execute("DO $do$ BEGIN UPDATE purchase_history SET qty = qty + %(qty)s WHERE item = %(item)s AND "
+                            "date = %(date)s; IF NOT FOUND THEN INSERT INTO purchase_history (item, date, qty) VALUES "
+                            "(%(item)s, %(date)s, %(qty)s); END IF; END $do$", {'item': item, 'date': str(date),
+                                                                                'qty': qty})
         self.connection.commit()
 
     def DecrementQuantityForItem(self, id, itemQty, decQty=1):
@@ -81,10 +113,9 @@ class DatabaseManager:
             self.cursor.execute("UPDATE inventory SET qty = %s WHERE item = %s", (newQty, id))
             self.connection.commit()
 
-
     def AddCategory(self, name, order_index = -1):
         if order_index == -1:
-            self.cursor.execute("SELECT COUNT(*) FROM category")
+            self.cursor.execute("SELECT MAX(order_index) FROM category")
             numRows = self.cursor.fetchone()[0]
             order_index = numRows + 1
 

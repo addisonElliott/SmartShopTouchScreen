@@ -12,6 +12,20 @@ from Windows.centralWindow import *
 
 logger = logging.getLogger(__name__)
 
+# Back up the reference to the exceptionhook
+sys._excepthook = sys.excepthook
+
+def my_exception_hook(exctype, value, traceback):
+    # Print the error and traceback
+    print(exctype, value, traceback)
+    logger.exception("Exception", exc_info=(exctype, value, traceback))
+    # Call the normal Exception hook after
+    sys._excepthook(exctype, value, traceback)
+    sys.exit(1)
+
+# Set the exception hook to our wrapping function
+sys.excepthook = my_exception_hook
+
 def load_stylesheet():
     f = QFile(":qdarkstyle/style.qss")
     if not f.exists():

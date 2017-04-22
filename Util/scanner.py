@@ -5,6 +5,8 @@ from PyQt5.QtWidgets import *
 from Util.exception import *
 from Util import constants
 
+from datetime import date, datetime
+
 if sys.platform.startswith("linux"):
     from evdev import *
     from evdev.ecodes import *
@@ -53,6 +55,7 @@ if sys.platform.startswith("linux"):
 
             # Setup the device by calling setPort with the desired port number
             self.usbPortNumber = None
+            self.device = None
             self.setPort(usbPortNumber)
 
             # Set the current string buffer to none
@@ -73,6 +76,10 @@ if sys.platform.startswith("linux"):
                 return
 
             if constants.barcodeScannerDeviceEnable:
+                # If this scanner already has a device, ungrab it since were done with it
+                if self.device:
+                    self.device.ungrab()
+
                 # This regex expression identifies a device on a specified USB port number
                 # I am not entirely sure if this is Raspbian specific, Linux specific or what,
                 # but it works in this case
@@ -90,6 +97,9 @@ if sys.platform.startswith("linux"):
                 # If unable to find the device at port number, raise error
                 if self.device is None:
                     raise SmartShopException("Unable to find input device located at port %i" % usbPortNumber)
+
+                # Grab current device so that no one else can receive input events from it
+                self.device.grab()
 
                 # Get the current state of the LED buttons; update self.state with the values that are on
                 ledStates = self.device.leds()
@@ -119,14 +129,16 @@ if sys.platform.startswith("linux"):
                                 elif keyEvent.keystate is events.KeyEvent.key_up: self.state[keyEvent.scancode] = 0
                             elif keyEvent.keystate is events.KeyEvent.key_down or keyEvent.keystate is events.KeyEvent.key_hold:
                                 if keyEvent.scancode is KEY_ENTER:
-                                    #print("Current str: %s" % self.curStr)
-                                    self.barcodeReceived.emit(self.curStr)
+                                    # Clear the curStr variable because recursion may occur where a barcode scan happens
+                                    # inside the barcodeReceived signal
+                                    emitStr = self.curStr
                                     self.curStr = ""
+                                    self.barcodeReceived.emit(emitStr)
                                 elif keyEvent.scancode in keycodeToASCII:
                                     shift = (self.modifiers[KEY_LEFTSHIFT] or self.modifiers[KEY_RIGHTSHIFT])
                                     self.curStr += keycodeToASCII[keyEvent.scancode][shift]
                                 elif keyEvent.scancode in numpadcodeToASCII and self.state[KEY_NUMLOCK]:
-                                    str = numpadcodeToASCII[keyEvent.scancode]
+                                    string = numpadcodeToASCII[keyEvent.scancode]
             except BlockingIOError:
                 # If no events are available, this is thrown
                 # No actual error, move on
@@ -173,4 +185,4 @@ elif sys.platform.startswith("win32"):
                                                Qt.WindowSystemMenuHint | Qt.WindowTitleHint | Qt.WindowCloseButtonHint)
 
             if ok and barcode:
-                self.barcodeReceived.emit(barcode)
+                self.barcodeReceived.emit(barcode.strip())

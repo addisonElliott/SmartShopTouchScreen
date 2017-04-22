@@ -44,13 +44,6 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
         # Set the current selection model to be the favorite's tab selection model
         self.currentSelectionModel = self.favoritesTableView.selectionModel()
 
-        # Create an empty tabDict which will contain a dictionary for each tab in the window, query all categories and
-        # add each tab to the window
-        self.tabDict = {}
-        self.categories = self.dbManager.GetCategories(True)
-        for category in self.categories:
-            self.addTab(category['id'], category['name'])
-
         # Enable the add and remove button because they are only shown when items are selected on the current tab
         self.addBtn.setEnabled(False)
         self.removeBtn.setEnabled(False)
@@ -130,7 +123,25 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
     def showEvent(self, event):
         # On show, set the current tab to favorite's, clear selections for each tab and set sort back to default
         self.categoryTabWidget.setCurrentIndex(0)
+        self.favoritesTabModel.select()
         self.favoritesTableView.selectionModel().clearSelection()
+
+        # Create an empty tabDict which will contain a dictionary for each tab in the window
+        self.tabDict = {}
+
+        # Loop through every category and remove it except for the favorite's tab (index 0)
+        # Keep pulling items from index 1 until there is no index 1
+        for x in range(1, self.categoryTabWidget.count()):
+            widget = self.categoryTabWidget.widget(1)
+            self.categoryTabWidget.removeTab(1) # Keep removing the next tab after favorite's window and they will all be gone
+            widget.deleteLater()
+
+        # Query all categories and add each tab to the window
+        self.categories = self.dbManager.GetCategories(True)
+        for category in self.categories:
+            self.addTab(category['id'], category['name'])
+
+        # On show, set the current tab to favorite's, clear selections for each tab and set sort back to default
         for id, category in self.tabDict.items():
             category.listView.selectionModel().clearSelection()
             category.listView.sortByColumn(0, Qt.AscendingOrder)

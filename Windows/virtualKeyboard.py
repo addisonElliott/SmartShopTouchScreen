@@ -111,6 +111,16 @@ class VirtualKeyboard(QDialog, virtualKeyboard_ui.Ui_VirtualKeyboard):
         # Give focus to the line edit so you can see where the caret is located
         self.lineEdit.setFocus()
 
+        # When focus is given to a QLineEdit which has text in it, it will select ALL of the text. This is not desirable
+        # in our case, since we want the user to be able to append text on. So, we need to deselect the text. However,
+        # the actual process of selecting the text occurs at the end of this event loop, so we put a singleShot timer
+        # that will run at the very end of the event loop to deselect
+        QTimer.singleShot(0, self.deselectOnFocus)
+
+    @pyqtSlot()
+    def deselectOnFocus(self):
+        self.lineEdit.deselect()
+
     def closeDialog(self, saveText=True):
         # Set text variable regardless if execution was successful
         self.text = self.lineEdit.text()

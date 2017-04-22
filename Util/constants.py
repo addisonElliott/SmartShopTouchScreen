@@ -8,7 +8,7 @@ from datetime import *
 
 # Enables/Disables the barcode scanner device. If enabled, this will actually search for the barcode scanners on the USB
 # ports and try to connect with them. Only disable this for developer mode where the barcode scanners will not be used
-barcodeScannerDeviceEnable = False
+barcodeScannerDeviceEnable = True
 
 # Enables/Disables shortcuts for the barcode scanner. If enabled, this will allow the user to press Ctrl+1 and Ctrl+2
 # which enables an input dialog box to input the barcode to be sent.
@@ -35,6 +35,9 @@ dbPort = "5432"
 
 # Maximum length that a category name can be
 maxCategoryNameLength = 20
+
+# Maximum length that an item name can be
+maxItemNameLength = 20
 
 # The time of day where the usage rate will be calculated on a day by day basis
 # Order is hour, minutes, and seconds. They should be normalized between their normal values (e.g. hour between 1 and 23)

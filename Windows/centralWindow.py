@@ -23,13 +23,6 @@ class CentralWindow(QMainWindow):
     def __init__(self, config, parent=None):
         super(CentralWindow, self).__init__(parent)
 
-        # Save config variable in class
-        self.config = config
-
-        self.dbManager = DatabaseManager(constants.dbDatabase, constants.dbUsername, constants.dbPassword,
-                                    constants.dbHost, constants.dbPort)
-        self.barcodeManager = BarcodeManager(self.dbManager, self.config)
-
         # Initialize central widget, horizontal layout and stacked which which fills the entire QMainWindow
         self.centralwidget = QWidget(self)
         self.horizontalLayout = QHBoxLayout(self.centralwidget)
@@ -38,6 +31,14 @@ class CentralWindow(QMainWindow):
         self.stackedWidget = QStackedWidget(self.centralwidget)
         self.horizontalLayout.addWidget(self.stackedWidget)
         self.setCentralWidget(self.centralwidget)
+
+        # Save config variable in class
+        self.config = config
+
+        self.dbManager = DatabaseManager(constants.dbDatabase, constants.dbUsername, constants.dbPassword,
+                                    constants.dbHost, constants.dbPort)
+
+        self.barcodeManager = BarcodeManager(self.dbManager, self.config, self)
 
         # Add main window to list of stacked widgets
         self.mainWindow = MainWindow(self, self.config, self.dbManager, self.barcodeManager, self.stackedWidget)
@@ -159,7 +160,7 @@ class CentralWindow(QMainWindow):
 
     @pyqtSlot(str)
     def primaryScanner_barcodeReceived(self, barcode):
-        print("Primary barcode scanner got: %s" % barcode)
+        print("Primary barcode scanner got: %s, %s" % (barcode, str(datetime.now())))
         checkedIn = not self.mainWindow.checkInOutBtn.isChecked()
         if checkedIn:
             self.barcodeManager.AddItemToInventory(barcode)
