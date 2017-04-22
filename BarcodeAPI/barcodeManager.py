@@ -156,7 +156,7 @@ class BarcodeManager:
                 expirationDate = str(datetime(month=int(month), day=int(day), year=int(year)).date())
 
             quantity = int(expirationBoxDialog.qty_combo.currentText())
-        else:
+
             callbackFunction = expirationBoxDialog.callbackFunction
             callbackParam = expirationBoxDialog.callbackParam
 

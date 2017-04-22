@@ -53,19 +53,19 @@ class CheckOutBox(QDialog, CheckOutBox_ui.Ui_CheckOutBox):
 
     @pyqtSlot(str)
     def primaryScanner_barcodeReceived(self, barcode):
+        # Close this dialog box, indicate to parent what the callback function and parameter should be
+        self.accept()
+
         self.callbackFunction = self.centralWindow.primaryScanner_barcodeReceived
         self.callbackParam = barcode
 
-        # Close this dialog box, indicate to parent what the callback function and parameter should be
-        self.accept()
-
     @pyqtSlot(str)
     def secondaryScanner_barcodeReceived(self, barcode):
-        self.callbackFunction = self.centralWindow.secondaryScanner_barcodeReceived
-        self.callbackParam = barcode
-
         # Close this dialog box, indicate to parent what the callback function and parameter should be
         self.accept()
+
+        self.callbackFunction = self.centralWindow.secondaryScanner_barcodeReceived
+        self.callbackParam = barcode
 
     @pyqtSlot(bool, bool)
     def on_accept_button_clicked(self, checked, longPressed):
