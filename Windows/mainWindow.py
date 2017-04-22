@@ -35,21 +35,13 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
         self.gridLayout_3.removeWidget(self.floatingPB1)
         self.floatingPB1.hide()
         self.floatingPB1.setEnabled(False)
-        floatingPB1Width = 70
-        floatingPB1Height = 70
-        floatingPB1X = 280
-        floatingPB1Y = 390
-        self.floatingPB1.setGeometry(floatingPB1X, floatingPB1Y, floatingPB1Width, floatingPB1Height)
+        self.floatingPB1.setGeometry(constants.removeReqShoppingItemBtnGeometry)
         self.floatingPB1.raise_()
 
         self.gridLayout_3.removeWidget(self.floatingPB2)
-        self.floatingPB2.setEnabled(False)
         self.floatingPB2.hide()
-        floatingPB2Width = 70
-        floatingPB2Height = 70
-        floatingPB2X = 630
-        floatingPB2Y = 390
-        self.floatingPB2.setGeometry(floatingPB2X, floatingPB2Y, floatingPB2Width, floatingPB2Height)
+        self.floatingPB2.setEnabled(False)
+        self.floatingPB2.setGeometry(constants.removeRecShoppingItemBtnGeometry)
         self.floatingPB2.raise_()
 
     @pyqtSlot()
