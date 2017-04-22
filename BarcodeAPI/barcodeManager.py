@@ -8,7 +8,6 @@ from Windows.CheckOutBox import *
 class BarcodeManager:
     def __init__(self, dbManager, config, centralWindow):
         self.dbManager = dbManager
-        self.expBox = ExpirationBox(config)
         self.checkOutBox = CheckOutBox(config)
 
         self.config = config
