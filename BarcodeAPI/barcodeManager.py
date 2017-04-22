@@ -45,26 +45,29 @@ class BarcodeManager:
         data = self.GetJsonFrom3rdParty(barcode)
         item = {}
         if data['status']['code'] == '200' and 'attributes' in data['product'] and 'product' in data['product']['attributes']:
-            product = data['product']['attributes']['product']
-            newItemDetailsDialog.itemName_textBox.setText(product[:min(constants.maxItemNameLength, len(product))])
             if 'category_text' in data['product']['attributes']:
-                isFound = False
                 category = data['product']['attributes']['category_text']
 
                 # Search for a category name that is the same as category
                 index = newItemDetailsDialog.category_combo.findText(category.lower(), Qt.MatchFixedString)
                 if index != -1:
-                    newItemDetailsDialog.category_combo.setCurrentIndex(index)
+                    # Only change the index of the combo box if it is enabled. The combo box will not be enabled if the
+                    # text entered matches a name already into the database and so it will be set to that and disabled
+                    if newItemDetailsDialog.category_combo.isEnabled():
+                        newItemDetailsDialog.category_combo.setCurrentIndex(index)
                 else:
                     # If the category was not found, then add it to the combo box with an asterisk meaning it is not
                     # in the database yet. The category will only be added if that user selects that as their category
                     newItemDetailsDialog.pending_category = category
                     newItemDetailsDialog.updateCategories()
-                    newItemDetailsDialog.category_combo.setCurrentIndex(newItemDetailsDialog.category_combo.findData(newItemDetailsDialog.pendingCategoryText))
 
-                    #newItemDetailsDialog.category_combo.addItem(category)
-                    #newItemDetailsDialog.category_combo.setCurrentIndex(newItemDetailsDialog.category_combo.count() - 1)
-                    #self.dbManager.AddCategory(category, newItemDetailsDialog.category_combo.count())
+                    # Only change the index of the combo box if it is enabled. The combo box will not be enabled if the
+                    # text entered matches a name already into the database and so it will be set to that and disabled
+                    if newItemDetailsDialog.category_combo.isEnabled():
+                        newItemDetailsDialog.category_combo.setCurrentIndex(newItemDetailsDialog.category_combo.findData(newItemDetailsDialog.pendingCategoryText))
+
+            product = data['product']['attributes']['product']
+            newItemDetailsDialog.itemName_textBox.setText(product[:min(constants.maxItemNameLength, len(product))])
 
         if newItemDetailsDialog.exec():
             item['name'] = newItemDetailsDialog.itemName_textBox.text()
@@ -94,7 +97,20 @@ class BarcodeManager:
                 expirationDate = str(datetime(month=int(month), day=int(day), year=int(year)).date())
 
             item['expirationDate'] = expirationDate
-            id = self.dbManager.AddItemToInventory(item)
+
+            # Now that we have the information from the dialog box, we are going to do a basic check to see if the item
+            # name exists in inventory already.
+            existingItem = self.dbManager.GetItemFromInventory(name=item['name'])
+            if existingItem:
+                # If the item does exist already, then set the id to be the existing item ID
+                # Also, update the existing item in inventory with new expiration date and increment quantity
+                id = existingItem['item']
+                cachedItem = {'item': id, 'pkg_qty': item['pkgQty']}
+                self.dbManager.UpdateItemInDatabase(cachedItem, item['expirationDate'], item['qty'])
+            else:
+                # Otherwise, add the item to inventory based on the information entered and get the id
+                id = self.dbManager.AddItemToInventory(item)
+
             self.dbManager.AddUPCToCachedUPCs(barcode, id, item['pkgQty'])
 
     def RemoveFromInventory(self, barcode, qty=1):

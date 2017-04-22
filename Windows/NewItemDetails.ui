@@ -338,7 +338,7 @@ QGroupBox::title
 }</string>
      </property>
      <property name="title">
-      <string>New Item Details</string>
+      <string>Item Details</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -446,6 +446,9 @@ QGroupBox::title
         </property>
         <property name="maxLength">
          <number>20</number>
+        </property>
+        <property name="clearButtonEnabled">
+         <bool>false</bool>
         </property>
        </widget>
       </item>

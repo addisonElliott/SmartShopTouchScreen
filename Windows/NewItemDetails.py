@@ -7,6 +7,10 @@ from Util import constants
 from Util import scroller
 from datetime import datetime
 from Windows.virtualKeyboard import *
+from Util.SqlTableModel import *
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class NewItemDetails(QDialog, NewItemDetails_ui.Ui_NewItemDetails):
@@ -24,6 +28,18 @@ class NewItemDetails(QDialog, NewItemDetails_ui.Ui_NewItemDetails):
 
         # Remove title bar
         self.setWindowFlags(Qt.Dialog | Qt.FramelessWindowHint)
+
+        self.itemNameModel = SqlTableModel(self.dbManager.connection, columnSortName='rank',
+                                        columnSortOrder=Qt.DescendingOrder,
+                                        customQuery='SELECT item, name, CASE\n'
+                                        'WHEN name LIKE %s THEN 3\n'
+                                        'WHEN name ILIKE %s THEN 2\n'
+                                        'WHEN name LIKE %s THEN 1\n'
+                                        'ELSE 0 END AS rank FROM inventory\n'
+                                        'WHERE name ILIKE %s', filterArgs=('%', '%%', '%', '%%'),
+                                        displayColumnMapping=(1,), limitCount = 10, hideItems=True)
+        self.itemName_textBox.autocompleteModel = self.itemNameModel
+        self.itemName_textBox.autocompleteUpdateCallback = self.itemName_updateSuggestions
 
         scroller.setupScrolling(self.category_combo.view())
         # Set the combobox view to scroll per pixel so the kinetic scrolling via touchscreen isnt ridiculously fast
@@ -95,9 +111,40 @@ class NewItemDetails(QDialog, NewItemDetails_ui.Ui_NewItemDetails):
                 # Set current index to be the added category
                 self.category_combo.setCurrentIndex(self.category_combo.count() - 2)
 
+    @pyqtSlot(str)
+    def on_itemName_textBox_textChanged(self, string):
+        # The current item name in the textbox changed, see if there is an item in the database with this name already
+        item = self.dbManager.GetItemFromInventory(name=string)
+        if item:
+            # If so, this wont create a new item but instead will use the existing item. Set category to the existing
+            # item category and set favorite's item checked to existing item. Then disable these controls since they
+            # cannot be configured
+            self.category_combo.setCurrentIndex(self.category_combo.findData(item['category']))
+            self.category_combo.setEnabled(False)
+            self.favorites_check.setChecked(item['favorites_index'] is not None)
+            self.favorites_check.setEnabled(False)
+        else:
+            # Otherwise, if the item does not exist, enable these controls since they are configurable
+            self.category_combo.setEnabled(True)
+            self.favorites_check.setEnabled(True)
+
+    @pyqtSlot(str)
+    def itemName_updateSuggestions(self, str):
+        if str:
+            prefixMatch = str + '%'
+            anyMatch = '%' + prefixMatch
+            self.itemNameModel.filterArgs = (prefixMatch, prefixMatch, anyMatch, anyMatch)
+            self.itemNameModel.hideItems = False
+        else:
+            self.itemNameModel.hideItems = True
+        self.itemNameModel.select()
+
     @pyqtSlot(bool, bool)
     def on_accept_button_clicked(self, checked, longPressed):
-        self.accept()
+        if len(self.itemName_textBox.text()) > 0:
+            self.accept()
+        else:
+            logger.warning("Invalid (empty) name entered into new item details dialog box.")
 
     @pyqtSlot(bool, bool)
     def on_cancel_button_clicked(self, checked, longPressed):

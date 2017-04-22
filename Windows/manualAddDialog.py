@@ -7,10 +7,14 @@ from Util import scroller
 from Util.enums import *
 from Windows.virtualKeyboard import *
 from Util import constants
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class ManualAddDialog(QDialog, manualAddDialog_ui.Ui_ManualAddDialog):
     newCategoryText = 'newCategory'
+    warningItemExists = 'Item Already Exists!'
 
     def __init__(self, config, dbManager, categories, currentCategory = 0, parent=None):
         super(ManualAddDialog, self).__init__(parent)
@@ -32,6 +36,8 @@ class ManualAddDialog(QDialog, manualAddDialog_ui.Ui_ManualAddDialog):
 
         self.updateCategories()
         self.categoryComboBox.setCurrentIndex(currentCategory)
+
+        self.warningLabel.setText("")
 
     def updateCategories(self):
         self.categoryComboBox.clear()
@@ -61,13 +67,23 @@ class ManualAddDialog(QDialog, manualAddDialog_ui.Ui_ManualAddDialog):
                 # Set current index to be the added category
                 self.categoryComboBox.setCurrentIndex(self.categoryComboBox.count() - 2)
 
+    @pyqtSlot(str)
+    def on_nameEdit_textChanged(self, str):
+        # When text changes, check if the item exists and give the user a warning if it does
+        # Otherwise, remove the warning if it is present already
+        if self.dbManager.itemExists(str):
+            self.warningLabel.setText(self.warningItemExists)
+        else:
+            self.warningLabel.setText("")
+
     @pyqtSlot(bool, bool)
     def on_confirmBtn_clicked(self, checked, longPressed):
         if (self.categoryComboBox.currentIndex() >= 0 and self.categoryComboBox.currentIndex() < len(self.categories)) \
-            and (len(self.nameEdit.text()) > 0):
+            and (len(self.nameEdit.text()) > 0) and not self.dbManager.itemExists(self.nameEdit.text):
             self.accept()
         else:
-            print('Please enter data into all of the fields to continue')
+            logger.warning("Invalid information entered into manual add dialog box. Four possible issues: no category "
+                           "selected, no item name entered, or the item name already exists in the database")
 
     @pyqtSlot(bool, bool)
     def on_cancelBtn_clicked(self, checked, longPressed):

@@ -27,10 +27,23 @@ class DatabaseManager:
 
         return self.cursor.fetchone()[0]
 
-    def GetItemFromInventory(self, id):
-        self.cursor.execute("SELECT qty,avg_shelf_time,last_buy_date FROM inventory WHERE item = %s", (id,))
+    def itemExists(self, name):
+        self.cursor.execute("SELECT COUNT(*) FROM inventory WHERE name = %s", (name,))
 
-        return self.cursor.fetchone()
+        return self.cursor.fetchone()[0] != 0
+
+    def GetItemFromInventory(self, id = None, name = None):
+        if id is not None:
+            self.cursor.execute("SELECT * FROM inventory WHERE item = %s", (id,))
+        elif name is not None:
+            self.cursor.execute("SELECT * FROM inventory WHERE name = %s", (name,))
+        else:
+            return None
+
+        if self.cursor.rowcount == 0:
+            return None
+        else:
+            return self.cursor.fetchone()
 
     def AddItemToInventory(self, item):
         if not 'name' in item:
@@ -72,12 +85,12 @@ class DatabaseManager:
         self.connection.commit()
 
     def UpdateItemInDatabase(self, cachedItem, expirationDate, quantity):
-        inventoryItem = self.GetItemFromInventory(cachedItem[0])
+        inventoryItem = self.GetItemFromInventory(cachedItem['item'])
         if expirationDate is '':
             expirationDate = None
             
         self.cursor.execute("UPDATE inventory SET qty = %s, last_buy_date = %s, expiration = %s WHERE item = %s",
-                                ((quantity * cachedItem['pkg_qty']) + inventoryItem[0], str(datetime.now()),
+                                ((quantity * cachedItem['pkg_qty']) + inventoryItem['qty'], str(datetime.now()),
                                 expirationDate, cachedItem['item']))
 
         self.connection.commit()
@@ -94,7 +107,7 @@ class DatabaseManager:
 
     def DecrementQuantityForItem(self, item, qty=1):
         inventoryItem = self.GetItemFromInventory(item[0])
-        self.cursor.execute("UPDATE inventory SET qty = %s WHERE item = %s", (inventoryItem[0] - qty, item[0]))
+        self.cursor.execute("UPDATE inventory SET qty = %s WHERE item = %s", (inventoryItem['qty'] - qty, item[0]))
         self.connection.commit()
 
     def AddCategory(self, name, order_index = -1):

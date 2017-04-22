@@ -105,18 +105,24 @@
      <property name="topMargin">
       <number>0</number>
      </property>
-     <item>
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+     <item alignment="Qt::AlignHCenter">
+      <widget class="QLabel" name="warningLabel">
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>15</pointsize>
+        </font>
        </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
+       <property name="styleSheet">
+        <string notr="true">QLabel
+{
+	color: red;
+}</string>
        </property>
-      </spacer>
+       <property name="text">
+        <string>Item Already Exists!</string>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="TouchButton" name="confirmBtn">
