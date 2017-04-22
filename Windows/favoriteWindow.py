@@ -216,13 +216,13 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
             records = tabCategory.listModel.getSelectedRecords(self.currentSelectionModel.selectedIndexes())
 
         if longPressed:
-            i = 4
             # Bring up a box for each one that asks how many to remove
             # DeSelect all items currently selected
+            pass
         else:
             # Subtract one from each of the items selected
             # DeSelect all items currently selected
-            i = 5
+            pass
 
     @pyqtSlot(bool, bool)
     def on_listAddBtn_clicked(self, checked, longPressed):

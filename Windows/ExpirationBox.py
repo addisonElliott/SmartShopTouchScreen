@@ -95,9 +95,9 @@ class ExpirationBox(QDialog, ExpirationBox_ui.Ui_ExpirationBox):
         self.callbackParam = barcode
 
     def ResetToDefault(self):
-        self.month_combo.setCurrentIndex(datetime.now().month)
-        self.day_combo.setCurrentIndex(datetime.now().day)
-        self.year_combo.setCurrentIndex(1)
+        self.month_combo.setCurrentIndex(0)
+        self.day_combo.setCurrentIndex(0)
+        self.year_combo.setCurrentIndex(0)
         self.qty_combo.setCurrentIndex(0)
 
     @pyqtSlot(bool, bool)
