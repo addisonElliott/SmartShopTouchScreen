@@ -78,7 +78,6 @@ class DatabaseManager:
         self.updatePurchaseHistory(id, datetime.now().date(), item['qty'] * item['pkgQty'])
 
         return id
-        return 1
 
     def AddUPCToCachedUPCs(self, barcode, id, pkgQty):
         self.cursor.execute("INSERT INTO cached_upcs (upc, item, pkg_qty) VALUES (%s, %s, %s)", (barcode, id, pkgQty))
@@ -105,10 +104,14 @@ class DatabaseManager:
                                                                                 'qty': qty})
         self.connection.commit()
 
-    def DecrementQuantityForItem(self, item, qty=1):
-        inventoryItem = self.GetItemFromInventory(item[0])
-        self.cursor.execute("UPDATE inventory SET qty = %s WHERE item = %s", (inventoryItem['qty'] - qty, item[0]))
-        self.connection.commit()
+    def DecrementQuantityForItem(self, id, itemQty, decQty=1):
+        newQty = itemQty - decQty
+        if newQty <= 0:
+            self.cursor.execute("UPDATE inventory SET qty = %s, expiration = %s WHERE item = %s", (0, None, id))
+            self.connection.commit()
+        elif newQty > 0:
+            self.cursor.execute("UPDATE inventory SET qty = %s WHERE item = %s", (newQty, id))
+            self.connection.commit()
 
     def AddCategory(self, name, order_index = -1):
         if order_index == -1:

@@ -94,6 +94,12 @@ class ExpirationBox(QDialog, ExpirationBox_ui.Ui_ExpirationBox):
         self.callbackFunction = self.centralWindow.secondaryScanner_barcodeReceived
         self.callbackParam = barcode
 
+    def ResetToDefault(self):
+        self.month_combo.setCurrentIndex(datetime.now().month)
+        self.day_combo.setCurrentIndex(datetime.now().day)
+        self.year_combo.setCurrentIndex(1)
+        self.qty_combo.setCurrentIndex(0)
+
     @pyqtSlot(bool, bool)
     def on_accept_button_clicked(self, checked, longPressed):
         self.accept()

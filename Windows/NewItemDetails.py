@@ -139,6 +139,16 @@ class NewItemDetails(QDialog, NewItemDetails_ui.Ui_NewItemDetails):
             self.itemNameModel.hideItems = True
         self.itemNameModel.select()
 
+    def ResetToDefault(self):
+        self.itemName_textBox.setText('')
+        self.category_combo.setCurrentIndex(0)
+        self.itemQty_combo.setCurrentIndex(0)
+        self.pkgQty_combo.setCurrentIndex(0)
+        self.month_combo.setCurrentIndex(0)
+        self.day_combo.setCurrentIndex(0)
+        self.year_combo.setCurrentIndex(0)
+        self.favorites_check.setChecked(False)
+
     @pyqtSlot(bool, bool)
     def on_accept_button_clicked(self, checked, longPressed):
         if len(self.itemName_textBox.text()) > 0:
