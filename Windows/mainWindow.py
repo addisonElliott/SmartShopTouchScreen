@@ -90,7 +90,7 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
 
     @pyqtSlot(bool, bool)
     def on_reqItemsRemoveBtn_clicked(self, checked, longPressed):
-        records = self.reqItemsModel.getSelectedRecords(self.reqItemsTableView.selectionModel().selectedIndexes())
+        records = self.reqItemsModel.getSelectedRecords(self.reqItemsTableView.selectionModel().selectedRows())
 
         for record in records:
             self.dbManager.removeItemFromRequiredList(record['item'])
@@ -101,7 +101,7 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
 
     @pyqtSlot(bool, bool)
     def on_recItemsRemoveBtn_clicked(self, checked, longPressed):
-        records = self.recItemsModel.getSelectedRecords(self.recItemsTableView.selectionModel().selectedIndexes())
+        records = self.recItemsModel.getSelectedRecords(self.recItemsTableView.selectionModel().selectedRows())
 
         for record in records:
             self.dbManager.removeItemFromRecommendedList(record['item'])

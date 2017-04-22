@@ -79,7 +79,7 @@ class ManualAddDialog(QDialog, manualAddDialog_ui.Ui_ManualAddDialog):
     @pyqtSlot(bool, bool)
     def on_confirmBtn_clicked(self, checked, longPressed):
         if (self.categoryComboBox.currentIndex() >= 0 and self.categoryComboBox.currentIndex() < len(self.categories)) \
-            and (len(self.nameEdit.text()) > 0) and not self.dbManager.itemExists(self.nameEdit.text):
+            and (len(self.nameEdit.text()) > 0) and not self.dbManager.itemExists(self.nameEdit.text()):
             self.accept()
         else:
             logger.warning("Invalid information entered into manual add dialog box. Four possible issues: no category "

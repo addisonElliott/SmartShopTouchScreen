@@ -116,6 +116,7 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
 
             # Get selection model based on category ID
             self.currentSelectionModel = self.tabDict[categoryID].listView.selectionModel()
+
         hasSelection = not self.currentSelectionModel.selection().isEmpty()
         self.addBtn.setEnabled(hasSelection)
         self.removeBtn.setEnabled(hasSelection)
@@ -165,14 +166,14 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
 
         # Handle favorite's tab versus category list
         if index == 0:
-            records = self.favoritesTabModel.getSelectedRecords(self.currentSelectionModel.selectedIndexes())
+            records = self.favoritesTabModel.getSelectedRecords(self.currentSelectionModel.selectedRows())
         else:
             # Get category ID by looking up index in categories variable
             categoryID = self.categories[index - 1]['id']
 
             # Get selection model based on category ID
             tabCategory = self.tabDict[categoryID]
-            records = tabCategory.listModel.getSelectedRecords(self.currentSelectionModel.selectedIndexes())
+            records = tabCategory.listModel.getSelectedRecords(self.currentSelectionModel.selectedRows())
 
         if longPressed:
             # Only take the first record and do this to it
@@ -185,8 +186,6 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
 
             if callbackFunction and callbackParam:
                 callbackFunction(callbackParam)
-
-            self.currentSelectionModel.clearSelection()
         else:
             # Update each record that is currently selected
             for record in records:
@@ -194,7 +193,9 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
                 cachedItem = {'item': record['item'], 'pkg_qty': 1}
                 self.dbManager.UpdateItemInDatabase(cachedItem, None, 1)
 
-            self.currentSelectionModel.clearSelection()
+        # Clear the current selection since it has been handled and refresh the lists since changes were made to database
+        self.currentSelectionModel.clearSelection()
+        self.refreshLists()
 
     @pyqtSlot(bool, bool)
     def on_removeBtn_clicked(self, checked, longPressed):
@@ -202,14 +203,14 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
 
         # Handle favorite's tab versus category list
         if index == 0:
-            records = self.favoritesTabModel.getSelectedRecords(self.currentSelectionModel.selectedIndexes())
+            records = self.favoritesTabModel.getSelectedRecords(self.currentSelectionModel.selectedRows())
         else:
             # Get category ID by looking up index in categories variable
             categoryID = self.categories[index - 1]['id']
 
             # Get selection model based on category ID
             tabCategory = self.tabDict[categoryID]
-            records = tabCategory.listModel.getSelectedRecords(self.currentSelectionModel.selectedIndexes())
+            records = tabCategory.listModel.getSelectedRecords(self.currentSelectionModel.selectedRows())
 
         if longPressed:
             # Only take the first record and do this to it
@@ -223,14 +224,14 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
 
             if callbackFunction and callbackParam:
                 callbackFunction(callbackParam)
-
-            self.currentSelectionModel.clearSelection()
         else:
             # Update each record that is currently selected
             for record in records:
                 self.dbManager.DecrementQuantityForItem(record['item'], 1)
 
-            self.currentSelectionModel.clearSelection()
+        # Clear the current selection since it has been handled and refresh the lists since changes were made to database
+        self.currentSelectionModel.clearSelection()
+        self.refreshLists()
 
     @pyqtSlot(bool, bool)
     def on_listAddBtn_clicked(self, checked, longPressed):
@@ -275,19 +276,40 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
 
     @pyqtSlot(bool, bool)
     def on_shoppingListAddBtn_clicked(self, checked, longPressed):
+        # If the current selection model has nothing selected, then do nothing
+        if not self.currentSelectionModel.hasSelection():
+            return
+
         index = self.categoryTabWidget.currentIndex()
 
         # Handle favorite's tab versus category list
         if index == 0:
-            records = self.favoritesTabModel.getSelectedRecords(self.currentSelectionModel.selectedIndexes())
+            records = self.favoritesTabModel.getSelectedRecords(self.currentSelectionModel.selectedRows())
         else:
             # Get category ID by looking up index in categories variable
             categoryID = self.categories[index - 1]['id']
 
             # Get selection model based on category ID
             tabCategory = self.tabDict[categoryID]
-            records = tabCategory.listModel.getSelectedRecords(self.currentSelectionModel.selectedIndexes())
+            records = tabCategory.listModel.getSelectedRecords(self.currentSelectionModel.selectedRows())
 
         itemList = tuple(record['item'] for record in records)
         self.dbManager.setRequiredItems(itemList)
         self.currentSelectionModel.clearSelection()
+
+    def refreshLists(self):
+        # Refresh the favorite's tile view
+        self.favoritesTabModel.select()
+
+        # Loop through each category and refresh each of the lists
+        for id, category in self.tabDict.items():
+            category.listModel.select()
+
+    @pyqtSlot(str)
+    def primaryScanner_barcodeReceived(self, barcode):
+        self.refreshLists()
+
+    @pyqtSlot(str)
+    def secondaryScanner_barcodeReceived(self, barcode):
+        print("Secondary barcode scanner got: %s" % barcode)
+        self.refreshLists()
