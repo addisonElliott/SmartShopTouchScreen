@@ -93,7 +93,8 @@ class DatabaseManager:
 
         # Update the item in inventory. Only update the expiration date if the date given is more recent than the existing
         # one
-        self.cursor.execute("UPDATE inventory SET qty = %(qty)s, last_buy_date = %(buy_date)s, expiration = "
+        self.cursor.execute("UPDATE inventory SET qty = %(qty)s, last_buy_date = %(buy_date)s, list_flags = 0, "
+                            "expiration = "
                             "CASE "
                             "WHEN expiration IS NULL THEN DATE(%(expiration_date)s) "
                             "WHEN DATE(%(expiration_date)s) IS NULL THEN expiration "
@@ -118,8 +119,14 @@ class DatabaseManager:
         self.connection.commit()
 
     def DecrementQuantityForItem(self, id, decQty=1):
-        self.cursor.execute("UPDATE inventory SET qty = GREATEST(qty - %s, 0), expiration = %s WHERE item = %s",
-                            (decQty, None, id))
+        self.cursor.execute("UPDATE inventory SET qty = GREATEST(qty - %(qty)s, 0), list_flags = "
+                            "CASE "
+                            "WHEN list_flags = 0 AND (qty - %(qty)s) <= 0 THEN 2 "
+                            "ELSE list_flags "
+                            "END, "
+                            "expiration = NULL WHERE item = %(item)s",
+                            {'qty': decQty, 'item': id})
+
         self.connection.commit()
 
     def AddCategory(self, name, order_index = -1):
