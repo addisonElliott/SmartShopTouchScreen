@@ -51,12 +51,7 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
         self.recItemsModel.select()
 
         # When the window is shown, make sure the floating remove buttons are hidden
-        self.reqItemsRemoveBtn.setEnabled(False)Added functionality when an item's quantity goes to zero, it will be sent to the recommended items list if its not on a list already
-
-When an item is bought, update the list flags to be 0. If it was on a list or it was being ignored and the item is bought, put it back to nothing.
-
-Hide the floating remove buttons are main window screen each time window is shown. If you selected an item and then moved to new screen and moved back, the selection would be gone but the floating button would be present.
-        self.reqItemsRemoveBtn.setVisible(False)
+        self.reqItemsRemoveBtn.setEnabled(False) self.reqItemsRemoveBtn.setVisible(False)
         self.recItemsRemoveBtn.setEnabled(False)
         self.recItemsRemoveBtn.setVisible(False)
 
