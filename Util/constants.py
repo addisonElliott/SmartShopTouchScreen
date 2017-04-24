@@ -45,6 +45,7 @@ maxItemNameLength = 20
 # Floating Push Buttons on Main Page to Remove Items from Shopping Lists
 removeReqShoppingItemBtnGeometry = QRect(280, 390, 58 + 12, 58 + 12)
 removeRecShoppingItemBtnGeometry = QRect(634, 390, 58 + 12, 58 + 12)
+removeMoveToReqListBtnGeometry = QRect(576-12, 390, 58 + 12, 58 + 12)
 
 # The time of day where the usage rate will be calculated on a day by day basis
 # Order is hour, minutes, and seconds. They should be normalized between their normal values (e.g. hour between 1 and 23)

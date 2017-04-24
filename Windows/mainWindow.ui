@@ -66,25 +66,73 @@
      <property name="bottomMargin">
       <number>6</number>
      </property>
-     <item row="1" column="0">
-      <widget class="QLabel" name="label_3">
-       <property name="font">
-        <font>
-         <family>Cronus Round</family>
-         <pointsize>16</pointsize>
-         <weight>50</weight>
-         <bold>false</bold>
-        </font>
+     <item row="0" column="2">
+      <spacer name="horizontalSpacer_7">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>6</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="0" column="6">
+      <spacer name="horizontalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>6</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="4" column="0">
+      <widget class="TouchButton" name="recItemsRemoveBtn">
+       <property name="styleSheet">
+        <string notr="true">background-color: transparent;
+border: 0;</string>
        </property>
        <property name="text">
-        <string>Required Items</string>
+        <string/>
        </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
+       <property name="icon">
+        <iconset resource="../Resource_BY.qrc">
+         <normaloff>:/Icons/Icons/RedMinusIcon_Finished.png</normaloff>:/Icons/Icons/RedMinusIcon_Finished.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>58</width>
+         <height>58</height>
+        </size>
        </property>
       </widget>
      </item>
-     <item row="0" column="7" rowspan="5">
+     <item row="0" column="3" rowspan="7">
+      <widget class="Line" name="line_2">
+       <property name="lineWidth">
+        <number>1</number>
+       </property>
+       <property name="midLineWidth">
+        <number>1</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="7" rowspan="7">
       <layout class="QVBoxLayout" name="verticalLayout_4">
        <property name="rightMargin">
         <number>0</number>
@@ -319,90 +367,6 @@ border: 0;</string>
        </item>
       </layout>
      </item>
-     <item row="1" column="1">
-      <widget class="QLabel" name="label_4">
-       <property name="font">
-        <font>
-         <family>Cronus Round</family>
-         <pointsize>16</pointsize>
-         <weight>50</weight>
-         <bold>false</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>Recommended Items</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="3" rowspan="5">
-      <widget class="Line" name="line_2">
-       <property name="lineWidth">
-        <number>1</number>
-       </property>
-       <property name="midLineWidth">
-        <number>1</number>
-       </property>
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="6">
-      <spacer name="horizontalSpacer_3">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>6</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item row="2" column="0">
-      <widget class="TouchButton" name="reqItemsRemoveBtn">
-       <property name="styleSheet">
-        <string notr="true">background-color: transparent;
-border: 0;</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="../Resource_BY.qrc">
-         <normaloff>:/Icons/Icons/RedMinusIcon_Finished.png</normaloff>:/Icons/Icons/RedMinusIcon_Finished.png</iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>58</width>
-         <height>58</height>
-        </size>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="2">
-      <spacer name="horizontalSpacer_7">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>6</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
      <item row="0" column="0" colspan="2">
       <widget class="TouchButton" name="printShoppingListButton">
        <property name="minimumSize">
@@ -445,28 +409,7 @@ border: 0;</string>
        </property>
       </widget>
      </item>
-     <item row="3" column="0">
-      <widget class="TouchButton" name="recItemsRemoveBtn">
-       <property name="styleSheet">
-        <string notr="true">background-color: transparent;
-border: 0;</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="../Resource_BY.qrc">
-         <normaloff>:/Icons/Icons/RedMinusIcon_Finished.png</normaloff>:/Icons/Icons/RedMinusIcon_Finished.png</iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>58</width>
-         <height>58</height>
-        </size>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="1">
+     <item row="6" column="1">
       <widget class="QTableView" name="recItemsTableView">
        <property name="font">
         <font>
@@ -529,7 +472,46 @@ border: 0;</string>
        </attribute>
       </widget>
      </item>
-     <item row="4" column="0">
+     <item row="1" column="1">
+      <widget class="QLabel" name="label_4">
+       <property name="font">
+        <font>
+         <family>Cronus Round</family>
+         <pointsize>16</pointsize>
+         <weight>50</weight>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Recommended Items</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="TouchButton" name="reqItemsRemoveBtn">
+       <property name="styleSheet">
+        <string notr="true">background-color: transparent;
+border: 0;</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../Resource_BY.qrc">
+         <normaloff>:/Icons/Icons/RedMinusIcon_Finished.png</normaloff>:/Icons/Icons/RedMinusIcon_Finished.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>58</width>
+         <height>58</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="0">
       <widget class="QTableView" name="reqItemsTableView">
        <property name="font">
         <font>
@@ -584,6 +566,45 @@ border: 0;</string>
        <attribute name="verticalHeaderVisible">
         <bool>false</bool>
        </attribute>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="font">
+        <font>
+         <family>Cronus Round</family>
+         <pointsize>16</pointsize>
+         <weight>50</weight>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Required Items</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="0">
+      <widget class="TouchButton" name="moveToReqListBtn">
+       <property name="styleSheet">
+        <string notr="true">background-color: transparent;
+border: 0;</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../Resource_BY.qrc">
+         <normaloff>:/Icons/Icons/ListIcon_Finished.png</normaloff>:/Icons/Icons/ListIcon_Finished.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>58</width>
+         <height>58</height>
+        </size>
+       </property>
       </widget>
      </item>
     </layout>

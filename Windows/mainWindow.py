@@ -44,6 +44,12 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
         self.recItemsRemoveBtn.setGeometry(constants.removeRecShoppingItemBtnGeometry)
         self.recItemsRemoveBtn.raise_()
 
+        self.gridLayout_3.removeWidget(self.moveToReqListBtn)
+        self.moveToReqListBtn.hide()
+        self.moveToReqListBtn.setEnabled(False)
+        self.moveToReqListBtn.setGeometry(constants.removeMoveToReqListBtnGeometry)
+        self.moveToReqListBtn.raise_()
+
     @pyqtSlot()
     def showEvent(self, event):
         # Update the two shopping lists in case any changes were made on a different menu
@@ -51,9 +57,12 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
         self.recItemsModel.select()
 
         # When the window is shown, make sure the floating remove buttons are hidden
-        self.reqItemsRemoveBtn.setEnabled(False) self.reqItemsRemoveBtn.setVisible(False)
+        self.reqItemsRemoveBtn.setEnabled(False)
+        self.reqItemsRemoveBtn.setVisible(False)
         self.recItemsRemoveBtn.setEnabled(False)
         self.recItemsRemoveBtn.setVisible(False)
+        self.moveToReqListBtn.setEnabled(False)
+        self.moveToReqListBtn.setVisible(False)
 
         # Reset the sorting for each of the shopping lists
         self.reqItemsTableView.sortByColumn(0, Qt.AscendingOrder)
@@ -120,6 +129,8 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
         self.recItemsModel.select()
         self.recItemsRemoveBtn.setEnabled(False)
         self.recItemsRemoveBtn.setVisible(False)
+        self.moveToReqListBtn.setEnabled(False)
+        self.moveToReqListBtn.setVisible(False)
 
     @pyqtSlot()
     def selectItem(self):
@@ -130,7 +141,8 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
         else:
             self.recItemsRemoveBtn.setEnabled(hasSelection)
             self.recItemsRemoveBtn.setVisible(hasSelection)
-
+            self.moveToReqListBtn.setEnabled(hasSelection)
+            self.moveToReqListBtn.setVisible(hasSelection)
     @pyqtSlot(str)
     def primaryScanner_barcodeReceived(self, barcode):
         pass
@@ -138,3 +150,21 @@ class MainWindow(QWidget, mainWindow_ui.Ui_MainWindow):
     @pyqtSlot(str)
     def secondaryScanner_barcodeReceived(self, barcode):
         pass
+
+    @pyqtSlot(bool, bool)
+    def on_moveToReqListBtn_clicked(self, checked, longPressed):
+        # If the current selection model has nothing selected, then do nothing
+        if not self.recItemsTableView.selectionModel().hasSelection():
+            return
+
+        currentSelection = self.recItemsTableView.selectionModel().selectedRows()
+        records = self.recItemsModel.getSelectedRecords(currentSelection)
+        itemList = tuple(record['item'] for record in records)
+        self.dbManager.setRequiredItems(itemList)
+
+        self.recItemsTableView.clearSelection()
+        self.recItemsModel.select()
+        self.reqItemsModel.select()
+
+
+
