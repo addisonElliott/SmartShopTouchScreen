@@ -170,7 +170,7 @@ class FavoriteWindow(QWidget, favoriteWindow_ui.Ui_FavoriteWindow):
 
         # Handle favorite's tab versus category list
         if index == 0:
-            records = self.favoritesTabModel.getSelectedRecords(self.currentSelectionModel.selectedRows())
+            records = self.favoritesTabModel.getSelectedRecords(self.currentSelectionModel.selectedIndexes())
         else:
             # Get category ID by looking up index in categories variable
             categoryID = self.categories[index - 1]['id']
