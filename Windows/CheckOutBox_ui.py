@@ -38,13 +38,6 @@ class Ui_CheckOutBox(object):
         self.horizontalLayout_1.setContentsMargins(-1, 0, -1, -1)
         self.horizontalLayout_1.setSpacing(15)
         self.horizontalLayout_1.setObjectName("horizontalLayout_1")
-        self.cancel_label = QtWidgets.QLabel(CheckOutBox)
-        font = QtGui.QFont()
-        font.setFamily("Segoe UI")
-        font.setPointSize(15)
-        self.cancel_label.setFont(font)
-        self.cancel_label.setObjectName("cancel_label")
-        self.horizontalLayout_1.addWidget(self.cancel_label)
         spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_1.addItem(spacerItem1)
         self.accept_button = TouchButton(CheckOutBox)
@@ -114,7 +107,6 @@ class Ui_CheckOutBox(object):
         _translate = QtCore.QCoreApplication.translate
         CheckOutBox.setWindowTitle(_translate("CheckOutBox", "Dialog"))
         self.item_label.setText(_translate("CheckOutBox", "Item"))
-        self.cancel_label.setText(_translate("CheckOutBox", "Scan to continue"))
         self.qty_label.setText(_translate("CheckOutBox", "Quantity"))
         self.title_label.setText(_translate("CheckOutBox", "Check Out"))
 

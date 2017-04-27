@@ -78,19 +78,6 @@
       <number>0</number>
      </property>
      <item>
-      <widget class="QLabel" name="cancel_label">
-       <property name="font">
-        <font>
-         <family>Segoe UI</family>
-         <pointsize>15</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Scan to continue</string>
-       </property>
-      </widget>
-     </item>
-     <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
